@@ -30,14 +30,17 @@ Read these before writing any code:
 
 | Layer | Choice |
 |---|---|
-| Framework | Next.js, latest stable, App Router, TypeScript (strict mode) |
+| Framework | Next.js, latest stable, App Router, TypeScript (strict mode). TypeScript stays on 6.x until typescript-eslint, which ESLint uses to read TypeScript, supports 7. |
 | Styling | Tailwind CSS, latest stable, compiled at build time. Tokens are defined once as CSS variables in `styles/tokens.css`, taken from DESIGN.md. |
 | Fonts | `next/font/google` (self-hosted at build time): Space Grotesk, Inter, JetBrains Mono |
 | Icons | `lucide-react`, 1.5px stroke |
 | Form | A Next.js route handler at `app/api/pilot/route.ts`. Input validated with `zod`. Spam protection: a honeypot field plus Cloudflare Turnstile. Email sent through Resend to `PILOT_INBOX`. |
 | Analytics | Vercel Web Analytics (no cookies) |
-| Hosting | Vercel. Every branch gets a preview deployment. Production stays `noindex` until launch is approved. |
+| Hosting | Vercel, connected to the GitHub repo. `main` is production; every branch gets a preview deployment. Production stays `noindex` until launch is approved. |
 | Tests | Playwright, `@axe-core/playwright`, Lighthouse CI |
+| Lint | ESLint 9 with `eslint-config-next`, which does not support ESLint 10 yet |
+| CI | GitHub Actions on every pull request (see Workflow) |
+| Dependency updates | Dependabot, weekly, with minor and patch updates grouped |
 
 Not allowed without approval: UI kits, CSS-in-JS, animation libraries (use CSS only), a CMS, databases, cookie-based trackers, external image hosts.
 
@@ -68,7 +71,10 @@ components/             one component per section, plus primitives (Button, Badg
 content/site.ts         all copy and feature flags, typed
 styles/tokens.css       design tokens as CSS variables
 public/brand/           logo files (SVG when supplied; the PNG placeholder until then)
-tests/                  smoke, accessibility, claims, form
+tests/                  smoke, accessibility, claims, form; screenshots.spec.ts for milestone reports
+reports/m<N>/           milestone screenshots at 375, 768 and 1440px
+.github/                CI workflow and Dependabot configuration
+next.config.ts          security headers and the noindex header
 ```
 
 ## Key behaviours
@@ -85,13 +91,33 @@ tests/                  smoke, accessibility, claims, form
   - Never log form contents. Rate-limit by IP.
 - **Feature flags** live in `content/site.ts`: `showTeam`, `showFaq`, `showLinkedIn`. All are `false` until Kian approves the pending content.
 
+## Security headers
+
+Set for every route in `next.config.ts`:
+- `Content-Security-Policy` allowing only self, Vercel Analytics and Cloudflare Turnstile, with `frame-ancestors 'none'`;
+- `Strict-Transport-Security`;
+- `Referrer-Policy: strict-origin-when-cross-origin`;
+- `X-Content-Type-Options: nosniff`;
+- `Permissions-Policy` disabling camera, microphone and geolocation.
+
+Ask Kian before adding any other source to the policy. The smoke test fails if a header is missing or the policy names a host that is not allowed.
+
+## Workflow
+
+- **Development:** run `npm run dev`. Every milestone is reviewed on its Vercel preview, not on localhost.
+- **Branches:** `main` is production. Work on one branch per milestone (`m1b-infra`, `m2-home`, `m3-evidence-chain`, ...), open a pull request, and let Vercel build its preview. Never push directly to `main`. Merge only after Kian approves.
+- **CI:** GitHub Actions runs on every pull request: type check, ESLint, production build, and the Playwright smoke, axe and claims tests (`npm test`). From milestone 2, Lighthouse CI also runs against the pull request's Vercel preview URL, with the thresholds in the quality bar.
+- **Dependabot:** weekly, with minor and patch updates grouped. Its pull requests also wait for Kian's approval.
+- **Screenshots:** every milestone report includes Playwright screenshots of every changed page at 375, 768 and 1440px, committed under `reports/m<N>/` (`MILESTONE=<N> npm run screenshots`).
+
 ## Milestones
 
-Each milestone ends with a preview URL and a short report: what was built, `TODO(copy)` items, open issues. Stop and wait for Kian's review before starting the next one.
+Each milestone ends with a pull request, its preview URL and a short report: what was built, `TODO(copy)` items, open issues, and the screenshots described under Workflow. Stop and wait for Kian's review before starting the next one.
 
 | # | Scope | Done when |
 |---|---|---|
 | 1 | Scaffold, tokens, fonts, Nav, Footer, 404 page, Vercel preview | The preview deploys; tokens match DESIGN.md exactly |
+| 1b | Infrastructure: branch workflow, CI, security headers, Dependabot, report screenshots | CI passes on the pull request; Vercel builds its preview |
 | 2 | All Home sections, static | Matches CONTENT.md word for word; responsive from 375px to 1440px |
 | 3 | Evidence chain interaction | Keyboard, touch and reduced-motion behaviour as specified |
 | 4 | Pilot page and form handler, Privacy page shell | A test submission reaches `PILOT_INBOX`; spam protection works |
