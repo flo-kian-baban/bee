@@ -1,0 +1,126 @@
+/*
+ * Design tokens from DESIGN.md (website v1). This file is the only place these
+ * values are defined.
+ *
+ * @theme publishes each token as a CSS variable on :root and generates the
+ * matching Tailwind utilities (bg-card, text-text-secondary, font-display,
+ * rounded-container, shadow-glow, …). `static` keeps every variable in the
+ * output, so SVG illustrations and inline styles can use them too.
+ *
+ * Tailwind's defaults are removed wherever DESIGN.md is exhaustive (colours,
+ * font families, type scale, radii, shadows, easing, animations), so an
+ * off-spec value fails to compile instead of slipping through.
+ */
+@theme static {
+  /* Colours */
+  --color-*: initial;
+  --color-bg: #111112;
+  --color-bg-alt: #0B0B0C;
+  --color-card: #1C1C1F;
+  --color-divider: #2E2E33; /* decorative lines only, never a control's edge */
+  --color-control-border: #6B6B70;
+  --color-text: #FFFFFF;
+  --color-text-secondary: #A3A3A8;
+  --color-brand: #F0EA0E;
+  --color-brand-hover: #DCD70B;
+  --color-on-brand: #111112;
+  --color-success: #4ADE80;
+  --color-warning: #FB923C;
+  --color-error: #F87171;
+
+  /* Font families. The --font-space-grotesk, --font-inter and
+     --font-jetbrains-mono variables are set by next/font in app/layout.tsx. */
+  --font-*: initial;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --default-font-family: var(--font-body);
+  --default-mono-font-family: var(--font-mono);
+
+  /* Type scale. Applied through the type-* utilities in app/globals.css.
+     The mobile value is the default; *-md applies from 768px up.
+     rem values are DESIGN.md's px at the default 16px root size. */
+  --text-*: initial;
+
+  --type-display-size: 2.25rem; /* 36px */
+  --type-display-leading: 2.75rem; /* 44px */
+  --type-display-size-md: 4rem; /* 64px */
+  --type-display-leading-md: 4.5rem; /* 72px */
+  --type-display-weight: 600;
+  --type-display-tracking: -0.02em;
+
+  --type-h2-size: 1.875rem; /* 30px */
+  --type-h2-leading: 2.375rem; /* 38px */
+  --type-h2-size-md: 2.5rem; /* 40px */
+  --type-h2-leading-md: 3rem; /* 48px */
+  --type-h2-weight: 500;
+
+  --type-h3-size: 1.25rem; /* 20px */
+  --type-h3-leading: 1.75rem; /* 28px */
+  --type-h3-size-md: 1.5rem; /* 24px */
+  --type-h3-leading-md: 2rem; /* 32px */
+  --type-h3-weight: 500;
+
+  --type-body-lg-size: 1.125rem; /* 18px */
+  --type-body-lg-leading: 1.75rem; /* 28px */
+  --type-body-lg-weight: 400;
+
+  --type-body-size: 1rem; /* 16px, the minimum for any paragraph */
+  --type-body-leading: 1.5rem; /* 24px */
+  --type-body-weight: 400;
+
+  --type-label-size: 0.8125rem; /* 13px, never smaller */
+  --type-label-leading: 1.125rem; /* 18px */
+  --type-label-weight: 500;
+  --type-label-tracking: 0.06em;
+
+  --type-button-size: 1rem; /* 16px */
+  --type-button-leading: 1.25rem; /* 20px */
+  --type-button-weight: 500;
+
+  /* Layout and spacing.
+     The spacing scale has an 8px base: 4, 8, 12, 16, 24, 32, 48, 72, 96, 128.
+     With Tailwind's 4px step those are steps 1, 2, 3, 4, 6, 8, 12, 18, 24, 32
+     (p-6 = 24px, py-32 = 128px). */
+  --spacing: 0.25rem; /* 4px */
+  --breakpoint-md: 48rem; /* 768px: mobile layout below, desktop from here up */
+  --content-max-width: 1200px;
+  --page-padding: 24px;
+  --page-padding-md: 48px;
+  --grid-columns: 4;
+  --grid-columns-md: 12;
+  --grid-gutter: 24px;
+  --section-padding: 72px;
+  --section-padding-md: 128px;
+  --nav-height: 72px;
+
+  /* Shape and depth. rounded-full (dots, badge) is built in. */
+  --radius-*: initial;
+  --radius-container: 12px; /* cards, panels, buttons, inputs */
+  --radius-chip: 6px;
+
+  /* Flat surfaces: no shadows except the two glows DESIGN.md allows. */
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --shadow-glow: 0 0 16px rgba(240, 234, 14, 0.2); /* primary button hover only */
+  --hero-glow-max-opacity: 0.08; /* hero radial glow, brand colour */
+
+  /* Focus ring on every interactive element: brand colour. */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  /* Motion: 150–250ms, ease-out, colour/opacity/border/transform only.
+     No looping animations, so Tailwind's spin, ping, pulse and bounce are removed. */
+  --ease-*: initial;
+  --ease-out: ease-out;
+  --animate-*: initial;
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: ease-out;
+
+  /* Logo: the wordmark is 28px tall in the nav, never under 24px.
+     Clear space is half its height on every side. */
+  --logo-height: 28px;
+  --logo-min-height: 24px;
+}

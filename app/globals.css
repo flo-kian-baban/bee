@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-bg);
+    /* Anchored sections and keyboard-focused elements stop below the sticky nav. */
+    scroll-padding-top: var(--nav-height);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    font-weight: var(--type-body-weight);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-brand);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+}
+
+/* With reduced motion, every transition and animation is off. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Content column: 1200px max, 24px side padding on mobile, 48px on desktop. */
+@utility page-container {
+  width: 100%;
+  max-width: calc(var(--content-max-width) + 2 * var(--page-padding-md));
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+  @variant md {
+    padding-inline: var(--page-padding-md);
+  }
+}
+
+/* Section vertical padding: 72px on mobile, 128px on desktop. */
+@utility section-y {
+  padding-block: var(--section-padding);
+  @variant md {
+    padding-block: var(--section-padding-md);
+  }
+}
+
+/* Type styles from the DESIGN.md typography table, one class per style. */
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: var(--type-display-weight);
+  font-size: var(--type-display-size);
+  line-height: var(--type-display-leading);
+  letter-spacing: var(--type-display-tracking);
+  @variant md {
+    font-size: var(--type-display-size-md);
+    line-height: var(--type-display-leading-md);
+  }
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-weight: var(--type-h2-weight);
+  font-size: var(--type-h2-size);
+  line-height: var(--type-h2-leading);
+  @variant md {
+    font-size: var(--type-h2-size-md);
+    line-height: var(--type-h2-leading-md);
+  }
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-weight: var(--type-h3-weight);
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-leading);
+  @variant md {
+    font-size: var(--type-h3-size-md);
+    line-height: var(--type-h3-leading-md);
+  }
+}
+
+@utility type-body-lg {
+  font-family: var(--font-body);
+  font-weight: var(--type-body-lg-weight);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-leading);
+}
+
+@utility type-body {
+  font-family: var(--font-body);
+  font-weight: var(--type-body-weight);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+}
+
+/* Eyebrows and panel labels only. */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-weight: var(--type-label-weight);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-leading);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+@utility type-button {
+  font-family: var(--font-display);
+  font-weight: var(--type-button-weight);
+  font-size: var(--type-button-size);
+  line-height: var(--type-button-leading);
+}

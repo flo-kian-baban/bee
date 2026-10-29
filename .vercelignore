@@ -1,0 +1,12 @@
+# Planning docs and design references are not needed to build the site,
+# so they are not uploaded with deployments.
+CLAUDE.md
+CONTENT.md
+DESIGN.md
+decisions.md
+reference/
+
+# Local secrets and tool state never leave this machine. Production values
+# are set as Vercel environment variables instead.
+.env*
+.gstack/
