@@ -5,6 +5,7 @@ CONTENT.md
 DESIGN.md
 decisions.md
 reference/
+reports/
 
 # Local secrets and tool state never leave this machine. Production values
 # are set as Vercel environment variables instead.
