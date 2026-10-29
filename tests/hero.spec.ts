@@ -91,6 +91,8 @@ test("the hero light brightens the cells within its radius of a mouse, and fades
   expect(problems).toEqual([]);
 });
 
+// TODO(M5): with the CPU 4x slower, the first hover sometimes takes one frame
+// of about 50ms (1 run in 6 at milestone 2, accepted for now). Recheck it.
 test("hovering the hero causes no long tasks", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(home.path);

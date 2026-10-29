@@ -9,12 +9,15 @@ const FOLLOW_PER_FRAME = 0.15;
 const GLOW_PER_FRAME = 0.1;
 const FRAME_MS = 1000 / 60;
 
-/** A lit cell's 12% outline is fully in once its brightness reaches this. */
-const OUTLINE_AT = 0.02;
-/** Below this brightness, a fading cell is dark again. */
-const DARK = 0.002;
-/** The most cells lit at once: those within the radius, plus those still fading. */
+/**
+ * As in Stitch, a cell shows as lit above this brightness: its 12% outline is
+ * fully in once it rises past it, and a fading cell goes dark below it.
+ */
+const LIT_FROM = 0.02;
+/** The most cell elements made: the radius holds about 30 cells; the rest are fading. */
 const MAX_CELLS = 64;
+/** At most this many cell elements are made in one frame, nearest first, so lighting up never blocks a frame. */
+const NEW_CELLS_PER_FRAME = 8;
 
 /** Room around each cell for its glow. */
 const MARGIN = 18;
@@ -58,29 +61,44 @@ export function HeroLight() {
     const spare: Cell[] = [];
     const made: HTMLElement[] = [];
 
-    const placeCell = ({ column, row }: Target) => {
-      let cell = spare.pop();
-      if (!cell) {
-        if (made.length === MAX_CELLS) return undefined;
+    const setBrightness = (cell: Cell, brightness: number) => {
+      if (brightness === cell.brightness) return;
+      cell.brightness = brightness;
+      cell.glow.style.opacity = String(brightness);
+      cell.outline.style.opacity = String(Math.min(1, brightness / LIT_FROM));
+    };
+
+    /**
+     * A cell element to light: a spare one, a new copy of the template if
+     * `mayMake`, or, once all are made, the dimmest fading one.
+     */
+    const freeCell = (targets: Map<string, Target>, mayMake: boolean): Cell | undefined => {
+      const spareCell = spare.pop();
+      if (spareCell) return spareCell;
+      if (made.length < MAX_CELLS) {
+        if (!mayMake) return undefined;
         const element = template.cloneNode(true) as HTMLElement;
         light.append(element);
         made.push(element);
         const outlineLayer = element.firstElementChild as SVGElement;
         const glowLayer = element.lastElementChild as SVGElement;
-        cell = { element, outline: outlineLayer, glow: glowLayer, brightness: 0 };
+        return { element, outline: outlineLayer, glow: glowLayer, brightness: 0 };
       }
+      let dimmest: [string, Cell] | undefined;
+      for (const entry of lit) {
+        if (!targets.has(entry[0]) && (!dimmest || entry[1].brightness < dimmest[1].brightness)) dimmest = entry;
+      }
+      if (!dimmest) return undefined;
+      lit.delete(dimmest[0]);
+      setBrightness(dimmest[1], 0);
+      return dimmest[1];
+    };
+
+    const placeCell = (cell: Cell, { column, row }: Target) => {
       const centre = cellCentre(column, row);
       cell.element.style.transform = `translate(${centre.x - CELL_WIDTH / 2 - MARGIN}px, ${centre.y - CELL_RADIUS - MARGIN}px)`;
       cell.element.dataset.x = String(centre.x);
       cell.element.dataset.y = String(centre.y);
-      return cell;
-    };
-
-    const setBrightness = (cell: Cell, brightness: number) => {
-      if (brightness === cell.brightness) return;
-      cell.brightness = brightness;
-      cell.glow.style.opacity = String(brightness);
-      cell.outline.style.opacity = String(Math.min(1, brightness / OUTLINE_AT));
     };
 
     /** The cells whose centres lie within the radius, and the brightness each aims for: (1 - d/r)². */
@@ -125,10 +143,21 @@ export function HeroLight() {
       }
 
       const targets = inside ? targetsAround() : new Map<string, Target>();
-      for (const [key, target] of targets) {
-        if (lit.has(key)) continue;
-        const cell = placeCell(target);
-        if (cell) lit.set(key, cell);
+      // Light the new cells, nearest first; any left over wait for the next frame.
+      let newElements = 0;
+      const waiting = [...targets]
+        .filter(([key]) => !lit.has(key))
+        .sort(([, a], [, b]) => b.brightness - a.brightness);
+      for (const [key, target] of waiting) {
+        const madeBefore = made.length;
+        const cell = freeCell(targets, newElements < NEW_CELLS_PER_FRAME);
+        newElements += made.length - madeBefore;
+        if (!cell) {
+          settled = false;
+          continue;
+        }
+        placeCell(cell, target);
+        lit.set(key, cell);
       }
 
       const ease = 1 - (1 - GLOW_PER_FRAME) ** frames;
@@ -137,7 +166,7 @@ export function HeroLight() {
         let brightness = cell.brightness + (target - cell.brightness) * ease;
         if (Math.abs(target - brightness) < 0.001) brightness = target;
         else settled = false;
-        if (target === 0 && brightness < DARK) {
+        if (target === 0 && brightness < LIT_FROM) {
           setBrightness(cell, 0);
           lit.delete(key);
           spare.push(cell);
