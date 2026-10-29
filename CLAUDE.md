@@ -1,5 +1,14 @@
 # B.E.E. Website: Instructions for Claude Code
 
+## Security boundary
+
+This project may access exactly one GitHub repository, `flo-kian-baban/bee`, and exactly one local folder, this project folder. Nothing else, for any reason.
+
+- Never list, read, clone, search or query any other repository, organization or local folder.
+- If a task seems to need something outside this boundary, stop and ask Kian.
+
+`.claude/settings.json` enforces part of this: Claude Code's file tools (Read, Grep, Glob) cannot read outside this folder.
+
 ## What this is
 
 The public marketing website for B.E.E. (Building Energy Engine), a building energy assessment platform that is still in development.
