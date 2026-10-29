@@ -62,6 +62,17 @@ export const meta = {
   description: `${BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open.`,
 };
 
+/** Home, section 1. */
+export const hero = {
+  badge: "In development · Pilot program open",
+  headline: "Every Building. Better Energy Intelligence.",
+  /** The words of the headline shown in brand yellow. */
+  headlineHighlight: "Energy Intelligence",
+  subtext: `${BRAND} connects physical building inspections, intelligent data processing and engineering-based analysis to turn fragmented building information into transparent, actionable energy intelligence.`,
+  primaryCta: { label: "Join the pilot program", href: "/pilot" },
+  secondaryCta: { label: "See how it works", href: "#how-it-works" },
+};
+
 /**
  * TODO(copy): interface labels CONTENT.md does not cover. Screen readers need
  * them (skip link, landmark names, icon-only buttons), so these are proposals

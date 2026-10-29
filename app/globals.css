@@ -16,7 +16,9 @@
     font-size: var(--type-body-size);
     line-height: var(--type-body-leading);
     font-weight: var(--type-body-weight);
-    font-variant-numeric: tabular-nums;
+    /* Numbers get tabular figures through the tabular-nums class on the
+       elements that show them. Not set here: Inter's tabular setting also
+       widens the hyphen, which opens gaps in words like "engineering-based". */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -60,6 +62,16 @@
   @variant md {
     padding-block: var(--section-padding-md);
   }
+}
+
+/* The hero's one glow: a soft radial brand-yellow wash behind the headline,
+   at most 8% opacity (DESIGN.md, Shape and depth). */
+@utility hero-glow {
+  background-image: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-brand) calc(var(--hero-glow-max-opacity) * 100%), transparent),
+    transparent
+  );
 }
 
 /* Type styles from the DESIGN.md typography table, one class per style. */

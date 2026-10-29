@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { nav, notFoundPage } from "../content/site";
-import { notFound, pages } from "./pages";
+import { hero, nav, notFoundPage } from "../content/site";
+import { home, notFound, pages } from "./pages";
 
 // Apart from the site itself, the content security policy may name only
 // Vercel Analytics and Cloudflare Turnstile.
@@ -14,6 +14,12 @@ for (const { name, path, status } of pages) {
       await expect(page.getByRole("banner").getByRole("link", { name: nav.cta.label })).toBeVisible();
       await expect(page.getByRole("main")).toBeAttached();
       await expect(page.getByRole("contentinfo")).toBeVisible();
+    });
+
+    test("has no horizontal scroll at 375px", async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 900 });
+      await page.goto(path);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
     });
 
     test("sends the security and noindex headers", async ({ request }) => {
@@ -64,6 +70,11 @@ for (const { name, path, status } of pages) {
     });
   });
 }
+
+test("home opens with the hero heading", async ({ page }) => {
+  await page.goto(home.path);
+  await expect(page.getByRole("heading", { level: 1, name: hero.headline })).toBeVisible();
+});
 
 test("unknown routes show the not-found page", async ({ page }) => {
   await page.goto(notFound.path);

@@ -5,7 +5,8 @@
  * @theme publishes each token as a CSS variable on :root and generates the
  * matching Tailwind utilities (bg-card, text-text-secondary, font-display,
  * rounded-container, shadow-glow, …). `static` keeps every variable in the
- * output, so SVG illustrations and inline styles can use them too.
+ * output, so hand-written CSS can use them too. Inline style attributes
+ * cannot: the CSP blocks them.
  *
  * Tailwind's defaults are removed wherever DESIGN.md is exhaustive (colours,
  * font families, type scale, radii, shadows, easing, animations), so an

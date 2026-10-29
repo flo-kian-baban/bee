@@ -61,7 +61,7 @@ export function Footer() {
           <AppLink href={footer.privacy.href} className={linkClass}>
             {footer.privacy.label}
           </AppLink>
-          <p className="flex min-h-11 items-center text-text-secondary">{footer.copyright}</p>
+          <p className="flex min-h-11 items-center text-text-secondary tabular-nums">{footer.copyright}</p>
         </div>
       </div>
     </footer>
