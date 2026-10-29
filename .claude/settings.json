@@ -1,5 +1,31 @@
 {
   "permissions": {
     "blockReadsOutsideWorkingDirectories": true
+  },
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "autoMemoryEnabled": false,
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": ["~/Development", "~/Desktop", "~/Downloads", "~/Documents", "~/.claude/projects"],
+      "allowRead": ["/Users/kianbaban/Development/B-E-E"],
+      "allowWrite": ["~/.npm", "~/Library/Caches/ms-playwright"]
+    },
+    "network": {
+      "allowLocalBinding": true,
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "cdn.playwright.dev",
+        "playwright.download.prss.microsoft.com",
+        "github.com",
+        "api.github.com"
+      ]
+    }
   }
 }

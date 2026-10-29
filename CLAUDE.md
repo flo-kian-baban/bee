@@ -6,8 +6,9 @@ This project may access exactly one GitHub repository, `flo-kian-baban/bee`, and
 
 - Never list, read, clone, search or query any other repository, organization or local folder.
 - If a task seems to need something outside this boundary, stop and ask Kian.
+- gstack skills (such as `/browse`) are not allowed in this project. For browser checks, use Playwright from this project.
 
-`.claude/settings.json` enforces part of this: Claude Code's file tools (Read, Grep, Glob) cannot read outside this folder.
+`.claude/settings.json` enforces part of this. Claude Code's file tools (Read, Grep, Glob) cannot read outside this folder. Shell commands run in a sandbox: they cannot read `~/Development` (except this folder), `~/Desktop`, `~/Downloads`, `~/Documents` or `~/.claude/projects`, and they can write only here, to npm's cache and to Playwright's browser folder. Auto memory is off.
 
 ## What this is
 
