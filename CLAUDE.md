@@ -11,6 +11,8 @@ Read these before writing any code:
 2. `CONTENT.md`: every word on the site, plus feature flags and pending items. The single source of truth for copy.
 3. `reference/stitch-home-desktop.png`: layout reference only. Do not copy any text from it.
 
+`AGENTS.md` holds Next.js's own guidance for AI coding agents; `next dev` writes it. If AGENTS.md and CLAUDE.md conflict, CLAUDE.md wins.
+
 ## Hard rules
 
 1. **Never write marketing copy.** All copy comes from `CONTENT.md`, moved into `content/site.ts`. If something needs copy that isn't there, insert `TODO(copy)` and list it in your milestone report.
@@ -31,6 +33,7 @@ Read these before writing any code:
 | Layer | Choice |
 |---|---|
 | Framework | Next.js, latest stable, App Router, TypeScript (strict mode). TypeScript stays on 6.x until typescript-eslint, which ESLint uses to read TypeScript, supports 7. |
+| Node | 24, set in `.nvmrc`; `engines` in package.json sets it for Vercel |
 | Styling | Tailwind CSS, latest stable, compiled at build time. Tokens are defined once as CSS variables in `styles/tokens.css`, taken from DESIGN.md. |
 | Fonts | `next/font/google` (self-hosted at build time): Space Grotesk, Inter, JetBrains Mono |
 | Icons | `lucide-react`, 1.5px stroke |
@@ -102,13 +105,17 @@ Set for every route in `next.config.ts`:
 
 Ask Kian before adding any other source to the policy. The smoke test fails if a header is missing or the policy names a host that is not allowed.
 
+The policy allows inline scripts (`'unsafe-inline'`), because Next.js inlines the scripts that start each page and a nonce would make every page render per request. Kian approved this for this marketing site only. The future platform must use a strict nonce-based CSP.
+
 ## Workflow
 
-- **Development:** run `npm run dev`. Every milestone is reviewed on its Vercel preview, not on localhost.
-- **Branches:** `main` is production. Work on one branch per milestone (`m1b-infra`, `m2-home`, `m3-evidence-chain`, ...), open a pull request, and let Vercel build its preview. Never push directly to `main`. Merge only after Kian approves.
+- **Development:** run `npm run dev` and iterate with Kian on localhost. Merging still goes through a pull request.
+- **Branches:** `main` is production. Work on one branch per milestone (`m1b-infra`, `m2-home`, `m3-evidence-chain`, ...), open a pull request, and let Vercel build its preview. Never push directly to `main`.
+- **Merge gate:** a pull request's CI result and Vercel preview. Merge only when CI passes, the preview builds, and Kian approves.
 - **CI:** GitHub Actions runs on every pull request: type check, ESLint, production build, and the Playwright smoke, axe and claims tests (`npm test`). From milestone 2, Lighthouse CI also runs against the pull request's Vercel preview URL, with the thresholds in the quality bar.
 - **Dependabot:** weekly, with minor and patch updates grouped. Its pull requests also wait for Kian's approval.
 - **Screenshots:** every milestone report includes Playwright screenshots of every changed page at 375, 768 and 1440px, committed under `reports/m<N>/` (`MILESTONE=<N> npm run screenshots`).
+- **Temporary test exceptions:** mark each with `TODO(M<n>)`, where `<n>` is the milestone that removes it. `tests/exceptions.spec.ts` fails on that milestone's branch while the exception remains, and from milestone 5 on it fails if any remain.
 
 ## Milestones
 
@@ -121,7 +128,7 @@ Each milestone ends with a pull request, its preview URL and a short report: wha
 | 2 | All Home sections, static | Matches CONTENT.md word for word; responsive from 375px to 1440px |
 | 3 | Evidence chain interaction | Keyboard, touch and reduced-motion behaviour as specified |
 | 4 | Pilot page and form handler, Privacy page shell | A test submission reaches `PILOT_INBOX`; spam protection works |
-| 5 | QA: tests, Lighthouse, accessibility, SEO metadata, Open Graph image, sitemap | Every check in the quality bar passes |
+| 5 | QA: tests, Lighthouse, accessibility, SEO metadata, Open Graph image, sitemap | Every check in the quality bar passes, and no temporary test exception remains |
 
 ## Quality bar
 
