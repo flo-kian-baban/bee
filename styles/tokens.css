@@ -80,6 +80,8 @@
   --type-title-size: 1.125rem; /* 18px */
   --type-title-leading: 1.75rem; /* 28px */
   --type-title-weight: 500;
+  --type-tile-size: 1rem; /* 16px: building tiles below 640px, then title */
+  --type-tile-leading: 1.5rem; /* 24px */
 
   --type-body-lg-size: 1rem; /* 16px */
   --type-body-lg-leading: 1.625rem; /* 26px */
@@ -106,9 +108,9 @@
   --type-button-size: 0.875rem; /* 14px */
   --type-button-leading: 1.25rem; /* 20px */
 
+  /* Labels take their weight from where they sit: 400, or 500 where DESIGN.md says. */
   --type-label-size: 0.75rem; /* 12px: only uppercase mono labels are this small */
   --type-label-leading: 1rem; /* 16px */
-  --type-label-weight: 400;
   --type-label-tracking: 0.1em;
 
   /* Layout and spacing. The spacing scale has a 4px base (p-6 = 24px, py-28 = 112px). */
@@ -171,6 +173,14 @@
 
   /* The hero light (DESIGN.md, Motion), at every screen size. */
   --hero-light-radius: 175px;
+
+  /* The pilot card: a glow at its top right, and a line along its top edge. */
+  --pilot-glow-size: 288px;
+  --pilot-glow-opacity: 0.05;
+  --pilot-edge-opacity: 0.9;
+
+  /* The Team avatars' dot grid: brand dots at 20%, 8px apart. */
+  --dot-grid-spacing: 8px;
 
   /* Focus ring on every interactive element: brand colour. */
   --focus-ring-width: 2px;

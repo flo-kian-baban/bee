@@ -95,7 +95,7 @@ next.config.ts          security headers and the noindex header
 - **Evidence chain (Home).** Four nodes: Nameplate photo → Extracted value → Calculation → Finding.
   - Each node is a `<button>`. Selecting a node highlights it and every node upstream of it, plus the connecting lines. Selecting Extracted value also outlines the matching region on the nameplate illustration.
   - Works with mouse, touch and keyboard (arrow keys move between nodes; Enter or Space selects). The selected node's details are announced through `aria-live="polite"`.
-  - Desktop: a horizontal row. Below 768px: a vertical stack with downward connectors.
+  - From 1024px: a horizontal row. Below 1024px: a vertical stack with downward connectors.
   - With reduced motion: no line animation; the highlight changes instantly.
   - The nameplate is an SVG illustration of a generic, made-up boiler nameplate. Never use a real photo.
 - **Hero.** A honeycomb built from the logo's hexagon geometry (inline SVG, yellow strokes at 4–6% opacity), with one soft radial yellow glow behind the headline. On desktop, a pointer-driven light brightens the cells around the pointer (DESIGN.md, Motion); on touch screens and with reduced motion, the honeycomb is static. No canvas, no particles, no looping animation.

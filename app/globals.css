@@ -102,6 +102,29 @@
   will-change: opacity;
 }
 
+/* The pilot card's glow: a circle of brand at 5%, blurred 90px. */
+@utility pilot-glow {
+  width: var(--pilot-glow-size);
+  height: var(--pilot-glow-size);
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--color-brand) calc(var(--pilot-glow-opacity) * 100%), transparent);
+  filter: blur(var(--blur-pilot));
+}
+
+/* The pilot card's top edge: a 2px line that brightens towards its middle. */
+@utility pilot-edge {
+  height: 2px;
+  opacity: var(--pilot-edge-opacity);
+  background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand) 30%, transparent), transparent);
+}
+
+/* The Team avatars' background: brand dots at 20%, 8px apart, on bg-alt. */
+@utility dot-grid {
+  background-color: var(--color-bg-alt);
+  background-image: radial-gradient(color-mix(in srgb, var(--color-brand) 20%, transparent) 1px, transparent 1px);
+  background-size: var(--dot-grid-spacing) var(--dot-grid-spacing);
+}
+
 /* Type styles from the DESIGN.md typography table, one class per style. */
 @utility type-display {
   font-family: var(--font-display);
@@ -165,6 +188,18 @@
   line-height: var(--type-title-leading);
 }
 
+/* Building tiles: 16/24, then title from 640px. */
+@utility type-tile {
+  font-family: var(--font-display);
+  font-weight: var(--type-title-weight);
+  font-size: var(--type-tile-size);
+  line-height: var(--type-tile-leading);
+  @variant sm {
+    font-size: var(--type-title-size);
+    line-height: var(--type-title-leading);
+  }
+}
+
 @utility type-body-lg {
   font-family: var(--font-body);
   font-weight: var(--type-body-weight);
@@ -212,10 +247,9 @@
   line-height: var(--type-button-leading);
 }
 
-/* Eyebrows, panel headers and chips. */
+/* Eyebrows, panel headers and chips. The weight comes from the context. */
 @utility type-label {
   font-family: var(--font-mono);
-  font-weight: var(--type-label-weight);
   font-size: var(--type-label-size);
   line-height: var(--type-label-leading);
   letter-spacing: var(--type-label-tracking);

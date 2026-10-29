@@ -1,5 +1,17 @@
 import { expect, test } from "@playwright/test";
-import { hero, nav, notFoundPage } from "../content/site";
+import {
+  buildings,
+  evidenceChain,
+  flags,
+  hero,
+  howItWorks,
+  nav,
+  notFoundPage,
+  pilotBand,
+  principles,
+  problem,
+  team,
+} from "../content/site";
 import { home, notFound, pages, widths } from "./pages";
 
 // Apart from the site itself, the content security policy may name only
@@ -79,6 +91,27 @@ for (const { name, path, status } of pages) {
 test("home opens with the hero heading", async ({ page }) => {
   await page.goto(home.path);
   await expect(page.getByRole("heading", { level: 1, name: hero.headline })).toBeVisible();
+});
+
+test("home shows its sections in CONTENT.md order, with Team only when shown", async ({ page }) => {
+  await page.goto(home.path);
+  expect(await page.getByRole("heading", { level: 2 }).allInnerTexts()).toEqual([
+    problem.heading,
+    howItWorks.heading,
+    evidenceChain.heading,
+    principles.heading,
+    buildings.heading,
+    ...(flags.showTeam ? [team.heading] : []),
+    pilotBand.heading,
+  ]);
+});
+
+test("every in-page link on home leads to a section", async ({ page }) => {
+  await page.goto(home.path);
+  const targets = [...nav.links.map((link) => link.href), hero.secondaryCta.href].map((href) => href.split("#")[1]);
+  for (const id of targets) {
+    await expect(page.locator(`section#${id}`)).toBeAttached();
+  }
 });
 
 test("unknown routes show the not-found page", async ({ page }) => {

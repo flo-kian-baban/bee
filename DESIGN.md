@@ -104,7 +104,8 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | h2 | Space Grotesk | 30/36 | 36/40 | | 500 | −0.025em | Other section headings |
 | h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works and Team card titles |
 | numeral | Space Grotesk | 36/40 | | | 700 | −0.025em | How it works step numbers |
-| title | Space Grotesk | 18/28 | | | 500 | 0 | Evidence nodes, principles; building tiles are 16/24 below 640px |
+| title | Space Grotesk | 18/28 | | | 500 | 0 | Evidence nodes, principles |
+| tile | Space Grotesk | 16/24 | 18/28 | | 500 | 0 | Building tiles |
 | body-lg | Inter | 16/26 | 18/28 | | 400 | 0 | Hero subtext |
 | lead | Inter | 18/28 | | | 400 | 0 | Section leads |
 | body | Inter | 16/26 | | | 400 | 0 | Every paragraph |
@@ -112,7 +113,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | small | Inter | 14/20 | | | 400; 500 when active | 0 | Nav and footer links |
 | badge | Inter | 14/20 | | | 400 | 0.025em | Hero badge (Stitch: 12/16) |
 | button | Space Grotesk | 14/20 | | | 600 primary, 400 secondary | 0 | Buttons (Stitch: the nav button at 12/16 below 640px) |
-| label | JetBrains Mono | 12/16 | | | 400 | 0.1em, uppercase | Eyebrows, panel headers, chips |
+| label | JetBrains Mono | 12/16 | | | 400; 500 for the How it works eyebrow, Problem card titles and step numbers | 0.1em, uppercase | Eyebrows, card and panel labels, chips, value tags, the footer's bottom row |
 
 - Paragraphs are 16px or larger (CLAUDE.md quality bar). Stitch sets card text at 14/22.75, and at 12px in the evidence nodes; here every paragraph is body, 16/26.
 - 12px is for uppercase mono labels only. Other text, such as links, buttons and the badge, is 14px or larger. Stitch's panel details at 9–11px become labels at 12/16 where they are uppercase, and small type at 14/20 otherwise.
@@ -186,11 +187,11 @@ Moving a mouse over the hero lights up the honeycomb cells around the pointer, a
 - **Bounds:** a 175px radius at every screen size, and only the cells within it; the hero section only. The pointer lights cells anywhere in the hero, including under the text and buttons. The cells are drawn behind the content, clipped to the hero, and never take pointer events.
 - **Touch screens and other devices without hover:** no light; the honeycomb stays at rest. Static was chosen over auto-drift, which would be a looping animation.
 - **Reduced motion:** no light.
-- **Implementation:** one element per lit cell, copied from a template and reused, and made only where the light shows. Each is placed once when it lights up; after that only its opacity changes, and its layers are composited on their own, so a change of brightness repaints nothing. No React state per pointer event, no canvas.
+- **Implementation:** one element per lit cell, copied from a template and reused, and made only where the light shows: at most 8 in a frame, nearest first, so the first hover never blocks a frame. Each is placed once when it lights up; after that only its opacity changes, and its layers are composited on their own, so a change of brightness repaints nothing. No React state per pointer event, no canvas.
 
 Differences from Stitch's canvas version:
 - Stitch's hexagons are flat-topped. Here they keep the logo's pointy-topped shape (CLAUDE.md), at Stitch's size: 38px from centre to corner.
-- Stitch switches a cell's 12% outline on once its brightness passes 0.02; here the outline fades in up to that point. Stitch's glow widens with brightness; here it keeps its 12px blur and strengthens instead.
+- Stitch switches a cell's 12% outline on once its brightness passes 0.02; here the outline fades in up to that point. As in Stitch, a fading cell goes dark once its brightness falls below 0.02. Stitch's glow widens with brightness; here it keeps its 12px blur and strengthens instead.
 - Stitch parks the light off-screen between visits, so it sweeps in from the left edge on entry. Here a dark light starts at the pointer.
 - Not ported, because CLAUDE.md rules out particles and looping animation in the hero: Stitch's 42 bee particles, which wander without stopping, gather within 262px of the pointer and are joined by lines when closer than 92px; and its breathing honeycomb, whose strokes cycle between 6% and 10% every 4.2 seconds.
 
@@ -215,7 +216,7 @@ Differences from Stitch's canvas version:
 
 **Chip**: chip fill, 1px chip-border, tag radius, 2px 6px padding, label type in text-soft.
 
-**Value tag** (product vocabulary from CONTENT.md, used in panels and the evidence chain). Stitch has none, so tags use its chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
+**Value tag** (product vocabulary from CONTENT.md): in the evidence chain, beside the Problem card titles and the principle titles, and in the Optimize panel's label row, where Stitch had status chips. Tags use Stitch's chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
 
 | Tag | Style |
 |---|---|
@@ -230,7 +231,7 @@ Differences from Stitch's canvas version:
 - Error: error-coloured border, plus the message under the field with an icon.
 - Checkbox: 20px, 1.5px control-border; when checked, brand fill with an on-brand check mark.
 
-**Section header**: a label eyebrow in text-secondary, then the h2. The How it works eyebrow is brand at 500, after an 8px brand dot. The Problem and How it works headers stand on a divider at 70%. Stitch's status chips beside them hold text that CONTENT.md doesn't have, so they are left out.
+**Section header**: a label eyebrow in text-secondary, then the h2. The Problem eyebrow follows an 8px brand dot; the How it works eyebrow is brand at 500, after the same dot. The Problem header stands on a divider at 60%, the How it works header on one at 70%. Stitch's status chips beside them hold text that CONTENT.md doesn't have, so they are left out.
 
 **Nav**:
 - Sticky, 80px tall, bg at 80% with a 24px backdrop blur, divider at 70% along the bottom.
@@ -241,7 +242,7 @@ Differences from Stitch's canvas version:
 **Footer**:
 - bg-alt, with a divider at 70% along the top; 64px padding top and bottom.
 - From 768px, three columns across 5, 4 and 3 of 12: identity (logo and descriptor), links, contact.
-- Bottom row, 32px below a divider at 60%: privacy link and copyright in JetBrains Mono at 12/16, text-secondary.
+- Bottom row, 32px below a divider at 60%: privacy link and copyright in label type, text-secondary.
 - Not used from Stitch: its column headings and descriptor (text not in CONTENT.md), its invented email address and legal name, and its status line.
 
 ## Logo
@@ -254,8 +255,8 @@ Differences from Stitch's canvas version:
 
 ## Icons and imagery
 
-- Lucide icons, 1.5px stroke, at Stitch's sizes (16–24px; 36px in Team cards); text-secondary by default, brand on hover or when active. Stitch uses the Material Symbols icon font, which CLAUDE.md rules out; each of its icons maps to the closest Lucide icon.
-- Illustrations are flat SVG line drawings using these tokens.
+- Lucide icons, 1.5px stroke, at Stitch's sizes (14–24px), in Stitch's colours: brand in the Problem cards, the Problem closing line and the principles; text-soft or text-secondary elsewhere, turning brand on hover. Stitch uses the Material Symbols icon font, which CLAUDE.md rules out; each of its icons maps to the closest Lucide icon.
+- Illustrations are flat SVG line drawings using these tokens. The Problem cards show one of each kind of data (equipment with its nameplate, statements, a nameplate and cut sheet, a spreadsheet and report) in place of Stitch's mock screens, which hold numbers, error states and statistics that CONTENT.md rules out.
 - No stock photos of people.
 - No photos from employers' or clients' projects.
 - Thermal images only if licensed or captured by B.E.E. itself.

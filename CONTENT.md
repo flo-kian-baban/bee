@@ -32,54 +32,58 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Secondary button: "See how it works" → `#how-it-works` [A]
 
 ### 2. Problem (bg-alt)
-- Eyebrow: "Today" [D]
+- Eyebrow: "Today" [A]
 - Heading: "Building energy data is scattered." [A]
-- Four panels (title [A], description [D]):
+- Four panels (title and description [A]):
   - "Site photos": "Equipment, conditions and nameplates, photographed during inspections."
   - "Utility bills": "Electricity, gas and water statements, often spread across several accounts."
   - "Equipment records": "Nameplates, cut sheets and service logs, often on paper."
   - "Spreadsheets and reports": "Calculations and past studies kept in separate files."
+- Value tags beside the panel titles: Observed on "Site photos", "Utility bills" and "Equipment records"; Calculated on "Spreadsheets and reports" [A]
 - Each panel's visual is a simple line illustration of its source type. No numbers, error states or statistics.
 - Closing line: "Kept in different places and re-entered by hand." [A]
 
 ### 3. How it works (id `how-it-works`)
-- Eyebrow: "How it works" [D]
+- Eyebrow: "How it works" [A]
 - Heading: "Capture. Analyze. Optimize." [A]
 - Card 01, "Capture": "Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow." [A]
-  - Panel: a list of input types (Photos, Thermal images, Nameplates, Utility bills, Operating records) [D]
+  - Panel: a list of input types (Photos, Thermal images, Nameplates, Utility bills, Operating records) [A]
 - Card 02, "Analyze": "Utility benchmarking, engineering calculations and energy conservation measures, with every assumption visible." [A]
-  - Panel: three labelled rows: "Method", "Assumptions", "Units", each with a short placeholder line and no figures [D]
+  - Panel: three labelled rows: "Method", "Assumptions", "Units", each with a short placeholder line and no figures [A]
 - Card 03, "Optimize": "Energy, cost and greenhouse gas scenarios for retrofit decisions, prepared for qualified engineering review." [A]
-  - Panel: two scenario rows ("Scenario A", "Scenario B"), columns "Energy", "Cost", "GHG" with "—" values, and an "Awaiting review" tag [D]
+  - Panel: two scenario rows ("Scenario A", "Scenario B"), columns "Energy", "Cost", "GHG" with "—" values, and an "Awaiting review" tag [A]
+- Panel labels: "INPUTS" (Card 01), "METHOD" (Card 02) and "SCENARIOS" (Card 03, with the "Awaiting review" tag beside it) [A]
 
 ### 4. Evidence chain (bg-alt)
-- Eyebrow: "Traceability" [D]
+- Eyebrow: "Traceability" [A]
 - Heading: "Every number has a source." [A]
-- Lead: "Select any step to see where it came from." [D]
+- Lead: "Select any step to see where it came from." [A]
 - Label: "Illustrative example · not real project data" [A, expanded]
+- Node labels: "STEP 01" to "STEP 04" [A]
 - Node 1, "Nameplate photo":
-  - Text: "Photographed on site during the inspection." [D]
-  - Meta: "Source: site photo 014" · tag: Observed [D]
+  - Text: "Photographed on site during the inspection." [A]
+  - Meta: "Source: site photo 014" · tag: Observed [A]
 - Node 2, "Extracted value":
-  - Text: "Rated input: 2,000 MBH" [D]
-  - Meta: "Extracted from site photo 014" · tag: Observed [D]
+  - Text: "Rated input: 2,000 MBH" [A]
+  - Meta: "Extracted from site photo 014" · tag: Observed [A]
 - Node 3, "Calculation":
-  - Text: "Annual heating energy, weather-normalized against heating degree days." [D]
-  - Meta: "Seasonal efficiency: engineer input" · tag: Assumed. "Annual heating energy" · tag: Calculated. [D]
+  - Text: "Annual heating energy, weather-normalized against heating degree days." [A]
+  - Meta: "Seasonal efficiency: engineer input" · tag: Assumed. "Annual heating energy" · tag: Calculated. [A]
 - Node 4, "Finding":
-  - Text: "Draft measure: boiler replacement option." [D]
-  - Meta: tag "Awaiting review" [D]
+  - Text: "Draft measure: boiler replacement option." [A]
+  - Meta: tag "Awaiting review" [A]
 - Live-region announcement when a node is selected: "{Node title}. {Node text}. Based on: {list of upstream nodes}." [D]
 
 ### 5. Principles
 - Heading: "AI assists engineers. It doesn't replace them." [A]
 - Lead: "{BRAND} is designed so that:" [A]
-- "Every value is labelled" [D]: "Observed, assumed and calculated values are labelled separately." [A]
-- "Methods travel with results" [D]: "Methods, units and assumptions travel with every result." [A]
-- "Qualified people review findings" [D]: "Findings are prepared for review by qualified professionals." [A]
+- "Every value is labelled" [A]: "Observed, assumed and calculated values are labelled separately." [A]
+- "Methods travel with results" [A]: "Methods, units and assumptions travel with every result." [A]
+- "Qualified people review findings" [A]: "Findings are prepared for review by qualified professionals." [A]
+- Value tags beside the titles: Observed, Assumed and Calculated; Calculated; Awaiting review [A]
 
 ### 6. Buildings (id `buildings`, bg-alt)
-- Eyebrow: "Building types" [D]
+- Eyebrow: "Building types" [A]
 - Heading: "Designed for every building type." [A]
 - Tiles: Condominiums · Rental apartments · Offices and retail · Government buildings · Schools and institutions · Hotels · Industrial and warehouses · Arenas, pools and community centres [A]
 
@@ -135,14 +139,14 @@ Every visible word on the site comes from this file. Move it into `content/site.
 
 ## 404 page
 
-- Heading: "Page not found." [D]
-- Text: "The page you are looking for does not exist or has moved." [D]
-- Button: "Back to home" [D]
+- Heading: "Page not found." [A]
+- Text: "The page you are looking for does not exist or has moved." [A]
+- Button: "Back to home" [A]
 
 ## Metadata
 
-- Title: "{BRAND} · Building Energy Intelligence" [D]
-- Description: "{BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open." [D]
+- Title: "{BRAND} · Building Energy Intelligence" [A]
+- Description: "{BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open." [A]
 - Open Graph image: the wordmark plus "Every Building. Better Energy Intelligence." on #111112 [D]
 - Structured data: Organization with name {BRAND}, plus `url` and `logo` once the domain is set [D]
 

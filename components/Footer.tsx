@@ -1,4 +1,4 @@
-import { createLucideIcon } from "lucide-react";
+import { createLucideIcon, Mail } from "lucide-react";
 import { AppLink } from "@/components/AppLink";
 import { Logo } from "@/components/Logo";
 import { business, flags, footer, ui } from "@/content/site";
@@ -10,22 +10,22 @@ const LinkedInIcon = createLucideIcon("linkedin", [
   ["circle", { cx: "4", cy: "4", r: "2", key: "linkedin-3" }],
 ]);
 
-const linkClass = "inline-flex min-h-11 items-center text-text-secondary transition-colors hover:text-text";
+const linkClass = "inline-flex min-h-11 items-center type-small text-text-secondary transition-colors hover:text-text";
 
 export function Footer() {
   const linkedInUrl = flags.showLinkedIn ? business.linkedInUrl : undefined;
   const hasContact = Boolean(business.contactEmail || linkedInUrl);
 
   return (
-    <footer className="border-t border-divider bg-bg-alt">
-      <div className="page-container">
-        <div className="grid gap-12 py-12 md:grid-cols-12 md:gap-6 md:py-18">
-          <div className="md:col-span-6">
+    <footer className="border-t border-divider/70 bg-bg-alt">
+      <div className="page-container flex flex-col gap-12 py-16">
+        <div className="grid items-start gap-10 md:grid-cols-12">
+          <div className="md:col-span-5">
             <Logo />
-            <p className="mt-4 text-text-secondary">{footer.descriptor}</p>
+            <p className="mt-4 max-w-sm type-body text-text-secondary">{footer.descriptor}</p>
           </div>
 
-          <nav aria-label={ui.footerNav} className="md:col-span-3">
+          <nav aria-label={ui.footerNav} className="md:col-span-4">
             <ul>
               {footer.links.map((link) => (
                 <li key={link.href}>
@@ -38,9 +38,10 @@ export function Footer() {
           </nav>
 
           {hasContact && (
-            <div className="flex flex-col items-start md:col-span-3">
+            <div className="flex flex-col items-start gap-1 md:col-span-3">
               {business.contactEmail && (
-                <AppLink href={`mailto:${business.contactEmail}`} className={linkClass}>
+                <AppLink href={`mailto:${business.contactEmail}`} className={`${linkClass} gap-2 hover:text-brand`}>
+                  <Mail size={16} aria-hidden />
                   {business.contactEmail}
                 </AppLink>
               )}
@@ -48,20 +49,22 @@ export function Footer() {
                 <AppLink
                   href={linkedInUrl}
                   aria-label={ui.linkedIn}
-                  className={`${linkClass} min-w-11 justify-center`}
+                  className="flex size-11 items-center justify-center rounded-tile border border-divider bg-card text-text-secondary transition-colors hover:border-brand/50 hover:text-brand"
                 >
-                  <LinkedInIcon size={24} aria-hidden />
+                  <LinkedInIcon size={18} aria-hidden />
                 </AppLink>
               )}
             </div>
           )}
         </div>
 
-        <div className="flex flex-col items-start border-t border-divider py-6 md:flex-row md:items-center md:justify-between">
-          <AppLink href={footer.privacy.href} className={linkClass}>
-            {footer.privacy.label}
-          </AppLink>
-          <p className="flex min-h-11 items-center text-text-secondary tabular-nums">{footer.copyright}</p>
+        <div className="flex flex-col items-center border-t border-divider/60 pt-8 sm:items-start">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 type-label text-text-secondary">
+            <AppLink href={footer.privacy.href} className="inline-flex min-h-11 items-center transition-colors hover:text-text">
+              {footer.privacy.label}
+            </AppLink>
+            <p className="tabular-nums">{footer.copyright}</p>
+          </div>
         </div>
       </div>
     </footer>

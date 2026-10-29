@@ -8,11 +8,12 @@ import { business, meta, ui } from "@/content/site";
 import "./globals.css";
 
 // Only the weights the site uses (DESIGN.md, Typography): Space Grotesk 400
-// (secondary buttons), 500 (headings, titles) and 600 (display, primary
-// buttons); Inter 400, and 500 for the active nav link; JetBrains Mono 400.
+// (secondary buttons), 500 (headings, titles), 600 (display, primary buttons)
+// and 700 (step numerals); Inter 400, and 500 for the active nav link;
+// JetBrains Mono 400, and 500 for the How it works eyebrow and card labels.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-space-grotesk",
 });
 const inter = Inter({
@@ -22,7 +23,7 @@ const inter = Inter({
 });
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
   variable: "--font-jetbrains-mono",
 });
 
