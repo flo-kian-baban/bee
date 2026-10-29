@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>B.E.E. — Building Energy Intelligence</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,300..500,0..1,0&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest": "#0b0b0c",
+            "surface-dim": "#111112",
+            "surface": "#111112",
+            "background": "#111112",
+            "surface-container-low": "#161618",
+            "surface-container": "#1c1c1f",
+            "surface-container-high": "#232327",
+            "surface-container-highest": "#2e2e33",
+            "outline": "#4a4a52",
+            "outline-variant": "#2e2e33",
+            "secondary": "#a1a1aa",
+            "secondary-container": "#27272a",
+            "on-surface": "#e4e4e7",
+            "on-surface-variant": "#94949e",
+            "primary": "#ffffff",
+            "primary-container": "#F0EA0E",
+            "primary-fixed-dim": "#d9d30a",
+            "on-primary-fixed": "#161500"
+          },
+          fontFamily: {
+            "display-lg": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "title-md": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "label-lg": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "mono-tech": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html { scroll-behavior: smooth; background-color: #111112; }
+      body { margin: 0; padding: 0; overscroll-behavior: none; }
+      ::-webkit-scrollbar { display: none; }
+    }
+    .reticle-corner {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      pointer-events: none;
+    }
+    @keyframes flowLine {
+      0% { stroke-dashoffset: 60; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .flow-active {
+      stroke-dasharray: 6 6;
+      animation: flowLine 2s linear infinite;
+    }
+    .shimmer-edge {
+      background: linear-gradient(90deg, transparent, rgba(240,234,14,0.3), transparent);
+    }
+  </style>
+</head>
+<body class="bg-[#111112] text-[#e4e4e7] font-body-md text-base antialiased selection:bg-[#F0EA0E]/20 selection:text-[#F0EA0E] relative overflow-x-hidden">
+<!-- NAVIGATION HEADER -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#111112]/80 backdrop-blur-xl border-b border-[#2E2E33]/70">
+<div class="max-w-7xl mx-auto h-20 px-6 lg:px-10 flex items-center justify-between gap-6">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3.5 group" href="#">
+<div class="relative w-9 h-9 rounded-lg bg-[#1C1C1F] border border-[#2E2E33] flex items-center justify-center overflow-hidden p-1 group-hover:border-[#F0EA0E]/50 transition-colors">
+<img alt="B-E-E-Logo.png" class="w-full h-full object-contain filter brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHr0OVDOmjJUzAeTv3CXS0-tmjAOxMc1EeMH6iuIuZQtz895QZ6OwYuqtmEFHpSn6Pc7Zixj28wEgs5KkyAd40djrwnuP7pzxUEZwuTnjlrWRt_mMLsa-Nnk59ZhK8NDABzj2ZkmzQMj9-I1fSuzKDz16BmwJR_lr4wd0U4QIl9cSSlYaZiwHzK0nee3MgQdX7Ba0II3JQL_BayWB8E5DE1KovTynf-k_1kWDjVBkeSuJsDwEWG6LL5A"/>
+<div class="absolute inset-0 bg-[#F0EA0E]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-lg text-white font-semibold tracking-tight group-hover:text-[#F0EA0E] transition-colors leading-none">B.E.E.</span>
+<span class="font-mono-tech text-[9px] uppercase tracking-widest text-zinc-500 mt-1">Energy Intelligence</span>
+</div>
+</a>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a aria-current="page" class="font-label-md text-sm text-[#F0EA0E] font-medium tracking-normal transition-colors" data-path="how-it-works" href="#how-it-works">How it works</a>
+<a class="font-label-md text-sm text-zinc-400 hover:text-white transition-colors" data-path="what-we-analyze" href="#what-we-analyze">What we analyze</a>
+<a class="font-label-md text-sm text-zinc-400 hover:text-white transition-colors" data-path="buildings" href="#what-we-analyze">Buildings</a>
+<a class="font-label-md text-sm text-zinc-400 hover:text-white transition-colors" data-path="team" href="#team">Team</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<a class="inline-flex items-center justify-center bg-[#F0EA0E] text-[#161500] font-title-md text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-lg transition-all hover:bg-[#d9d30a] shadow-[0_0_20px_rgba(240,234,14,0.18)] hover:shadow-[0_0_25px_rgba(240,234,14,0.32)] active:scale-[0.98]" data-path="join-the-pilot" href="#pilot">
+          Join the pilot
+        </a>
+<div class="w-8 h-8 rounded-lg bg-[#1C1C1F] border border-[#2E2E33] flex items-center justify-center text-zinc-400">
+<span class="material-symbols-outlined text-[17px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN WRAPPER -->
+<main class="relative z-10 w-full pt-20">
+<div class="flex flex-col w-full">
+<!-- SECTION 1: HERO WITH HONEYCOMB LATTICE & BEE COLONY PARTICLES -->
+<section class="relative w-full pt-24 sm:pt-32 pb-24 sm:pb-32 px-6 lg:px-12 flex flex-col items-center text-center overflow-hidden" id="hero-section">
+<!-- Interactive Canvas: Hexagonal Honeycomb Matrix + Bee Colony Particles -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none z-0" id="hive-particle-canvas"></canvas>
+<!-- Ambient Radial Glow Behind Hero -->
+<div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-[#F0EA0E]/5 blur-[120px] rounded-full pointer-events-none z-[1]"></div>
+<!-- Development Badge -->
+<div class="relative z-10 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#1C1C1F]/90 border border-[#2E2E33] text-zinc-300 font-label-md text-xs mb-8 shadow-sm backdrop-blur-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F0EA0E] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#F0EA0E]"></span>
+</span>
+<span class="tracking-wide">In development · Pilot program open</span>
+</div>
+<!-- Main Headline -->
+<h1 class="relative z-10 font-display-lg text-4xl sm:text-6xl lg:text-[68px] font-semibold text-white max-w-4xl tracking-tight mb-7 leading-[1.12]">
+          Every Building. Better <span class="text-[#F0EA0E] drop-shadow-[0_0_28px_rgba(240,234,14,0.3)]">Energy Intelligence</span>.
+        </h1>
+<!-- Subtext -->
+<p class="relative z-10 font-body-lg text-base sm:text-lg text-zinc-400 max-w-3xl mb-12 leading-relaxed font-normal">
+          B.E.E. connects physical building inspections, intelligent data processing and engineering-based analysis to turn fragmented building information into transparent, actionable energy intelligence.
+        </p>
+<!-- CTAs -->
+<div class="relative z-20 flex flex-wrap items-center justify-center gap-4">
+<a class="inline-flex items-center justify-center bg-[#F0EA0E] text-[#161500] font-title-md text-sm font-semibold px-7 py-3.5 rounded-xl transition-all duration-200 hover:bg-[#d9d30a] shadow-[0_0_24px_rgba(240,234,14,0.22)] hover:shadow-[0_0_32px_rgba(240,234,14,0.38)] active:scale-[0.98]" data-path="join-the-pilot" href="#pilot">
+            Join the pilot program
+          </a>
+<a class="inline-flex items-center justify-center bg-[#1C1C1F]/80 backdrop-blur-md text-white font-title-md text-sm px-7 py-3.5 rounded-xl border border-[#2E2E33] hover:border-[#F0EA0E]/50 hover:text-[#F0EA0E] hover:bg-[#1C1C1F] transition-all duration-200 shadow-sm" href="#how-it-works">
+            See how it works
+          </a>
+</div>
+</section>
+<!-- SECTION 2: CURRENT REALITY / FRAGMENTATION -->
+<section class="w-full py-24 px-6 lg:px-12 bg-[#0b0b0c] border-y border-[#2E2E33]/70 relative"><div class="max-w-7xl mx-auto flex flex-col gap-12 relative z-10">
+<!-- Section Heading & Telemetry Diagnostic Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-[#2E2E33]/60">
+<div class="flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#F0EA0E] animate-pulse"></span>
+<span class="font-mono-tech text-xs uppercase tracking-widest text-[#a1a1aa]">CURRENT REALITY // UNSTRUCTURED INGESTION</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-5xl text-white font-medium tracking-tight">
+        Building energy data is scattered.
+      </h2>
+</div>
+<div class="flex items-center gap-3 font-mono-tech text-xs text-zinc-400 bg-[#161618] border border-[#2E2E33] px-3.5 py-2 rounded-lg self-start md:self-auto shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-[#F0EA0E]">error</span>
+<span>DATA ENTROPY: HIGH</span>
+<span class="text-[#2E2E33]">|</span>
+<span class="text-zinc-500">DISCONNECTED SILOS (4/4)</span>
+</div>
+</div>
+<!-- 4 Heterogeneous Engineering Data Artifacts -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Artifact 1: Site photos (Mock Inspection Viewfinder Card) -->
+<div class="md:col-span-6 bg-[#161618]/90 border border-[#2E2E33] hover:border-[#F0EA0E]/50 rounded-2xl p-6 lg:p-7 flex flex-col justify-between gap-6 transition-all duration-300 relative group overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+<div class="flex items-center justify-between font-mono-tech text-xs border-b border-[#2E2E33]/70 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#F0EA0E] text-[18px]">photo_camera</span>
+<span class="text-white font-medium">Site photos</span>
+</div>
+<div class="flex items-center gap-2 text-zinc-500 text-[11px]">
+<span>SRC.01</span>
+<span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px]">RAW/JPEG</span>
+</div>
+</div>
+<!-- Interactive Viewfinder Simulation Canvas -->
+<div class="relative bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-5 overflow-hidden flex flex-col gap-4 font-mono-tech">
+<!-- Viewfinder Reticles -->
+<span class="reticle-corner top-2 left-2 border-t-2 border-l-2 border-[#F0EA0E]/70"></span>
+<span class="reticle-corner top-2 right-2 border-t-2 border-r-2 border-[#F0EA0E]/70"></span>
+<span class="reticle-corner bottom-2 left-2 border-b-2 border-l-2 border-[#F0EA0E]/70"></span>
+<span class="reticle-corner bottom-2 right-2 border-b-2 border-r-2 border-[#F0EA0E]/70"></span>
+<div class="flex items-center justify-between text-[11px] text-zinc-400">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span>REC · FIELD OPTICAL</span>
+</div>
+<span class="text-zinc-500">EXIF: ISO 400 · 24mm · f/2.8 · RAW</span>
+</div>
+<div class="border border-dashed border-[#2E2E33] bg-[#111112]/80 rounded-lg p-3.5 flex items-center justify-between text-xs">
+<div class="flex flex-col gap-1">
+<span class="text-zinc-500 text-[10px]">DETECTED BOUNDING TAG</span>
+<span class="text-white font-medium">PUMP-CHW-02 // NAMEPLATE</span>
+</div>
+<span class="text-zinc-500 text-[10px] bg-zinc-900 px-2 py-1 rounded border border-zinc-800">LOC: [34.052, -118.243]</span>
+</div>
+</div>
+<div>
+<p class="font-body-md text-sm text-[#a1a1aa] leading-relaxed">
+          Visual surveys, mechanical equipment tags, and field inspections.
+        </p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex items-center justify-between text-xs font-mono-tech text-zinc-500">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>UNSTRUCTURED CAPTURE</span>
+<span class="text-zinc-400">MANUAL TRANSCRIBE</span>
+</div>
+</div>
+<!-- Artifact 2: Utility bills (Interval Data Slip & Disconnected Wave) -->
+<div class="md:col-span-6 bg-[#161618]/90 border border-[#2E2E33] hover:border-[#F0EA0E]/50 rounded-2xl p-6 lg:p-7 flex flex-col justify-between gap-6 transition-all duration-300 relative group overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+<div class="flex items-center justify-between font-mono-tech text-xs border-b border-[#2E2E33]/70 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#F0EA0E] text-[18px]">receipt_long</span>
+<span class="text-white font-medium">Utility bills</span>
+</div>
+<div class="flex items-center gap-2 text-zinc-500 text-[11px]">
+<span>SRC.02</span>
+<span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px]">INTERVAL: 15-MIN</span>
+</div>
+</div>
+<!-- Disconnected Billing Curve / Meter Slip -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-4 flex flex-col gap-3 font-mono-tech">
+<div class="flex items-center justify-between text-[11px]">
+<span class="text-zinc-400">ACCOUNT: #8921-NATGAS-COMM</span>
+<span class="text-amber-400/90 flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">link_off</span> UNLINKED METERS</span>
+</div>
+<!-- Jagged Interval Curve SVG with Missing Telemetry Gaps -->
+<div class="h-12 w-full flex items-center">
+<svg class="w-full h-10 overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 320 40">
+<path d="M0,28 L30,22 L55,30 L80,12 L105,18 L125,32 L150,26" stroke="#a1a1aa" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Missing interval telemetry gap -->
+<line stroke="#ef4444" stroke-dasharray="3 3" stroke-width="1.5" x1="150" x2="180" y1="26" y2="26"></line>
+<path d="M180,26 L205,14 L235,16 L265,34 L295,10 L320,18" stroke="#a1a1aa" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Marker dots -->
+<circle cx="80" cy="12" fill="#F0EA0E" r="2.5"></circle>
+<circle cx="295" cy="10" fill="#F0EA0E" r="2.5"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[10px] text-zinc-500 pt-1 border-t border-[#2E2E33]/60">
+<span>PEAK DEMAND: 412 kW</span>
+<span class="text-red-400">MISSING TELEMETRY (3 DYS)</span>
+<span>TARIFF: TIME-OF-USE</span>
+</div>
+</div>
+<div>
+<p class="font-body-md text-sm text-[#a1a1aa] leading-relaxed">
+          Periodic meters, interval gas statements, and electricity tariffs.
+        </p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex items-center justify-between text-xs font-mono-tech text-zinc-500">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>DISCONNECTED CADENCE</span>
+<span class="text-zinc-400">NON-UNIFIED SCHEMA</span>
+</div>
+</div>
+<!-- Artifact 3: Equipment records (Analog Mechanical Submittal Plate) -->
+<div class="md:col-span-6 bg-[#161618]/90 border border-[#2E2E33] hover:border-[#F0EA0E]/50 rounded-2xl p-6 lg:p-7 flex flex-col justify-between gap-6 transition-all duration-300 relative group overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+<div class="flex items-center justify-between font-mono-tech text-xs border-b border-[#2E2E33]/70 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#F0EA0E] text-[18px]">precision_manufacturing</span>
+<span class="text-white font-medium">Equipment records</span>
+</div>
+<div class="flex items-center gap-2 text-zinc-500 text-[11px]">
+<span>SRC.03</span>
+<span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px]">ANALOG</span>
+</div>
+</div>
+<!-- Analog Cut-sheet schematic & Serial Stamp -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-4 flex flex-col gap-3 font-mono-tech">
+<div class="flex items-center justify-between text-[11px]">
+<span class="text-zinc-300 font-semibold">SUBMITTAL: CONDENSING BOILER</span>
+<span class="text-[10px] text-zinc-500 border border-zinc-700 px-2 py-0.5 rounded">1998 ORIGINAL</span>
+</div>
+<div class="grid grid-cols-2 gap-3 text-[11px] bg-[#111112] p-3 rounded-lg border border-[#2E2E33]/60">
+<div class="flex flex-col gap-0.5">
+<span class="text-zinc-500 text-[10px]">RATED CAPACITY</span>
+<span class="text-zinc-300">2,400 MBH INPUT</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="text-zinc-500 text-[10px]">DESIGN DELTA T</span>
+<span class="text-zinc-300">20°F @ 180°F HW</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="text-zinc-500 text-[10px]">SERVICE STATUS</span>
+<span class="text-amber-400/90">MANUAL LOG ONLY</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="text-zinc-500 text-[10px]">DIGITAL TWIN</span>
+<span class="text-zinc-500">NONE (OFFLINE)</span>
+</div>
+</div>
+</div>
+<div>
+<p class="font-body-md text-sm text-[#a1a1aa] leading-relaxed">
+          Boiler plates, chiller cut-sheets, and manual service logs.
+        </p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex items-center justify-between text-xs font-mono-tech text-zinc-500">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>DOCS: SUBMITTALS</span>
+<span class="text-zinc-400">PHYSICAL LEGACY</span>
+</div>
+</div>
+<!-- Artifact 4: Spreadsheets and reports (Fragmented Cell Grid / Broken Formulas) -->
+<div class="md:col-span-6 bg-[#161618]/90 border border-[#2E2E33] hover:border-[#F0EA0E]/50 rounded-2xl p-6 lg:p-7 flex flex-col justify-between gap-6 transition-all duration-300 relative group overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+<div class="flex items-center justify-between font-mono-tech text-xs border-b border-[#2E2E33]/70 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#F0EA0E] text-[18px]">table_chart</span>
+<span class="text-white font-medium">Spreadsheets and reports</span>
+</div>
+<div class="flex items-center gap-2 text-zinc-500 text-[11px]">
+<span>SRC.04</span>
+<span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 text-[10px]">XLS / PDF</span>
+</div>
+</div>
+<!-- Disconnected Sheet Simulation -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-3 font-mono-tech overflow-hidden">
+<table class="w-full text-[10px] text-left border-collapse">
+<thead>
+<tr class="border-b border-[#2E2E33] text-zinc-500">
+<th class="py-1.5 px-2">CELL</th>
+<th class="py-1.5 px-2">METRIC</th>
+<th class="py-1.5 px-2">EXPRESSION</th>
+<th class="py-1.5 px-2 text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="text-zinc-300">
+<tr class="border-b border-[#2E2E33]/40">
+<td class="py-1.5 px-2 text-zinc-500">F14</td>
+<td class="py-1.5 px-2">Baseline EUI</td>
+<td class="py-1.5 px-2 text-zinc-400">SUM(B2:B13)*3.412</td>
+<td class="py-1.5 px-2 text-right text-amber-400">HARDCODED</td>
+</tr>
+<tr class="border-b border-[#2E2E33]/40 bg-red-950/20">
+<td class="py-1.5 px-2 text-zinc-500">G28</td>
+<td class="py-1.5 px-2">Weather Norm</td>
+<td class="py-1.5 px-2 text-red-400">=VLOOKUP(HDD_2021)</td>
+<td class="py-1.5 px-2 text-right text-red-400">#REF! ERROR</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 text-zinc-500">K04</td>
+<td class="py-1.5 px-2">GHG Factor</td>
+<td class="py-1.5 px-2 text-zinc-400">[2019_PDF_Export]</td>
+<td class="py-1.5 px-2 text-right text-zinc-500">STALE</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div>
+<p class="font-body-md text-sm text-[#a1a1aa] leading-relaxed">
+          Ad-hoc modeling files, past audits, and disjointed PDF summaries.
+        </p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex items-center justify-between text-xs font-mono-tech text-zinc-500">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>SILOS: XLS / PDF</span>
+<span class="text-zinc-400">UNLINKED</span>
+</div>
+</div>
+</div>
+<!-- High-Tech Divider Status Banner -->
+<div class="relative bg-[#161618] border border-[#2E2E33] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-tech shadow-md">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-[#0b0b0c] border border-amber-500/40 flex items-center justify-center text-[#F0EA0E]">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<p class="font-body-md text-sm sm:text-base text-zinc-300 text-center sm:text-left tracking-normal font-normal">
+        Kept in different places and re-entered by hand.
+      </p>
+</div>
+<div class="flex items-center gap-2.5 text-xs text-zinc-400 bg-[#0b0b0c] px-3.5 py-2 rounded-lg border border-[#2E2E33]">
+<span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+<span>ERROR RISK: 42% ON MANUAL TRANSFER</span>
+</div>
+</div>
+</div></section>
+<!-- SECTION 3: HOW IT WORKS / PIPELINE -->
+<section class="w-full py-28 px-6 lg:px-12 bg-[#111112]" id="how-it-works"><div class="max-w-7xl mx-auto flex flex-col gap-14 relative z-10">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2E2E33]/70 pb-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#F0EA0E] font-medium">
+<span class="w-2 h-2 rounded-full bg-[#F0EA0E]"></span>
+<span>Structured Pipeline</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-5xl text-white font-medium tracking-tight">
+        Capture. Analyze. Optimize.
+      </h2>
+</div>
+<div class="font-mono-tech text-xs text-zinc-400 flex items-center gap-3 bg-[#161618] border border-[#2E2E33] px-4 py-2 rounded-lg">
+<span class="text-[#F0EA0E]">STAGE: ACTIVE PIPELINE</span>
+<span class="text-[#2E2E33]">|</span>
+<span>DETERMINISTIC CONVERGENCE</span>
+</div>
+</div>
+<!-- Horizontal Pipeline Progression Terminal with Connected Telemetry Bus -->
+<div class="relative flex flex-col gap-8">
+<!-- Connected Backbone Bus Line (Desktop) -->
+<div class="hidden lg:block absolute top-12 left-16 right-16 h-[2px] bg-[#2E2E33] z-0">
+<div class="h-full bg-[#F0EA0E]/60 flow-active w-full"></div>
+</div>
+<!-- 3 High-Fidelity Architectural Workflow Stages -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+<!-- Stage 01: Capture -->
+<div class="bg-[#161618] border border-white/10 hover:border-[#F0EA0E]/50 rounded-2xl p-7 flex flex-col justify-between gap-6 transition-all duration-300 group shadow-xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+<div class="flex items-center justify-between border-b border-[#2E2E33] pb-4">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-4xl font-bold text-[#F0EA0E] tracking-tight">01</span>
+<span class="font-mono-tech text-xs text-zinc-400 tracking-wider">PHASE</span>
+</div>
+<div class="w-11 h-11 rounded-xl bg-[#111112] border border-[#2E2E33] flex items-center justify-center text-zinc-300 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[24px]">sensor_window</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="font-headline-sm text-2xl text-white font-medium group-hover:text-[#F0EA0E] transition-colors">Capture</h3>
+<p class="font-body-md text-zinc-400 leading-relaxed text-sm sm:text-base">
+            Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow.
+          </p>
+</div>
+<!-- Interactive Field Ingestion Console -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-4 font-mono-tech text-xs flex flex-col gap-2.5">
+<div class="flex items-center justify-between text-zinc-400 text-[11px]">
+<span>INGESTION STREAMS</span>
+<span class="text-[#F0EA0E]">LIVE (5/5 READY)</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[10px]">
+<div class="p-2 rounded bg-[#111112] border border-zinc-800 flex items-center gap-1.5 text-zinc-300">
+<span class="material-symbols-outlined text-[14px] text-[#F0EA0E]">photo_camera</span> Optical Tags
+            </div>
+<div class="p-2 rounded bg-[#111112] border border-zinc-800 flex items-center gap-1.5 text-zinc-300">
+<span class="material-symbols-outlined text-[14px] text-[#F0EA0E]">device_thermostat</span> Thermal Scans
+            </div>
+<div class="p-2 rounded bg-[#111112] border border-zinc-800 flex items-center gap-1.5 text-zinc-300">
+<span class="material-symbols-outlined text-[14px] text-[#F0EA0E]">receipt</span> Interval Gas
+            </div>
+<div class="p-2 rounded bg-[#111112] border border-zinc-800 flex items-center gap-1.5 text-zinc-300">
+<span class="material-symbols-outlined text-[14px] text-[#F0EA0E]">speed</span> Electric Interval
+            </div>
+</div>
+</div>
+<div class="pt-4 border-t border-[#2E2E33] flex items-center gap-2 font-mono-tech text-xs text-zinc-400">
+<span class="inline-block w-2 h-2 rounded-full bg-[#F0EA0E]"></span>
+<span>Ingest Multi-Modal Field Inputs</span>
+</div>
+</div>
+<!-- Stage 02: Analyze -->
+<div class="bg-[#161618] border border-white/10 hover:border-[#F0EA0E]/50 rounded-2xl p-7 flex flex-col justify-between gap-6 transition-all duration-300 group shadow-xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+<div class="flex items-center justify-between border-b border-[#2E2E33] pb-4">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-4xl font-bold text-white tracking-tight group-hover:text-[#F0EA0E] transition-colors">02</span>
+<span class="font-mono-tech text-xs text-zinc-400 tracking-wider">PHASE</span>
+</div>
+<div class="w-11 h-11 rounded-xl bg-[#111112] border border-[#2E2E33] flex items-center justify-center text-zinc-300 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="font-headline-sm text-2xl text-white font-medium group-hover:text-[#F0EA0E] transition-colors">Analyze</h3>
+<p class="font-body-md text-zinc-400 leading-relaxed text-sm sm:text-base">
+            Utility benchmarking, engineering calculations and energy conservation measures, with every assumption visible.
+          </p>
+</div>
+<!-- Transparent Physics Blueprint Display -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-4 font-mono-tech text-xs flex flex-col gap-2.5">
+<div class="flex items-center justify-between text-zinc-400 text-[11px]">
+<span>PHYSICS BLUEPRINT</span>
+<span class="text-zinc-300">ASHRAE G14 MODEL</span>
+</div>
+<div class="p-2.5 rounded bg-[#111112] border border-zinc-800 text-[11px] text-zinc-300 flex flex-col gap-1">
+<div class="flex items-center justify-between text-zinc-400 text-[10px]">
+<span>WEATHER NORM</span>
+<span class="text-[#F0EA0E]">R² = 0.942</span>
+</div>
+<div class="font-mono-tech text-zinc-400 text-[10px]">Q_heat = UA·(T_base - T_amb) + Inf_load</div>
+</div>
+<div class="flex items-center justify-between text-[10px] text-zinc-500">
+<span>BOILER EFF: 82.0%</span>
+<span class="text-zinc-400">ALL ASSUMPTIONS VISIBLE</span>
+</div>
+</div>
+<div class="pt-4 border-t border-[#2E2E33] flex items-center gap-2 font-mono-tech text-xs text-zinc-400">
+<span class="inline-block w-2 h-2 rounded-full bg-[#F0EA0E]"></span>
+<span>Deterministic Energy Physics Engine</span>
+</div>
+</div>
+<!-- Stage 03: Optimize -->
+<div class="bg-[#161618] border border-white/10 hover:border-[#F0EA0E]/50 rounded-2xl p-7 flex flex-col justify-between gap-6 transition-all duration-300 group shadow-xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
+<div class="flex items-center justify-between border-b border-[#2E2E33] pb-4">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-4xl font-bold text-white tracking-tight group-hover:text-[#F0EA0E] transition-colors">03</span>
+<span class="font-mono-tech text-xs text-zinc-400 tracking-wider">PHASE</span>
+</div>
+<div class="w-11 h-11 rounded-xl bg-[#111112] border border-[#2E2E33] flex items-center justify-center text-zinc-300 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="font-headline-sm text-2xl text-white font-medium group-hover:text-[#F0EA0E] transition-colors">Optimize</h3>
+<p class="font-body-md text-zinc-400 leading-relaxed text-sm sm:text-base">
+            Energy, cost and greenhouse gas scenarios for retrofit decisions, prepared for qualified engineering review.
+          </p>
+</div>
+<!-- Retrofit Decision Matrix & Governance Blueprint -->
+<div class="bg-[#0b0b0c] border border-[#2E2E33] rounded-xl p-4 font-mono-tech text-xs flex flex-col gap-2.5">
+<div class="flex items-center justify-between text-zinc-400 text-[11px]">
+<span>SCENARIO MATRIX</span>
+<span class="text-[#F0EA0E]">P.ENG SIGNOFF QUEUE</span>
+</div>
+<div class="flex flex-col gap-1.5 text-[10px]">
+<div class="flex items-center justify-between p-1.5 rounded bg-[#111112] border border-zinc-800">
+<span class="text-zinc-400">A: Heat Pump Hybrid</span>
+<span class="text-zinc-300">-48% GHG TARGET</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded bg-[#111112] border border-zinc-800">
+<span class="text-zinc-400">B: Enclosure Deep Retrofit</span>
+<span class="text-zinc-300">-32% THERMAL LOAD</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-[10px] text-zinc-500 pt-1">
+<span>AUDIT COMPLIANT</span>
+<span class="text-zinc-400">SEALABLE OUTPUT</span>
+</div>
+</div>
+<div class="pt-4 border-t border-[#2E2E33] flex items-center gap-2 font-mono-tech text-xs text-zinc-400">
+<span class="inline-block w-2 h-2 rounded-full bg-[#F0EA0E]"></span>
+<span>Audit-Ready Scenarios &amp; P.Eng Sign-Off</span>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<!-- SECTION 4: DATA LINEAGE / AUDIT TRAIL -->
+<section class="w-full py-28 px-6 lg:px-12 bg-[#0b0b0c] border-y border-[#2E2E33]/70 relative overflow-hidden">
+<div class="max-w-6xl mx-auto flex flex-col gap-12 relative z-10">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<span class="font-mono-tech text-xs uppercase tracking-widest text-[#a1a1aa]">Data Lineage</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-white font-medium tracking-tight mt-1">
+                Every number has a source.
+              </h2>
+</div>
+<div class="self-start sm:self-auto px-3.5 py-1.5 rounded-md bg-[#1C1C1F] border border-[#2E2E33] text-zinc-400 font-mono-tech text-xs flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-[#F0EA0E]"></span>
+              Illustrative example
+            </div>
+</div>
+<!-- CONNECTED AUDIT PIPELINE -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+<!-- Connector SVG Overlay behind cards (Desktop) -->
+<div class="hidden md:block absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none z-0 px-12">
+<svg class="w-full h-8 overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#2E2E33" stroke-width="2" x1="0%" x2="100%" y1="16" y2="16"></line>
+<line class="flow-active" opacity="0.8" stroke="#F0EA0E" stroke-width="2" x1="0%" x2="100%" y1="16" y2="16"></line>
+</svg>
+</div>
+<!-- Node 1: Nameplate photo -->
+<div class="relative z-10 bg-[#1C1C1F] border border-white/10 hover:border-[#F0EA0E]/50 rounded-xl p-6 flex flex-col justify-between gap-5 transition-all shadow-lg group">
+<div class="flex items-center justify-between">
+<span class="text-zinc-500 font-mono-tech text-xs font-medium">STEP 01</span>
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-[#F0EA0E] text-[20px] transition-colors">document_scanner</span>
+</div>
+<div>
+<h4 class="font-title-md text-lg text-white font-medium mb-1">Nameplate photo</h4>
+<p class="font-body-md text-xs sm:text-sm text-zinc-400 leading-relaxed">Metadata preview, OCR coordinate anchor, raw field capture tag.</p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex flex-col gap-1.5 font-mono-tech text-[11px]">
+<div class="flex items-center justify-between text-zinc-400">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>IMG_8492.RAW</span>
+<span class="text-[10px] text-zinc-500">SHA256: 9e4f</span>
+</div>
+<div class="text-[10px] text-zinc-500">LOC: [34.052, -118.243]</div>
+</div>
+</div>
+<!-- Node 2: Extracted value -->
+<div class="relative z-10 bg-[#1C1C1F] border border-[#F0EA0E]/30 rounded-xl p-6 flex flex-col justify-between gap-5 transition-all shadow-lg group">
+<div class="flex items-center justify-between">
+<span class="text-[#F0EA0E] font-mono-tech text-xs font-medium">STEP 02</span>
+<span class="material-symbols-outlined text-[#F0EA0E] text-[20px]">data_object</span>
+</div>
+<div>
+<h4 class="font-title-md text-lg text-white font-medium mb-1">Extracted value</h4>
+<p class="font-body-md text-xs sm:text-sm text-zinc-400 leading-relaxed">Rated input: 450 MBH, thermal efficiency: 82%, verified bounding box.</p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex flex-col gap-1.5 font-mono-tech text-[11px]">
+<div class="flex items-center justify-between text-[#F0EA0E]">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#F0EA0E] animate-pulse"></span>Linked to origin</span>
+<span class="text-[10px] text-zinc-400">OCR ACC: 99.4%</span>
+</div>
+<div class="text-[10px] text-zinc-500">BOUND: [x:124, y:308, w:92]</div>
+</div>
+</div>
+<!-- Node 3: Calculation -->
+<div class="relative z-10 bg-[#1C1C1F] border border-white/10 hover:border-[#F0EA0E]/50 rounded-xl p-6 flex flex-col justify-between gap-5 transition-all shadow-lg group">
+<div class="flex items-center justify-between">
+<span class="text-zinc-500 font-mono-tech text-xs font-medium">STEP 03</span>
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-[#F0EA0E] text-[20px] transition-colors">functions</span>
+</div>
+<div>
+<h4 class="font-title-md text-lg text-white font-medium mb-1">Calculation</h4>
+<p class="font-body-md text-xs sm:text-sm text-zinc-400 leading-relaxed">Method and parameters exposed: degree-day regression model v2.1.</p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex flex-col gap-1.5 font-mono-tech text-[11px]">
+<div class="flex items-center justify-between text-zinc-300">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>ASHRAE Guideline 14</span>
+<span class="text-[10px] text-zinc-500">HDD: 4,120</span>
+</div>
+<div class="text-[10px] text-zinc-500">FORMULA: TMY3_NORM_V2</div>
+</div>
+</div>
+<!-- Node 4: Finding -->
+<div class="relative z-10 bg-[#1C1C1F] border border-white/10 hover:border-[#F0EA0E]/50 rounded-xl p-6 flex flex-col justify-between gap-5 transition-all shadow-lg group">
+<div class="flex items-center justify-between">
+<span class="text-zinc-500 font-mono-tech text-xs font-medium">STEP 04</span>
+<span class="material-symbols-outlined text-zinc-400 group-hover:text-[#F0EA0E] text-[20px] transition-colors">assignment_turned_in</span>
+</div>
+<div>
+<h4 class="font-title-md text-lg text-white font-medium mb-1">Finding</h4>
+<p class="font-body-md text-xs sm:text-sm text-zinc-400 leading-relaxed">Draft conservation measure, queued for professional engineer review.</p>
+</div>
+<div class="pt-3 border-t border-[#2E2E33]/70 flex flex-col gap-1.5 font-mono-tech text-[11px]">
+<div class="flex items-center justify-between text-zinc-300">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#F0EA0E]"></span>Pending P.Eng sign-off</span>
+<span class="text-[10px] text-zinc-500">STAMP: REQ</span>
+</div>
+<div class="text-[10px] text-zinc-500">AUDIT ID: BEE-2026-088</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: PHILOSOPHY -->
+<section class="w-full py-28 px-6 lg:px-12 bg-[#111112]">
+<div class="max-w-4xl mx-auto flex flex-col gap-10">
+<div class="flex flex-col gap-3">
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-white font-medium tracking-tight">
+              AI assists engineers. It doesn't replace them.
+            </h2>
+<p class="font-body-lg text-lg text-[#a1a1aa]">
+              B.E.E. is designed so that:
+            </p>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Point 1 -->
+<div class="bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex items-start gap-5 transition-all">
+<div class="w-9 h-9 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center shrink-0 text-[#F0EA0E] mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">label</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h3 class="font-title-md text-lg text-white font-medium">Distinct Categorization</h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-tech bg-zinc-800 text-zinc-300 border border-zinc-700">RIGOR</span>
+</div>
+<p class="font-body-md text-zinc-400 text-sm sm:text-base leading-relaxed">
+                  Observed, assumed and calculated values are labelled separately across every dataset.
+                </p>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex items-start gap-5 transition-all">
+<div class="w-9 h-9 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center shrink-0 text-[#F0EA0E] mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">alt_route</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h3 class="font-title-md text-lg text-white font-medium">Traceable Assumptions</h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-tech bg-zinc-800 text-zinc-300 border border-zinc-700">TRANSPARENCY</span>
+</div>
+<p class="font-body-md text-zinc-400 text-sm sm:text-base leading-relaxed">
+                  Methods, units and assumptions travel with every result throughout the calculation engine.
+                </p>
+</div>
+</div>
+<!-- Point 3 -->
+<div class="bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex items-start gap-5 transition-all">
+<div class="w-9 h-9 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center shrink-0 text-[#F0EA0E] mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h3 class="font-title-md text-lg text-white font-medium">Engineering Governance</h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-tech bg-zinc-800 text-zinc-300 border border-zinc-700">P.ENG SIGNOFF</span>
+</div>
+<p class="font-body-md text-zinc-400 text-sm sm:text-base leading-relaxed">
+                  Findings are prepared for review by qualified professionals before actionable recommendations are issued.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 6: BUILDING TYPES -->
+<section class="w-full py-28 px-6 lg:px-12 bg-[#0b0b0c] border-y border-[#2E2E33]/70" id="what-we-analyze">
+<div class="max-w-6xl mx-auto flex flex-col gap-12">
+<div class="flex flex-col gap-2">
+<span class="font-mono-tech text-xs uppercase tracking-widest text-[#a1a1aa]">Coverage</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-white font-medium tracking-tight">
+              Designed for every building type.
+            </h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+<!-- 1: Condominiums -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">apartment</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Condominiums</span>
+</div>
+<!-- 2: Rental apartments -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">home_work</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Rental apartments</span>
+</div>
+<!-- 3: Offices and retail -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">storefront</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Offices and retail</span>
+</div>
+<!-- 4: Government buildings -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">account_balance</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Government buildings</span>
+</div>
+<!-- 5: Schools and institutions -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">school</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Schools and institutions</span>
+</div>
+<!-- 6: Hotels -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">hotel</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Hotels</span>
+</div>
+<!-- 7: Industrial and warehouses -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">warehouse</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium">Industrial and warehouses</span>
+</div>
+<!-- 8: Arenas, pools and community centres -->
+<div class="relative bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-xl p-6 flex flex-col justify-between gap-8 group transition-all duration-200 hover:-translate-y-1">
+<div class="w-10 h-10 rounded-lg bg-[#161618] border border-[#2E2E33] flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] transition-colors">
+<span class="material-symbols-outlined text-[22px]">sports_volleyball</span>
+</div>
+<span class="font-title-md text-base sm:text-lg text-white font-medium leading-snug">Arenas, pools and community centres</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 7: TEAM -->
+<section class="w-full py-28 px-6 lg:px-12 bg-[#111112]" id="team">
+<div class="max-w-6xl mx-auto flex flex-col gap-12">
+<div class="flex flex-col gap-2">
+<span class="font-mono-tech text-xs uppercase tracking-widest text-[#a1a1aa]">Leadership</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-white font-medium tracking-tight">
+              Team
+            </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Team Member 1 -->
+<div class="bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-2xl p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 transition-all group">
+<div class="relative w-20 h-20 rounded-xl bg-[#161618] border border-[#2E2E33] shrink-0 flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] overflow-hidden transition-colors">
+<!-- Geometric Grid Silhouette -->
+<div class="absolute inset-0 bg-[#0b0b0c] flex items-center justify-center">
+<div class="w-full h-full opacity-20" style="background-image: radial-gradient(#F0EA0E 1px, transparent 1px); background-size: 8px 8px;"></div>
+</div>
+<span class="material-symbols-outlined text-[36px] relative z-10">architecture</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<h3 class="font-headline-sm text-2xl text-white font-medium tracking-tight">[Name]</h3>
+<p class="font-body-md text-zinc-400 text-sm leading-relaxed">
+                  Co-Founder, Engineering &amp; Building Energy Intelligence
+                </p>
+<div class="font-mono-tech text-[10px] text-zinc-500 uppercase tracking-widest pt-1">DIRECTORATE // THERMODYNAMICS</div>
+</div>
+</div>
+<!-- Team Member 2 -->
+<div class="bg-[#1C1C1F] border border-[#2E2E33] hover:border-[#F0EA0E]/40 rounded-2xl p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 transition-all group">
+<div class="relative w-20 h-20 rounded-xl bg-[#161618] border border-[#2E2E33] shrink-0 flex items-center justify-center text-zinc-400 group-hover:text-[#F0EA0E] overflow-hidden transition-colors">
+<div class="absolute inset-0 bg-[#0b0b0c] flex items-center justify-center">
+<div class="w-full h-full opacity-20" style="background-image: radial-gradient(#F0EA0E 1px, transparent 1px); background-size: 8px 8px;"></div>
+</div>
+<span class="material-symbols-outlined text-[36px] relative z-10">memory</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<h3 class="font-headline-sm text-2xl text-white font-medium tracking-tight">[Name]</h3>
+<p class="font-body-md text-zinc-400 text-sm leading-relaxed">
+                  Co-Founder, AI &amp; Technology Development
+                </p>
+<div class="font-mono-tech text-[10px] text-zinc-500 uppercase tracking-widest pt-1">DIRECTORATE // PLATFORM SYSTEMS</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 8: PILOT CALLOUT -->
+<section class="w-full py-20 px-6 lg:px-12 bg-[#0b0b0c] border-t border-[#2E2E33]/70" id="pilot">
+<div class="max-w-6xl mx-auto">
+<div class="relative bg-[#1C1C1F] border border-white/10 hover:border-[#F0EA0E]/40 rounded-2xl p-10 md:p-14 overflow-hidden transition-all duration-300 shadow-2xl">
+<!-- Architectural Radiant Horizon Line -->
+<div class="absolute top-0 left-0 right-0 h-[2px] shimmer-edge opacity-90"></div>
+<div class="absolute top-0 right-10 w-72 h-72 bg-[#F0EA0E]/5 blur-[90px] rounded-full pointer-events-none"></div>
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+<div class="flex flex-col gap-3 max-w-2xl">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#F0EA0E] animate-pulse"></span>
+<span class="font-mono-tech text-xs uppercase tracking-widest text-zinc-400">PILOT COHORT RECRUITMENT</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-white font-medium tracking-tight">
+                  Help shape B.E.E. on real buildings.
+                </h2>
+<p class="font-body-md text-zinc-400 text-base leading-relaxed">
+                  We are looking for building owners, property managers and engineering firms to join our pilot program.
+                </p>
+</div>
+<div class="shrink-0">
+<a class="inline-flex items-center justify-center bg-[#F0EA0E] text-[#161500] font-title-md text-sm font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:bg-[#d9d30a] shadow-[0_0_24px_rgba(240,234,14,0.2)] hover:shadow-[0_0_36px_rgba(240,234,14,0.4)] active:scale-[0.98]" data-path="apply-for-pilot" href="#">
+                  Apply for the pilot
+                </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FOOTER -->
+<footer class="w-full bg-[#0b0b0c] border-t border-[#2E2E33]/70">
+<div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 flex flex-col gap-12">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+<!-- Col 1: Identity -->
+<div class="md:col-span-5 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#1C1C1F] border border-[#2E2E33] flex items-center justify-center p-1">
+<img alt="B-E-E-Logo.png" class="w-full h-full object-contain filter brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHr0OVDOmjJUzAeTv3CXS0-tmjAOxMc1EeMH6iuIuZQtz895QZ6OwYuqtmEFHpSn6Pc7Zixj28wEgs5KkyAd40djrwnuP7pzxUEZwuTnjlrWRt_mMLsa-Nnk59ZhK8NDABzj2ZkmzQMj9-I1fSuzKDz16BmwJR_lr4wd0U4QIl9cSSlYaZiwHzK0nee3MgQdX7Ba0II3JQL_BayWB8E5DE1KovTynf-k_1kWDjVBkeSuJsDwEWG6LL5A"/>
+</div>
+<span class="font-display-lg text-lg text-white font-medium tracking-tight">B.E.E.</span>
+</div>
+<p class="font-body-md text-zinc-400 text-sm max-w-sm leading-relaxed">
+            Building Energy Efficiency. High-precision telemetry and environmental engineering intelligence platform for sustainable commercial facilities.
+          </p>
+</div>
+<!-- Col 2: Navigation -->
+<div class="md:col-span-4 flex flex-col gap-3">
+<span class="font-mono-tech text-xs uppercase tracking-widest text-zinc-300 font-semibold mb-1">Platform Navigation</span>
+<nav class="flex flex-col gap-2.5 text-sm" data-active-classes="text-[#F0EA0E]">
+<a aria-current="page" class="font-label-md text-[#F0EA0E] font-medium transition-colors" data-path="how-it-works" href="#how-it-works">How it works</a>
+<a class="font-label-md text-zinc-400 hover:text-white transition-colors" data-path="what-we-analyze" href="#what-we-analyze">What we analyze</a>
+<a class="font-label-md text-zinc-400 hover:text-white transition-colors" data-path="buildings" href="#what-we-analyze">Buildings</a>
+<a class="font-label-md text-zinc-400 hover:text-white transition-colors" data-path="team" href="#team">Team</a>
+</nav>
+</div>
+<!-- Col 3: Direct Contact -->
+<div class="md:col-span-3 flex flex-col gap-4">
+<span class="font-mono-tech text-xs uppercase tracking-widest text-zinc-300 font-semibold">Direct Contact</span>
+<a class="font-label-md text-sm text-zinc-400 hover:text-[#F0EA0E] transition-colors flex items-center gap-2" href="mailto:hello@bee-intelligence.io">
+<span class="material-symbols-outlined text-[16px]">mail</span>hello@bee-intelligence.io
+          </a>
+<div class="flex items-center gap-3 pt-1">
+<a class="w-9 h-9 rounded-lg bg-[#1C1C1F] border border-[#2E2E33] flex items-center justify-center text-zinc-400 hover:border-[#F0EA0E]/50 hover:text-[#F0EA0E] transition-colors" data-path="linkedin" href="#">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Bottom Bar -->
+<div class="pt-8 border-t border-[#2E2E33]/60 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-tech text-xs text-zinc-500">
+<div class="flex items-center gap-6">
+<a class="hover:text-zinc-300 transition-colors" data-path="privacy-policy" href="#">Privacy policy</a>
+<span>© 2026 B.E.E. Systems Inc. All rights reserved.</span>
+</div>
+<div class="flex items-center gap-2 text-zinc-400">
+<span class="w-2 h-2 rounded-full bg-[#F0EA0E] animate-pulse"></span>
+<span>Telemetry Engine: Active v4.2.0</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- INTERACTIVE HEXAGON HONEYCOMB & BEE COLONY SWARM SCRIPT -->
+<script>
+  (function() {
+    const canvas = document.getElementById('hive-particle-canvas');
+    const hero = document.getElementById('hero-section');
+    if (!canvas || !hero) return;
+    const ctx = canvas.getContext('2d');
+
+    let width = 0;
+    let height = 0;
+    let dpr = window.devicePixelRatio || 1;
+
+    // Mouse coordinates relative to hero canvas
+    const mouse = {
+      x: -9999,
+      y: -9999,
+      targetX: -9999,
+      targetY: -9999,
+      radius: 175,
+      active: false
+    };
+
+    // Honeycomb Configuration
+    const hexRadius = 38; // Radius of single honeycomb cell
+    const hexHeight = Math.sqrt(3) * hexRadius;
+    const hexWidth = 2 * hexRadius;
+    const horizDist = hexWidth * 0.75;
+    const vertDist = hexHeight;
+
+    let hexCells = [];
+    let particles = [];
+    const particleCount = 42;
+
+    function resize() {
+      const rect = hero.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = window.devicePixelRatio || 1;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.resetTransform?.();
+      ctx.scale(dpr, dpr);
+
+      buildHoneycomb();
+      initParticles();
+    }
+
+    function buildHoneycomb() {
+      hexCells = [];
+      const cols = Math.ceil(width / horizDist) + 2;
+      const rows = Math.ceil(height / vertDist) + 2;
+
+      for (let col = -1; col < cols; col++) {
+        for (let row = -1; row < rows; row++) {
+          const cx = col * horizDist;
+          const cy = row * vertDist + (col % 2 !== 0 ? vertDist / 2 : 0);
+          hexCells.push({
+            x: cx,
+            y: cy,
+            hoverGlow: 0,
+            targetGlow: 0,
+            pulseOffset: (cx + cy) * 0.005
+          });
+        }
+      }
+    }
+
+    // Helper to draw regular hexagon polygon path
+    function drawHexPath(cx, cy, r) {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 180) * (60 * i);
+        const hx = cx + r * Math.cos(angle);
+        const hy = cy + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(hx, hy);
+        else ctx.lineTo(hx, hy);
+      }
+      ctx.closePath();
+    }
+
+    class BeeParticle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.75;
+        this.vy = (Math.random() - 0.5) * 0.75;
+        this.size = Math.random() * 2.2 + 1.2;
+        this.pulse = Math.random() * Math.PI * 2;
+        this.energy = Math.random() * 0.5 + 0.5;
+        this.heading = Math.random() * Math.PI * 2;
+      }
+
+      update(time) {
+        // Natural organic sinusoidal bee flight wander
+        this.pulse += 0.04;
+        this.heading += (Math.random() - 0.5) * 0.2;
+        
+        this.vx += Math.cos(this.heading) * 0.04;
+        this.vy += Math.sin(this.heading) * 0.04;
+
+        // Damping velocity
+        this.vx *= 0.96;
+        this.vy *= 0.96;
+
+        // Cursor influence (gentle bee swarm curiosity)
+        if (mouse.active) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < mouse.radius * 1.5 && dist > 15) {
+            const force = (mouse.radius * 1.5 - dist) / (mouse.radius * 1.5);
+            this.vx += (dx / dist) * force * 0.35;
+            this.vy += (dy / dist) * force * 0.35;
+          }
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Screen boundary wraparound
+        if (this.x < -30) this.x = width + 30;
+        if (this.x > width + 30) this.x = -30;
+        if (this.y < -30) this.y = height + 30;
+        if (this.y > height + 30) this.y = -30;
+      }
+
+      draw() {
+        const glow = 0.5 + 0.5 * Math.sin(this.pulse);
+        const radius = this.size + glow * 0.6;
+
+        // Luminous micro-node / energy vector
+        ctx.save();
+        ctx.fillStyle = '#F0EA0E';
+        ctx.shadowColor = 'rgba(240, 234, 14, 0.8)';
+        ctx.shadowBlur = 10;
+        
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner nucleus
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, radius * 0.45, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new BeeParticle());
+      }
+    }
+
+    // Event listeners
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+      mouse.active = true;
+    });
+
+    hero.addEventListener('mouseenter', () => {
+      mouse.active = true;
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      mouse.active = false;
+      mouse.targetX = -9999;
+      mouse.targetY = -9999;
+    });
+
+    window.addEventListener('resize', resize);
+
+    // Animation Loop
+    let lastTime = 0;
+    function animate(time) {
+      // Smooth mouse interpolation
+      if (mouse.active) {
+        mouse.x += (mouse.targetX - mouse.x) * 0.15;
+        mouse.y += (mouse.targetY - mouse.y) * 0.15;
+      } else {
+        mouse.x = -9999;
+        mouse.y = -9999;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw Hexagonal Honeycomb Matrix
+      ctx.lineWidth = 1;
+      const baseTime = time * 0.0015;
+
+      for (let i = 0; i < hexCells.length; i++) {
+        const cell = hexCells[i];
+        const distToMouse = Math.hypot(mouse.x - cell.x, mouse.y - cell.y);
+
+        // Hover excitement
+        if (mouse.active && distToMouse < mouse.radius) {
+          const factor = Math.max(0, 1 - distToMouse / mouse.radius);
+          cell.targetGlow = factor * factor; // Quadratic falloff for sharp focus
+        } else {
+          cell.targetGlow = 0;
+        }
+
+        // Smooth glow decay/rise
+        cell.hoverGlow += (cell.targetGlow - cell.hoverGlow) * 0.1;
+
+        // Subtle ambient honeycomb breathing
+        const ambientBreath = 0.04 + 0.02 * Math.sin(baseTime + cell.pulseOffset);
+
+        // Render cell fill when illuminated
+        if (cell.hoverGlow > 0.02) {
+          drawHexPath(cell.x, cell.y, hexRadius - 1.5);
+          ctx.fillStyle = `rgba(240, 234, 14, ${cell.hoverGlow * 0.14})`;
+          ctx.fill();
+        }
+
+        // Render Hexagonal Lattice Borders
+        drawHexPath(cell.x, cell.y, hexRadius);
+        if (cell.hoverGlow > 0.02) {
+          ctx.strokeStyle = `rgba(240, 234, 14, ${0.12 + cell.hoverGlow * 0.65})`;
+          ctx.shadowColor = 'rgba(240, 234, 14, 0.4)';
+          ctx.shadowBlur = cell.hoverGlow * 12;
+        } else {
+          ctx.strokeStyle = `rgba(240, 234, 14, ${ambientBreath + 0.04})`;
+          ctx.shadowBlur = 0;
+        }
+        ctx.stroke();
+      }
+
+      // Reset shadow blur
+      ctx.shadowBlur = 0;
+
+      // 2. Draw Hairline Telemetry Vectors Between Neighbor Swarm Particles
+      const maxConnectDist = 92;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+          if (dist < maxConnectDist) {
+            const alpha = (1 - dist / maxConnectDist) * 0.22;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(240, 234, 14, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. Update & Draw Particles (Bee Swarm Telemetry Nodes)
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update(time);
+        particles[i].draw();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Initialize
+    resize();
+    requestAnimationFrame(animate);
+  })();
+</script>
+</body></html>
