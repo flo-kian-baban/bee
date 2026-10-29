@@ -70,7 +70,7 @@ Rules:
 | label | JetBrains Mono | 13/18 | 13/18 | 500 | Uppercase, tracking 0.06em; eyebrows and panel labels only; never smaller than 13px |
 | button | Space Grotesk | 16/20 | 16/20 | 500 | |
 
-Use `font-variant-numeric: tabular-nums` on all numbers.
+Use `font-variant-numeric: tabular-nums` on numeric text only (values, counts, dates), never on running text: in Inter it also widens the hyphen.
 
 ## Layout and spacing
 
