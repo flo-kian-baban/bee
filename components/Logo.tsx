@@ -6,6 +6,7 @@ import { BRAND } from "@/content/site";
  */
 export function Logo() {
   return (
+    // eslint-disable-next-line @next/next/no-img-element -- next/image would add an inline style, which the CSP blocks, and gains nothing at 28px.
     <img
       src="/brand/bee-wordmark-placeholder.png"
       alt={BRAND}
