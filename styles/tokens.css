@@ -1,5 +1,6 @@
 /*
- * Design tokens from DESIGN.md (website v1). This file is the only place these
+ * Design tokens from DESIGN.md (website v1), which takes them from the Stitch
+ * export in reference/stitch/code.html. This file is the only place these
  * values are defined.
  *
  * @theme publishes each token as a CSS variable on :root and generates the
@@ -9,22 +10,29 @@
  * cannot: the CSP blocks them.
  *
  * Tailwind's defaults are removed wherever DESIGN.md is exhaustive (colours,
- * font families, type scale, radii, shadows, easing, animations), so an
- * off-spec value fails to compile instead of slipping through.
+ * font families, type scale, breakpoints, content widths, radii, shadows,
+ * blurs, easing, animations), so an off-spec value fails to compile instead
+ * of slipping through.
  */
 @theme static {
   /* Colours */
   --color-*: initial;
   --color-bg: #111112;
   --color-bg-alt: #0B0B0C;
+  --color-card-low: #161618;
   --color-card: #1C1C1F;
-  --color-divider: #2E2E33; /* decorative lines only, never a control's edge */
-  --color-control-border: #6B6B70;
+  --color-divider: #2E2E33;
+  --color-edge: rgb(255 255 255 / 0.1);
+  --color-chip: #27272A;
+  --color-chip-border: #3F3F46;
+  --color-control-border: #6B6B70; /* form controls: 3:1 against every surface */
   --color-text: #FFFFFF;
-  --color-text-secondary: #A3A3A8;
+  --color-text-body: #E4E4E7;
+  --color-text-soft: #D4D4D8;
+  --color-text-secondary: #A1A1AA;
   --color-brand: #F0EA0E;
-  --color-brand-hover: #DCD70B;
-  --color-on-brand: #111112;
+  --color-brand-hover: #D9D30A;
+  --color-on-brand: #161500;
   --color-success: #4ADE80;
   --color-warning: #FB923C;
   --color-error: #F87171;
@@ -39,86 +47,143 @@
   --default-mono-font-family: var(--font-mono);
 
   /* Type scale. Applied through the type-* utilities in app/globals.css.
-     The mobile value is the default; *-md applies from 768px up.
-     rem values are DESIGN.md's px at the default 16px root size. */
+     The plain value applies at every width, *-sm from 640px up and *-lg from
+     1024px up. rem values are DESIGN.md's px at the default 16px root size. */
   --text-*: initial;
 
   --type-display-size: 2.25rem; /* 36px */
-  --type-display-leading: 2.75rem; /* 44px */
-  --type-display-size-md: 4rem; /* 64px */
-  --type-display-leading-md: 4.5rem; /* 72px */
+  --type-display-leading: 1.12; /* 40.32px */
+  --type-display-size-sm: 3.75rem; /* 60px */
+  --type-display-leading-sm: 1; /* 60px, and 68px from 1024px */
+  --type-display-size-lg: 4.25rem; /* 68px */
   --type-display-weight: 600;
-  --type-display-tracking: -0.02em;
+  --type-display-tracking: -0.025em;
 
   --type-h2-size: 1.875rem; /* 30px */
-  --type-h2-leading: 2.375rem; /* 38px */
-  --type-h2-size-md: 2.5rem; /* 40px */
-  --type-h2-leading-md: 3rem; /* 48px */
+  --type-h2-leading: 2.25rem; /* 36px */
+  --type-h2-size-sm: 2.25rem; /* 36px */
+  --type-h2-leading-sm: 2.5rem; /* 40px */
+  --type-h2-lg-size-sm: 3rem; /* 48px: Problem and How it works */
+  --type-h2-lg-leading-sm: 3rem; /* 48px */
   --type-h2-weight: 500;
+  --type-h2-tracking: -0.025em;
 
-  --type-h3-size: 1.25rem; /* 20px */
-  --type-h3-leading: 1.75rem; /* 28px */
-  --type-h3-size-md: 1.5rem; /* 24px */
-  --type-h3-leading-md: 2rem; /* 32px */
+  --type-h3-size: 1.5rem; /* 24px */
+  --type-h3-leading: 2rem; /* 32px */
   --type-h3-weight: 500;
 
-  --type-body-lg-size: 1.125rem; /* 18px */
-  --type-body-lg-leading: 1.75rem; /* 28px */
-  --type-body-lg-weight: 400;
+  --type-numeral-size: 2.25rem; /* 36px */
+  --type-numeral-leading: 2.5rem; /* 40px */
+  --type-numeral-weight: 700;
+  --type-numeral-tracking: -0.025em;
+
+  --type-title-size: 1.125rem; /* 18px */
+  --type-title-leading: 1.75rem; /* 28px */
+  --type-title-weight: 500;
+
+  --type-body-lg-size: 1rem; /* 16px */
+  --type-body-lg-leading: 1.625rem; /* 26px */
+  --type-body-lg-size-sm: 1.125rem; /* 18px */
+  --type-body-lg-leading-sm: 1.75rem; /* 28px */
+
+  --type-lead-size: 1.125rem; /* 18px */
+  --type-lead-leading: 1.75rem; /* 28px */
 
   --type-body-size: 1rem; /* 16px, the minimum for any paragraph */
-  --type-body-leading: 1.5rem; /* 24px */
-  --type-body-weight: 400;
+  --type-body-leading: 1.625rem; /* 26px */
+  --type-body-weight: 400; /* every Inter style */
 
-  --type-label-size: 0.8125rem; /* 13px, never smaller */
-  --type-label-leading: 1.125rem; /* 18px */
-  --type-label-weight: 500;
-  --type-label-tracking: 0.06em;
+  --type-base-leading: 1.5rem; /* 24px, for text with no style */
 
-  --type-button-size: 1rem; /* 16px */
+  --type-small-size: 0.875rem; /* 14px */
+  --type-small-leading: 1.25rem; /* 20px */
+
+  --type-badge-size: 0.875rem; /* 14px */
+  --type-badge-leading: 1.25rem; /* 20px */
+  --type-badge-tracking: 0.025em;
+
+  /* Button weights are set per variant: 600 primary, 400 secondary. */
+  --type-button-size: 0.875rem; /* 14px */
   --type-button-leading: 1.25rem; /* 20px */
-  --type-button-weight: 500;
 
-  /* Layout and spacing.
-     The spacing scale has an 8px base: 4, 8, 12, 16, 24, 32, 48, 72, 96, 128.
-     With Tailwind's 4px step those are steps 1, 2, 3, 4, 6, 8, 12, 18, 24, 32
-     (p-6 = 24px, py-32 = 128px). */
+  --type-label-size: 0.75rem; /* 12px: only uppercase mono labels are this small */
+  --type-label-leading: 1rem; /* 16px */
+  --type-label-weight: 400;
+  --type-label-tracking: 0.1em;
+
+  /* Layout and spacing. The spacing scale has a 4px base (p-6 = 24px, py-28 = 112px). */
   --spacing: 0.25rem; /* 4px */
-  --breakpoint-md: 48rem; /* 768px: mobile layout below, desktop from here up */
-  --content-max-width: 1200px;
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px: the mobile menu below, desktop nav from here up */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --container-*: initial;
+  --container-2xl: 42rem; /* 672px: Pilot text */
+  --container-3xl: 48rem; /* 768px: hero subtext */
+  --container-4xl: 56rem; /* 896px: Principles, hero headline */
+  --container-6xl: 72rem; /* 1152px: Evidence chain, Buildings, Team, Pilot */
+  --container-7xl: 80rem; /* 1280px: nav and footer (with their padding), Problem, How it works */
   --page-padding: 24px;
-  --page-padding-md: 48px;
-  --grid-columns: 4;
-  --grid-columns-md: 12;
-  --grid-gutter: 24px;
-  --section-padding: 72px;
-  --section-padding-md: 128px;
-  --nav-height: 72px;
+  --page-padding-lg: 48px; /* sections, from 1024px */
+  --bar-padding-lg: 40px; /* nav and footer, from 1024px */
+  --section-padding: 112px; /* top and bottom of most sections */
+  --nav-height: 80px;
 
-  /* Shape and depth. rounded-full (dots, badge) is built in. */
+  /* Shape. rounded-full (dots, badge) is built in. */
   --radius-*: initial;
-  --radius-container: 12px; /* cards, panels, buttons, inputs */
-  --radius-chip: 6px;
+  --radius-tag: 4px; /* chips, value tags, rows in panels */
+  --radius-chip: 6px; /* the "Illustrative example" label */
+  --radius-tile: 8px; /* icon tiles, the nav button, status chips */
+  --radius-container: 12px; /* buttons, panels, small cards, inputs */
+  --radius-card: 16px; /* large cards */
 
-  /* Flat surfaces: no shadows except the two glows DESIGN.md allows. */
+  /* Depth */
   --shadow-*: initial;
   --inset-shadow-*: initial;
-  --drop-shadow-*: initial;
   --text-shadow-*: initial;
-  --shadow-glow: 0 0 16px rgba(240, 234, 14, 0.2); /* primary button hover only */
-  --hero-glow-max-opacity: 0.08; /* hero radial glow, brand colour */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-card-hover: 0 8px 30px rgb(0 0 0 / 0.6);
+  --shadow-card-hover-soft: 0 8px 30px rgb(0 0 0 / 0.5);
+  --shadow-glow-sm: 0 0 20px rgb(240 234 14 / 0.18);
+  --shadow-glow-sm-hover: 0 0 25px rgb(240 234 14 / 0.32);
+  --shadow-glow: 0 0 24px rgb(240 234 14 / 0.22);
+  --shadow-glow-hover: 0 0 32px rgb(240 234 14 / 0.38);
+  --shadow-glow-lg: 0 0 24px rgb(240 234 14 / 0.2);
+  --shadow-glow-lg-hover: 0 0 36px rgb(240 234 14 / 0.4);
+  --drop-shadow-*: initial;
+  --drop-shadow-glow: 0 0 28px rgb(240 234 14 / 0.3); /* highlighted headline words */
+  --drop-shadow-light: 0 0 12px rgb(240 234 14 / 0.4); /* strokes in the hero light */
+  --blur-*: initial;
+  --blur-md: 12px; /* behind the badge and the secondary button */
+  --blur-xl: 24px; /* behind the nav */
+  --blur-pilot: 90px;
+  --blur-hero: 120px;
+
+  /* The hero glow: an ellipse of brand behind the headline. */
+  --hero-glow-width: 700px;
+  --hero-glow-height: 360px;
+  --hero-glow-top: 40px;
+  --hero-glow-opacity: 0.05;
+
+  /* The hero light (DESIGN.md, Motion), at every screen size. */
+  --hero-light-radius: 175px;
 
   /* Focus ring on every interactive element: brand colour. */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
 
-  /* Motion: 150–250ms, ease-out, colour/opacity/border/transform only.
-     No looping animations, so Tailwind's spin, ping, pulse and bounce are removed. */
+  /* Motion: 150, 200 or 300ms on Stitch's easing; colour, background, border,
+     box-shadow and transform only. No looping animations, so Tailwind's spin,
+     ping, pulse and bounce are removed. */
   --ease-*: initial;
-  --ease-out: ease-out;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --animate-*: initial;
   --default-transition-duration: 150ms;
-  --default-transition-timing-function: ease-out;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Logo: the wordmark is 28px tall in the nav, never under 24px.
      Clear space is half its height on every side. */

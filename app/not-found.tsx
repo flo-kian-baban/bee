@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="page-container section-y">
-      <h1 className="type-h2">{notFoundPage.heading}</h1>
+      <h1 className="type-h2 text-text">{notFoundPage.heading}</h1>
       <p className="mt-4 type-body-lg text-text-secondary">{notFoundPage.text}</p>
       <Button href={notFoundPage.cta.href} className="mt-8">
         {notFoundPage.cta.label}

@@ -1,16 +1,23 @@
 ---
 name: B.E.E. Design System (website v1)
+source: reference/stitch/code.html
 colors:
   bg: '#111112'
   bg-alt: '#0B0B0C'
+  card-low: '#161618'
   card: '#1C1C1F'
   divider: '#2E2E33'
+  edge: 'rgba(255,255,255,0.1)'
+  chip: '#27272A'
+  chip-border: '#3F3F46'
   control-border: '#6B6B70'
   text: '#FFFFFF'
-  text-secondary: '#A3A3A8'
+  text-body: '#E4E4E7'
+  text-soft: '#D4D4D8'
+  text-secondary: '#A1A1AA'
   brand: '#F0EA0E'
-  brand-hover: '#DCD70B'
-  on-brand: '#111112'
+  brand-hover: '#D9D30A'
+  on-brand: '#161500'
   success: '#4ADE80'
   warning: '#FB923C'
   error: '#F87171'
@@ -19,12 +26,21 @@ fonts:
   body: Inter
   mono: JetBrains Mono
 radius:
-  container: 12px
+  tag: 4px
   chip: 6px
-spacing-base: 8px
+  tile: 8px
+  container: 12px
+  card: 16px
+spacing-base: 4px
 ---
 
 # B.E.E. Design System (website v1)
+
+## Source
+
+The Stitch export, `reference/stitch/code.html`, is the visual and motion source of truth for Home. The values below come from it: its Tailwind config, its classes (read as the Tailwind v3 defaults it loads) and its hero script. Each section's layout also comes from the export; this file holds the tokens, the components and the motion.
+
+Where a Stitch value would break a rule in CLAUDE.md or CONTENT.md, the rule wins, and this file says what is used instead. Those rules cover contrast, text size, tap targets, claims, looping animation, canvas and particles, icon fonts and invented content. Never copy the export's markup or its text.
 
 ## What the brand is
 
@@ -35,78 +51,171 @@ B.E.E. is **not** a real-time monitoring or building-automation product. Do not 
 
 ## Colours
 
-All ratios below were measured. "Bg", "Alt" and "Card" are the three surfaces.
+Ratios are measured (WCAG 2.x).
 
-| Token | Hex | Use | On bg | On alt | On card |
-|---|---|---|---|---|---|
-| bg | #111112 | Default page background | n/a | n/a | n/a |
-| bg-alt | #0B0B0C | Alternate section background | n/a | n/a | n/a |
-| card | #1C1C1F | Cards, panels, form fields | n/a | n/a | n/a |
-| divider | #2E2E33 | Decorative lines only, never a control's edge | 1.40 | n/a | n/a |
-| control-border | #6B6B70 | Input, checkbox and select borders | 3.56 | 3.71 | 3.21 |
-| text | #FFFFFF | Headings, body | 18.87 | 19.67 | 17.00 |
-| text-secondary | #A3A3A8 | Supporting text, labels | 7.51 | 7.83 | 6.77 |
-| brand | #F0EA0E | Primary buttons, highlighted words, active and selected states, focus ring | 14.81 | 15.44 | 13.34 |
-| on-brand | #111112 | Text on brand-yellow fills | 14.81 on brand | | |
-| success | #4ADE80 | Form success state | 10.83 | 11.29 | 9.76 |
-| warning | #FB923C | Warnings. Never use brand yellow for warnings. | 8.34 | 8.69 | 7.51 |
-| error | #F87171 | Form errors | 6.82 | 7.11 | 6.15 |
+| Token | Value | Use | On bg | On bg-alt | On card-low | On card |
+|---|---|---|---|---|---|---|
+| bg | #111112 | Page background: hero, How it works, Principles, Team | n/a | n/a | n/a | n/a |
+| bg-alt | #0B0B0C | Problem, Evidence chain, Buildings and Pilot sections; footer; panels inside cards | n/a | n/a | n/a | n/a |
+| card-low | #161618 | Problem and How it works cards; icon tiles; status chips | n/a | n/a | n/a | n/a |
+| card | #1C1C1F | Evidence nodes, principles, building tiles, Team and pilot cards; badge; secondary button | n/a | n/a | n/a | n/a |
+| divider | #2E2E33 | Borders of cards, sections and the nav; secondary button border | 1.40 | 1.46 | 1.34 | 1.26 |
+| edge | white at 10% | Borders of How it works cards, evidence nodes and the pilot card | 1.30 | 1.25 | 1.31 | 1.35 |
+| chip | #27272A | Chip fill | n/a | n/a | n/a | n/a |
+| chip-border | #3F3F46 | Chip border | 1.81 | 1.88 | 1.73 | 1.63 |
+| control-border | #6B6B70 | Input, checkbox and select borders, which need 3:1. Not in Stitch, which has no form. | 3.56 | 3.71 | 3.41 | 3.21 |
+| text | #FFFFFF | Headings, card titles, button labels | 18.87 | 19.67 | 18.07 | 17.00 |
+| text-body | #E4E4E7 | Default text colour | 14.87 | 15.50 | 14.24 | 13.40 |
+| text-soft | #D4D4D8 | Badge, values inside panels, chip text (10.08 on chip) | 12.77 | 13.31 | 12.23 | 11.50 |
+| text-secondary | #A1A1AA | Descriptions, supporting text, eyebrows, nav and footer links (5.81 on chip) | 7.36 | 7.68 | 7.05 | 6.63 |
+| brand | #F0EA0E | Primary buttons, highlighted words, active and selected states, focus ring, honeycomb | 14.81 | 15.44 | 14.18 | 13.34 |
+| brand-hover | #D9D30A | Primary button hover | n/a | n/a | n/a | n/a |
+| on-brand | #161500 | Text on brand fills: 14.44 on brand, 11.63 on brand-hover | n/a | n/a | n/a | n/a |
+| success | #4ADE80 | Form success state. Not in Stitch. | 10.83 | 11.29 | 10.37 | 9.76 |
+| warning | #FB923C | Warnings; never brand yellow. Not in Stitch. | 8.34 | 8.69 | 7.98 | 7.51 |
+| error | #F87171 | Form errors. Not in Stitch. | 6.82 | 7.11 | 6.53 | 6.15 |
+
+Opacity steps Stitch uses:
+- divider at 70% (borders of sections, the nav and card headers) and 60% (the footer's bottom row, rows inside panels);
+- brand at 50% (card borders on hover), 40% (borders on hover for principles, building tiles, Team and pilot cards), 30% (the selected evidence node), 20% (text selection, with brand text) and 5% (glows);
+- bg at 80% (nav), card at 90% (badge) and 80% (secondary button), card-low at 90% (Problem cards).
+
+Not used from Stitch:
+- Its dimmest grey text, #71717A: 3.52 to 4.07:1, below the 4.5:1 that AA requires. That text uses text-secondary.
+- The colours of the error states in its Problem panels, which CONTENT.md rules out. The error token is for form errors only.
+- The colours its config defines but its page never uses.
 
 Rules:
 - Yellow is the brand colour, not a status colour.
-- On any light background, yellow is allowed only as a fill behind #111112 text. Yellow text or lines on white measure 1.27:1.
+- On any light background, yellow is allowed only as a fill behind on-brand text. Yellow text or lines on white measure 1.27:1.
 - Never convey meaning with colour alone. Every status shows a text label or an icon too.
-- No other colours. In particular, no cyan, purple or red accents.
+- No colours outside this table.
 
 ## Typography
 
-| Style | Font | Desktop | Mobile | Weight | Notes |
-|---|---|---|---|---|---|
-| display | Space Grotesk | 64/72 | 36/44 | 600 | Hero headline only; tracking -0.02em |
-| h2 | Space Grotesk | 40/48 | 30/38 | 500 | Section headings |
-| h3 | Space Grotesk | 24/32 | 20/28 | 500 | Card titles |
-| body-lg | Inter | 18/28 | 18/28 | 400 | Hero subtext, section leads |
-| body | Inter | 16/24 | 16/24 | 400 | Minimum size for any paragraph |
-| label | JetBrains Mono | 13/18 | 13/18 | 500 | Uppercase, tracking 0.06em; eyebrows and panel labels only; never smaller than 13px |
-| button | Space Grotesk | 16/20 | 16/20 | 500 | |
+Fonts: Space Grotesk for display, headings, card titles and buttons; Inter for text, links and the badge; JetBrains Mono for labels. Stitch sets its mono text in the system stack (`ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`). This site keeps JetBrains Mono, from the CLAUDE.md stack, so labels look the same on every platform.
 
-Use `font-variant-numeric: tabular-nums` on numeric text only (values, counts, dates), never on running text: in Inter it also widens the hyphen.
+Sizes are px, as size/line height. Where a style changes with width, the later columns apply from that width up.
+
+| Style | Font | Base | From 640px | From 1024px | Weight | Tracking | Use |
+|---|---|---|---|---|---|---|---|
+| display | Space Grotesk | 36/40.32 | 60/60 | 68/68 | 600 | −0.025em | Hero headline |
+| h2-lg | Space Grotesk | 30/36 | 48/48 | | 500 | −0.025em | Problem and How it works headings |
+| h2 | Space Grotesk | 30/36 | 36/40 | | 500 | −0.025em | Other section headings |
+| h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works and Team card titles |
+| numeral | Space Grotesk | 36/40 | | | 700 | −0.025em | How it works step numbers |
+| title | Space Grotesk | 18/28 | | | 500 | 0 | Evidence nodes, principles; building tiles are 16/24 below 640px |
+| body-lg | Inter | 16/26 | 18/28 | | 400 | 0 | Hero subtext |
+| lead | Inter | 18/28 | | | 400 | 0 | Section leads |
+| body | Inter | 16/26 | | | 400 | 0 | Every paragraph |
+| base | Inter | 16/24 | | | 400 | 0 | Default for text with no style |
+| small | Inter | 14/20 | | | 400; 500 when active | 0 | Nav and footer links |
+| badge | Inter | 14/20 | | | 400 | 0.025em | Hero badge (Stitch: 12/16) |
+| button | Space Grotesk | 14/20 | | | 600 primary, 400 secondary | 0 | Buttons (Stitch: the nav button at 12/16 below 640px) |
+| label | JetBrains Mono | 12/16 | | | 400 | 0.1em, uppercase | Eyebrows, panel headers, chips |
+
+- Paragraphs are 16px or larger (CLAUDE.md quality bar). Stitch sets card text at 14/22.75, and at 12px in the evidence nodes; here every paragraph is body, 16/26.
+- 12px is for uppercase mono labels only. Other text, such as links, buttons and the badge, is 14px or larger. Stitch's panel details at 9–11px become labels at 12/16 where they are uppercase, and small type at 14/20 otherwise.
+- Use `font-variant-numeric: tabular-nums` on numeric text only (values, counts, dates), never on running text: in Inter it also widens the hyphen.
 
 ## Layout and spacing
 
-- Content max width 1200px. Side padding 24px on mobile, 48px on desktop.
-- 12-column grid on desktop, 4 columns on mobile. Gutters 24px.
-- Section vertical padding: 128px desktop, 72px mobile. Alternate sections between bg and bg-alt.
-- Spacing scale (8px base): 4, 8, 12, 16, 24, 32, 48, 72, 96, 128.
+- Spacing: a 4px base. Stitch uses 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 112 and 128.
+- Breakpoints: 640px, 768px and 1024px.
+- Content widths: 1280px (nav and footer, including their side padding; Problem; How it works), 1152px (Evidence chain, Buildings, Team, Pilot), 896px (Principles; the hero headline), 768px (the hero subtext), 672px (the Pilot text).
+- Side padding: 24px. From 1024px: 48px on sections, 40px in the nav and footer.
+- Section padding, top and bottom, at every width: hero 96px (128px from 640px); Problem 96px; How it works, Evidence chain, Principles, Buildings and Team 112px; Pilot 80px; footer 64px.
+- Nav height: 80px.
+- From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
+- Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Evidence chain, Principles), 20px (Buildings).
+- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (evidence nodes, principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px.
+- Tap targets: 44px or larger (CLAUDE.md), so the nav button is 44px tall where Stitch has 36–40px.
 
 ## Shape and depth
 
-- Radius 12px on cards, panels, buttons and inputs; 6px on chips; full on dots.
-- Flat surfaces: depth comes from tone (card on bg) and a 1px divider border. No drop shadows on cards.
-- Hover on interactive cards: the border changes from divider to brand at 50% opacity, over 150ms. No lift or scale.
-- Glow is allowed in two places only:
-  - the hero radial glow behind the headline (max 8% brand opacity);
-  - primary button hover (`0 0 16px rgba(240,234,14,0.2)`).
+| Radius | Value | Stitch | Use |
+|---|---|---|---|
+| tag | 4px | `rounded` | Chips, value tags, rows inside panels |
+| chip | 6px | `rounded-md` | The "Illustrative example" label |
+| tile | 8px | `rounded-lg` | Icon tiles, the nav button, status chips |
+| container | 12px | `rounded-xl` | Buttons, panels inside cards, evidence nodes, principles, building tiles, form fields |
+| card | 16px | `rounded-2xl` | Problem, How it works, Team and pilot cards |
+| full | | `rounded-full` | Badge, dots |
+
+Borders are 1px: divider (often at 70%), or edge on How it works cards, evidence nodes and the pilot card.
+
+| Shadow | Value | Use |
+|---|---|---|
+| shadow-sm | 0 1px 2px 0 rgb(0 0 0 / 0.05) | Badge, secondary button, icon tiles |
+| shadow-md | 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) | Problem closing banner |
+| shadow-lg | 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) | Problem cards, evidence nodes |
+| shadow-xl | 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) | How it works cards |
+| shadow-2xl | 0 25px 50px -12px rgb(0 0 0 / 0.25) | Pilot card |
+| shadow-card-hover | 0 8px 30px rgb(0 0 0 / 0.6) | Problem cards on hover |
+| shadow-card-hover-soft | 0 8px 30px rgb(0 0 0 / 0.5) | How it works cards on hover |
+| shadow-glow-sm | 0 0 20px rgb(240 234 14 / 0.18); hover 0 0 25px rgb(240 234 14 / 0.32) | Nav button |
+| shadow-glow | 0 0 24px rgb(240 234 14 / 0.22); hover 0 0 32px rgb(240 234 14 / 0.38) | Hero primary button |
+| shadow-glow-lg | 0 0 24px rgb(240 234 14 / 0.2); hover 0 0 36px rgb(240 234 14 / 0.4) | Pilot button |
+
+Glows:
+- Hero: a 700 × 360px ellipse of brand at 5%, blurred 120px, centred, 40px below the top of the hero, behind the headline.
+- Highlighted headline words: a drop shadow, 0 0 28px rgb(240 234 14 / 0.3).
+- Pilot card: a 288px circle of brand at 5%, blurred 90px, 40px in from the top right; and along the top edge a 2px line, `linear-gradient(90deg, transparent, rgb(240 234 14 / 0.3), transparent)` at 90% opacity.
+- Hero light: see Motion.
+
+Backdrop blur: 24px behind the nav; 12px behind the badge and the secondary button.
 
 ## Motion
 
-- Durations 150–250ms, `ease-out`. Only colour, opacity, border and transform change.
-- No looping animations: no pulsing dots, pings or flowing lines.
-- With `prefers-reduced-motion: reduce`, every transition and animation is turned off.
+- Easing: `cubic-bezier(0.4, 0, 0.2, 1)` on every transition.
+- Durations: 150ms for colour changes on links and icons, and for the nav button; 200ms for the hero and pilot buttons and the building tiles; 300ms for the Problem, How it works and pilot cards.
+- Only colour, background, border colour, box-shadow, opacity and transform change.
+- Hover: card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards); Problem and How it works cards deepen their shadow; building tiles rise 4px.
+- Press: primary buttons scale to 0.98.
+- In-page links scroll smoothly.
+- No looping animations. Stitch has five, and none is used: the badge dot's ping, pulsing dots, dashes flowing along the How it works and Evidence chain lines, the honeycomb's breathing, and the bee particles.
+- With `prefers-reduced-motion: reduce`, every transition, smooth scrolling and the hero light are off.
+
+### Hero light
+
+Moving a mouse over the hero lights up the honeycomb cells around the pointer, as in Stitch.
+
+- **What moves:** a light trails the pointer, and every cell whose centre lies within 175px of it brightens. Each cell takes one brightness from its centre's distance d to the light, g = (1 − d/175)², across the whole cell: its fill rises to brand at 14% × g, its outline to brand at 12% + 65% × g, and the outline glows (12px blur, brand at 40%, in proportion to g). The honeycomb itself, the text and the buttons stay where they are.
+- **Easing:** each 60Hz frame, the light covers 15% of the remaining way to the pointer (a time constant of about 100ms; within 5% after about 300ms), and each cell 10% of the remaining way to its brightness (about 160ms; settled after about 500ms). At other frame rates the steps scale, so the timing stays the same.
+- **Duration:** cells light up as the light reaches them and fade as it moves on; when the pointer leaves the hero, every cell fades out. Frames are requested only while the pointer moves and the cells settle.
+- **Bounds:** a 175px radius at every screen size, and only the cells within it; the hero section only. The pointer lights cells anywhere in the hero, including under the text and buttons. The cells are drawn behind the content, clipped to the hero, and never take pointer events.
+- **Touch screens and other devices without hover:** no light; the honeycomb stays at rest. Static was chosen over auto-drift, which would be a looping animation.
+- **Reduced motion:** no light.
+- **Implementation:** one element per lit cell, copied from a template and reused, and made only where the light shows. Each is placed once when it lights up; after that only its opacity changes, and its layers are composited on their own, so a change of brightness repaints nothing. No React state per pointer event, no canvas.
+
+Differences from Stitch's canvas version:
+- Stitch's hexagons are flat-topped. Here they keep the logo's pointy-topped shape (CLAUDE.md), at Stitch's size: 38px from centre to corner.
+- Stitch switches a cell's 12% outline on once its brightness passes 0.02; here the outline fades in up to that point. Stitch's glow widens with brightness; here it keeps its 12px blur and strengthens instead.
+- Stitch parks the light off-screen between visits, so it sweeps in from the left edge on entry. Here a dark light starts at the pointer.
+- Not ported, because CLAUDE.md rules out particles and looping animation in the hero: Stitch's 42 bee particles, which wander without stopping, gather within 262px of the pointer and are joined by lines when closer than 92px; and its breathing honeycomb, whose strokes cycle between 6% and 10% every 4.2 seconds.
 
 ## Components
 
-**Buttons** (minimum height 44px, padding 12px 24px):
-- Primary: brand fill, on-brand text; hover brand-hover plus the glow.
-- Secondary: card fill, 1px control-border, white text; hover border brand.
-- Ghost: no fill, text-secondary; hover white.
-- Focus (every interactive element): 2px brand outline, 2px offset.
+**Buttons.** Every variant has a 1px border, transparent where none shows, so buttons side by side share one height.
 
-**Badge** (hero status): card fill, 1px divider border, full radius, label style. The dot is static brand yellow.
+| Size | Height | Side padding | Radius | Type | Primary glow | Use |
+|---|---|---|---|---|---|---|
+| sm | 44px | 16px; 20px from 640px | tile | button | shadow-glow-sm | Nav |
+| md | 48px | 28px | container | button | shadow-glow | Hero, not-found page |
+| lg | 52px | 32px | container | button | shadow-glow-lg | Pilot band |
 
-**Panel** (a card that shows product-style detail): card fill, 1px divider border, 12px radius, 24px padding. The header row has a mono label on the left and a chip on the right, separated from the body by a divider.
+- Primary: brand fill, on-brand text at 600, its glow at rest; on hover, brand-hover and the stronger glow; pressed, scale 0.98.
+- Secondary: card at 80% with a 12px backdrop blur, 1px divider border, white text at 400, shadow-sm; on hover, border brand at 50%, text brand, fill card.
+- Ghost: no fill, text-secondary; on hover, white. Not in Stitch.
+- Focus, on every interactive element: 2px brand outline, 2px offset. Not in Stitch.
 
-**Value tag** (product vocabulary, used in panels and the evidence chain). Each tag differs by text and border style, not colour alone:
+**Badge** (hero status): card at 90% with a 12px backdrop blur, 1px divider border, full radius, 6px 14px padding, shadow-sm; badge type in text-soft; an 8px brand dot, 10px before the text. The dot is static (Stitch's pings).
+
+**Panel** (product-style detail inside a card): bg-alt fill, 1px divider border, container radius, 16px padding. The header row has a label on the left and a value or chip on the right.
+
+**Chip**: chip fill, 1px chip-border, tag radius, 2px 6px padding, label type in text-soft.
+
+**Value tag** (product vocabulary from CONTENT.md, used in panels and the evidence chain). Stitch has none, so tags use its chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
 
 | Tag | Style |
 |---|---|
@@ -115,37 +224,39 @@ Use `font-variant-numeric: tabular-nums` on numeric text only (values, counts, d
 | Calculated | Solid 1px brand border, brand text |
 | Awaiting review | Card fill, text-secondary text, clock icon |
 
-**Form fields**:
+**Form fields** (not in Stitch):
 - Label above every field (body size, white); never use the placeholder as the label.
-- Input: card fill, 1px control-border, 12px radius, padding 12px 16px; focus border brand plus the focus ring.
+- Input: card fill, 1px control-border, container radius, padding 12px 16px; focus border brand plus the focus ring.
 - Error: error-coloured border, plus the message under the field with an icon.
-- Checkbox: 20px, 1.5px control-border; when checked, brand fill with an #111112 check mark.
+- Checkbox: 20px, 1.5px control-border; when checked, brand fill with an on-brand check mark.
 
-**Section header**: label-style eyebrow in text-secondary, then the h2.
+**Section header**: a label eyebrow in text-secondary, then the h2. The How it works eyebrow is brand at 500, after an 8px brand dot. The Problem and How it works headers stand on a divider at 70%. Stitch's status chips beside them hold text that CONTENT.md doesn't have, so they are left out.
 
 **Nav**:
-- Sticky, bg at 85% opacity with a backdrop blur, 1px divider on the bottom, height 72px.
-- Logo on the left, links in the centre (body size, text-secondary; hover white; the active section in white), primary button on the right.
-- Below 768px: a menu button opens a full-screen sheet; the primary button stays visible.
+- Sticky, 80px tall, bg at 80% with a 24px backdrop blur, divider at 70% along the bottom.
+- Logo on the left; links in the centre, 32px apart (small type, text-secondary; on hover white; the active section brand at 500); the sm primary button on the right.
+- Below 768px, a menu button opens a full-screen sheet, and the primary button stays visible. Stitch has no mobile menu.
+- Not used from Stitch: the logo in a bordered tile with "B.E.E." beside it (see Logo), the "What we analyze" link (not in CONTENT.md) and the account icon (the site has no login).
 
 **Footer**:
-- bg-alt with a divider on top.
-- Columns: identity (logo and descriptor), links, contact.
-- Bottom row: privacy link and copyright.
+- bg-alt, with a divider at 70% along the top; 64px padding top and bottom.
+- From 768px, three columns across 5, 4 and 3 of 12: identity (logo and descriptor), links, contact.
+- Bottom row, 32px below a divider at 60%: privacy link and copyright in JetBrains Mono at 12/16, text-secondary.
+- Not used from Stitch: its column headings and descriptor (text not in CONTENT.md), its invented email address and legal name, and its status line.
 
 ## Logo
 
 - Use the "bee" wordmark on dark backgrounds only, at 28px tall in the nav (minimum 24px).
 - Clear space is half the logo's height on every side.
-- Never put it in a box, recolour it, add effects, or set "B.E.E." text beside it.
+- Never put it in a box, recolour it, add effects, or set "B.E.E." text beside it. Stitch shows the mark in a bordered tile with "B.E.E." and "Energy Intelligence" beside it, which these rules rule out.
 - The "b" hexagon on its own is the favicon and the social avatar.
 - A one-colour black version is required for light backgrounds. Its file is pending.
 
 ## Icons and imagery
 
-- Lucide icons, 1.5px stroke, 20px or 24px; text-secondary by default, brand when active.
+- Lucide icons, 1.5px stroke, at Stitch's sizes (16–24px; 36px in Team cards); text-secondary by default, brand on hover or when active. Stitch uses the Material Symbols icon font, which CLAUDE.md rules out; each of its icons maps to the closest Lucide icon.
 - Illustrations are flat SVG line drawings using these tokens.
 - No stock photos of people.
 - No photos from employers' or clients' projects.
 - Thermal images only if licensed or captured by B.E.E. itself.
-- The hero honeycomb uses the logo's own hexagon proportions.
+- The hero honeycomb: the logo's pointy-topped hexagons, 38px from centre to corner (Stitch's size), with 1px strokes in brand at 6%. Stitch's honeycomb breathes between 6% and 10%; here it holds at 6%, the top of the 4–6% range in CLAUDE.md.

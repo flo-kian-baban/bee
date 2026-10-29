@@ -1,12 +1,10 @@
 import type { ReactNode } from "react";
 
-/** Status badge: card fill, divider border, full radius, label type and a static brand dot. */
+/** Hero status badge (DESIGN.md, Components): translucent card, divider border, full radius, a static brand dot. */
 export function Badge({ children }: { children: ReactNode }) {
-  // The dot sits inline, so when the text wraps on a narrow screen it stays
-  // beside the first line instead of at the badge's left edge.
   return (
-    <p className="rounded-full border border-divider bg-card px-3 py-1 text-center text-balance type-label text-text">
-      <span aria-hidden className="mr-2 inline-block size-2 rounded-full bg-brand align-middle" />
+    <p className="inline-flex items-center gap-2.5 rounded-full border border-divider bg-card/90 px-3.5 py-1.5 type-badge text-text-soft shadow-sm backdrop-blur-md">
+      <span aria-hidden className="size-2 shrink-0 rounded-full bg-brand" />
       {children}
     </p>
   );

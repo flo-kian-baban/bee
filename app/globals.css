@@ -7,14 +7,15 @@
     background-color: var(--color-bg);
     /* Anchored sections and keyboard-focused elements stop below the sticky nav. */
     scroll-padding-top: var(--nav-height);
+    scroll-behavior: smooth;
   }
 
   body {
     background-color: var(--color-bg);
-    color: var(--color-text);
+    color: var(--color-text-body);
     font-family: var(--font-body);
     font-size: var(--type-body-size);
-    line-height: var(--type-body-leading);
+    line-height: var(--type-base-leading);
     font-weight: var(--type-body-weight);
     /* Numbers get tabular figures through the tabular-nums class on the
        elements that show them. Not set here: Inter's tabular setting also
@@ -29,12 +30,13 @@
   }
 
   ::selection {
-    background-color: var(--color-brand);
-    color: var(--color-on-brand);
+    background-color: color-mix(in srgb, var(--color-brand) 20%, transparent);
+    color: var(--color-brand);
   }
 }
 
-/* With reduced motion, every transition and animation is off. */
+/* With reduced motion, every transition and animation is off, and so is
+   smooth scrolling. The hero light hides itself (see hero-light below). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -45,33 +47,59 @@
   }
 }
 
-/* Content column: 1200px max, 24px side padding on mobile, 48px on desktop. */
+/* Nav and footer column: 1280px wide including its side padding, which is
+   24px, and 40px from 1024px. */
 @utility page-container {
   width: 100%;
-  max-width: calc(var(--content-max-width) + 2 * var(--page-padding-md));
+  max-width: var(--container-7xl);
   margin-inline: auto;
   padding-inline: var(--page-padding);
-  @variant md {
-    padding-inline: var(--page-padding-md);
+  @variant lg {
+    padding-inline: var(--bar-padding-lg);
   }
 }
 
-/* Section vertical padding: 72px on mobile, 128px on desktop. */
+/* Section side padding: 24px, and 48px from 1024px. */
+@utility section-x {
+  padding-inline: var(--page-padding);
+  @variant lg {
+    padding-inline: var(--page-padding-lg);
+  }
+}
+
+/* Top and bottom padding of most sections: 112px at every width. */
 @utility section-y {
   padding-block: var(--section-padding);
-  @variant md {
-    padding-block: var(--section-padding-md);
+}
+
+/* The hero glow (DESIGN.md, Shape and depth): an ellipse of brand at 5%,
+   blurred 120px, behind the headline. */
+@utility hero-glow {
+  width: var(--hero-glow-width);
+  height: var(--hero-glow-height);
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--color-brand) calc(var(--hero-glow-opacity) * 100%), transparent);
+  filter: blur(var(--blur-hero));
+}
+
+/* The hero light (DESIGN.md, Motion): honeycomb cells that light up around a
+   mouse pointer. components/HeroLight.tsx places the cells and sets their
+   brightness. It shows only for a mouse or trackpad without reduced motion. */
+@utility hero-light {
+  display: none;
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    display: block;
   }
 }
 
-/* The hero's one glow: a soft radial brand-yellow wash behind the headline,
-   at most 8% opacity (DESIGN.md, Shape and depth). */
-@utility hero-glow {
-  background-image: radial-gradient(
-    closest-side,
-    color-mix(in srgb, var(--color-brand) calc(var(--hero-glow-max-opacity) * 100%), transparent),
-    transparent
-  );
+/* A layer of a lit cell: dark until HeroLight.tsx sets its opacity. Each layer
+   is composited on its own, so a change of brightness repaints nothing. */
+@utility hero-cell-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  will-change: opacity;
 }
 
 /* Type styles from the DESIGN.md typography table, one class per style. */
@@ -81,9 +109,12 @@
   font-size: var(--type-display-size);
   line-height: var(--type-display-leading);
   letter-spacing: var(--type-display-tracking);
-  @variant md {
-    font-size: var(--type-display-size-md);
-    line-height: var(--type-display-leading-md);
+  @variant sm {
+    font-size: var(--type-display-size-sm);
+    line-height: var(--type-display-leading-sm);
+  }
+  @variant lg {
+    font-size: var(--type-display-size-lg);
   }
 }
 
@@ -92,9 +123,23 @@
   font-weight: var(--type-h2-weight);
   font-size: var(--type-h2-size);
   line-height: var(--type-h2-leading);
-  @variant md {
-    font-size: var(--type-h2-size-md);
-    line-height: var(--type-h2-leading-md);
+  letter-spacing: var(--type-h2-tracking);
+  @variant sm {
+    font-size: var(--type-h2-size-sm);
+    line-height: var(--type-h2-leading-sm);
+  }
+}
+
+/* Problem and How it works headings. */
+@utility type-h2-lg {
+  font-family: var(--font-display);
+  font-weight: var(--type-h2-weight);
+  font-size: var(--type-h2-size);
+  line-height: var(--type-h2-leading);
+  letter-spacing: var(--type-h2-tracking);
+  @variant sm {
+    font-size: var(--type-h2-lg-size-sm);
+    line-height: var(--type-h2-lg-leading-sm);
   }
 }
 
@@ -103,17 +148,39 @@
   font-weight: var(--type-h3-weight);
   font-size: var(--type-h3-size);
   line-height: var(--type-h3-leading);
-  @variant md {
-    font-size: var(--type-h3-size-md);
-    line-height: var(--type-h3-leading-md);
-  }
+}
+
+@utility type-numeral {
+  font-family: var(--font-display);
+  font-weight: var(--type-numeral-weight);
+  font-size: var(--type-numeral-size);
+  line-height: var(--type-numeral-leading);
+  letter-spacing: var(--type-numeral-tracking);
+}
+
+@utility type-title {
+  font-family: var(--font-display);
+  font-weight: var(--type-title-weight);
+  font-size: var(--type-title-size);
+  line-height: var(--type-title-leading);
 }
 
 @utility type-body-lg {
   font-family: var(--font-body);
-  font-weight: var(--type-body-lg-weight);
+  font-weight: var(--type-body-weight);
   font-size: var(--type-body-lg-size);
   line-height: var(--type-body-lg-leading);
+  @variant sm {
+    font-size: var(--type-body-lg-size-sm);
+    line-height: var(--type-body-lg-leading-sm);
+  }
+}
+
+@utility type-lead {
+  font-family: var(--font-body);
+  font-weight: var(--type-body-weight);
+  font-size: var(--type-lead-size);
+  line-height: var(--type-lead-leading);
 }
 
 @utility type-body {
@@ -123,7 +190,29 @@
   line-height: var(--type-body-leading);
 }
 
-/* Eyebrows and panel labels only. */
+/* Nav and footer links. */
+@utility type-small {
+  font-family: var(--font-body);
+  font-size: var(--type-small-size);
+  line-height: var(--type-small-leading);
+}
+
+@utility type-badge {
+  font-family: var(--font-body);
+  font-weight: var(--type-body-weight);
+  font-size: var(--type-badge-size);
+  line-height: var(--type-badge-leading);
+  letter-spacing: var(--type-badge-tracking);
+}
+
+/* Buttons set their own weight: 600 primary, 400 secondary. */
+@utility type-button {
+  font-family: var(--font-display);
+  font-size: var(--type-button-size);
+  line-height: var(--type-button-leading);
+}
+
+/* Eyebrows, panel headers and chips. */
 @utility type-label {
   font-family: var(--font-mono);
   font-weight: var(--type-label-weight);
@@ -131,11 +220,4 @@
   line-height: var(--type-label-leading);
   letter-spacing: var(--type-label-tracking);
   text-transform: uppercase;
-}
-
-@utility type-button {
-  font-family: var(--font-display);
-  font-weight: var(--type-button-weight);
-  font-size: var(--type-button-size);
-  line-height: var(--type-button-leading);
 }

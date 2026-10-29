@@ -98,7 +98,7 @@ next.config.ts          security headers and the noindex header
   - Desktop: a horizontal row. Below 768px: a vertical stack with downward connectors.
   - With reduced motion: no line animation; the highlight changes instantly.
   - The nameplate is an SVG illustration of a generic, made-up boiler nameplate. Never use a real photo.
-- **Hero.** A static honeycomb pattern built from the logo's hexagon geometry (inline SVG, yellow strokes at 4–6% opacity), with one soft radial yellow glow behind the headline. No canvas, no particles, no looping animation.
+- **Hero.** A honeycomb built from the logo's hexagon geometry (inline SVG, yellow strokes at 4–6% opacity), with one soft radial yellow glow behind the headline. On desktop, a pointer-driven light brightens the cells around the pointer (DESIGN.md, Motion); on touch screens and with reduced motion, the honeycomb is static. No canvas, no particles, no looping animation.
 - **Pilot form.** Validate on both the client and the server.
   - States: idle, submitting (button disabled), success (the form is replaced by the success message from CONTENT.md), error (the message from CONTENT.md, form data kept).
   - Never log form contents. Rate-limit by IP.

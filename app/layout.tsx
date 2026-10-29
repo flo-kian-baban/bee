@@ -7,20 +7,22 @@ import { Nav } from "@/components/Nav";
 import { business, meta, ui } from "@/content/site";
 import "./globals.css";
 
-// Only the weights DESIGN.md uses: display 600; h2, h3 and button 500; body 400; label 500.
+// Only the weights the site uses (DESIGN.md, Typography): Space Grotesk 400
+// (secondary buttons), 500 (headings, titles) and 600 (display, primary
+// buttons); Inter 400, and 500 for the active nav link; JetBrains Mono 400.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["400", "500", "600"],
   variable: "--font-space-grotesk",
 });
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
   variable: "--font-inter",
 });
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["500"],
+  weight: ["400"],
   variable: "--font-jetbrains-mono",
 });
 
@@ -40,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <LucideProvider strokeWidth={1.5} absoluteStrokeWidth>
           <a
             href="#main-content"
-            className="fixed top-3 left-6 z-60 -translate-y-24 rounded-container bg-brand px-6 py-3 type-button text-on-brand focus:translate-y-0"
+            className="fixed top-3 left-6 z-60 -translate-y-24 rounded-container bg-brand px-6 py-3 type-button font-semibold text-on-brand focus:translate-y-0"
           >
             {ui.skipToContent}
           </a>
