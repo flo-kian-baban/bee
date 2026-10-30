@@ -93,7 +93,10 @@ test("the hero light brightens the cells within its radius of a mouse, and fades
 
 // TODO(M5): with the CPU 4x slower, the first hover sometimes takes one frame
 // of about 50ms (1 run in 6 at milestone 2, accepted for now). Recheck it.
-test("hovering the hero causes no long tasks", async ({ page }) => {
+// Tagged @performance, so it runs alone after the other checks
+// (playwright.config.ts): with ten pages loading the CPU at once, that first
+// frame takes 60 to 260ms, before and after the milestone 2 detail pass alike.
+test("hovering the hero causes no long tasks", { tag: "@performance" }, async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(home.path);
   const box = await heroBox(page);

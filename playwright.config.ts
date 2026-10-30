@@ -11,8 +11,11 @@ export default defineConfig({
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: { ...devices["Desktop Chrome"], baseURL },
   projects: [
-    // Smoke, accessibility and claims tests: `npm test`.
-    { name: "checks", testIgnore: "screenshots.spec.ts" },
+    // Smoke, accessibility, claims and motion tests: `npm test`.
+    { name: "checks", testIgnore: "screenshots.spec.ts", grepInvert: /@performance/ },
+    // Timing tests, also in `npm test`. They start once every check has
+    // finished and run alone, so the other tests' load does not count.
+    { name: "performance", grep: /@performance/, dependencies: ["checks"] },
     // Milestone report screenshots: `MILESTONE=2 npm run screenshots`.
     { name: "screenshots", testMatch: "screenshots.spec.ts" },
   ],
