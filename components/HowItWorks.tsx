@@ -24,6 +24,9 @@ const inputIcons = [Camera, Thermometer, Tag, Receipt, ClipboardList];
 const tickIndex = ["[--tick-index:0]", "[--tick-index:1]", "[--tick-index:2]", "[--tick-index:3]", "[--tick-index:4]"];
 // The placeholder lines of the Analyze panel: short, and of different lengths.
 const placeholderWidths = ["w-3/5", "w-4/5", "w-2/5"];
+// From 1024 to 1279px the three cards are at their narrowest, so the cards and
+// their panels take less padding at the sides, and the Optimize table fits.
+const narrowPanel = "lg:max-[1280px]:px-3";
 
 type StepProps = {
   number: string;
@@ -40,7 +43,7 @@ function Step({ number, title, titleId, text, icon: Icon, first = false, childre
   return (
     <li
       data-reveal="up"
-      className="group flex flex-col gap-6 rounded-card border border-edge bg-card-low p-7 shadow-xl transition-[border-color,box-shadow] duration-200 hover:border-brand/50 hover:shadow-card-hover-soft"
+      className="group flex flex-col gap-6 rounded-card border border-edge bg-card-low p-7 shadow-xl lg:max-[1280px]:px-5 transition-[border-color,box-shadow] duration-200 hover:border-brand/50 hover:shadow-card-hover-soft"
     >
       <div className="flex items-center justify-between border-b border-divider pb-4">
         <span
@@ -96,7 +99,7 @@ export function HowItWorks() {
 
           <ol className="relative grid gap-8 lg:grid-cols-3">
             <Step number={capture.number} title={capture.title} titleId="step-capture" text={capture.text} icon={ScanLine} first>
-              <Panel label={capture.label}>
+              <Panel label={capture.label} className={narrowPanel}>
                 {/* As the list comes into view, each input ticks from a dashed circle to "Captured", one by one. */}
                 <ul data-reveal="tick" className="flex flex-col gap-2">
                   {capture.inputs.map((input, index) => {
@@ -129,7 +132,7 @@ export function HowItWorks() {
             </Step>
 
             <Step number={analyze.number} title={analyze.title} titleId="step-analyze" text={analyze.text} icon={ChartColumn}>
-              <Panel label={analyze.label}>
+              <Panel label={analyze.label} className={narrowPanel}>
                 <ul className="flex flex-col gap-2.5">
                   {analyze.rows.map((row, index) => (
                     <li key={row} className="flex items-center gap-3 rounded-tag border border-chip bg-bg p-2.5">
@@ -150,7 +153,7 @@ export function HowItWorks() {
               text={optimize.text}
               icon={SlidersHorizontal}
             >
-              <Panel label={optimize.label} aside={<ValueTag kind="awaitingReview" />}>
+              <Panel label={optimize.label} aside={<ValueTag kind="awaitingReview" />} className={narrowPanel}>
                 <table aria-labelledby="step-optimize" className="w-full border-separate border-spacing-y-1.5 type-label">
                   <thead>
                     <tr className="text-text-secondary">

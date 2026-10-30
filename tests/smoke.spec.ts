@@ -36,6 +36,39 @@ for (const { name, path, status } of pages) {
       });
     }
 
+    for (const width of widths) {
+      // In-flow content stays inside the content box of its parent: a table
+      // or a row of chips wider than its card or panel fails here, even when
+      // the page itself does not scroll sideways.
+      test(`keeps content inside its cards and panels at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(path);
+        await page.evaluate(() => document.fonts.ready);
+        const overflowing = await page.evaluate(() => {
+          const found: string[] = [];
+          const name = (element: Element) =>
+            `${element.tagName.toLowerCase()} "${(element.textContent ?? "").trim().slice(0, 30)}"`;
+          for (const parent of document.querySelectorAll("main *")) {
+            if (parent instanceof SVGElement) continue;
+            const style = getComputedStyle(parent);
+            const box = parent.getBoundingClientRect();
+            const left = box.left + parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft);
+            const right = box.right - parseFloat(style.borderRightWidth) - parseFloat(style.paddingRight);
+            for (const child of parent.children) {
+              const { position } = getComputedStyle(child);
+              if (position === "absolute" || position === "fixed") continue;
+              const inner = child.getBoundingClientRect();
+              if (!inner.width) continue;
+              const by = Math.max(left - inner.left, inner.right - right);
+              if (by > 0.5) found.push(`${name(child)} leaves ${name(parent)} by ${Math.round(by)}px`);
+            }
+          }
+          return found;
+        });
+        expect(overflowing).toEqual([]);
+      });
+    }
+
     test("sends the security and noindex headers", async ({ request }) => {
       const headers = (await request.get(path)).headers();
       const policy = new Map(

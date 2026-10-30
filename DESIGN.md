@@ -130,6 +130,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 - From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
 - Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Evidence chain, Principles), 20px (Buildings).
 - Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (evidence nodes, principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
+- From 1024 to 1279px, where its three cards are narrowest, How it works takes 20px at the sides of its cards and 12px at the sides of their panels, so the Optimize table fits. From 1280px it is back to 28px and 16px.
 - Tap targets: 44px or larger (CLAUDE.md), so the nav button is 44px tall where Stitch has 36–40px.
 
 ## Shape and depth

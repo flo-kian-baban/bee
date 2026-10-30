@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { revealAll } from "./motion";
-import { pages, widths } from "./pages";
+import { pages, screenshotWidths } from "./pages";
 
 // Screenshots for a milestone report: `MILESTONE=2 npm run screenshots`
 // saves every page at every width under reports/m2/.
@@ -9,7 +9,7 @@ const milestone = process.env.MILESTONE;
 test.skip(!milestone, "Set MILESTONE, for example MILESTONE=2 npm run screenshots");
 
 for (const { name, path } of pages) {
-  for (const width of widths) {
+  for (const width of screenshotWidths) {
     test(`${name} at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);

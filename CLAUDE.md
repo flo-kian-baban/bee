@@ -168,7 +168,7 @@ Each milestone ends with a pull request, its preview URL and a short report: wha
 | Reduced motion | No animation runs while `prefers-reduced-motion: reduce` is set |
 | Claims test | Playwright reads the visible text (`innerText`) of Home and Pilot. The test fails on any banned term in rule 2 (whole words, case-insensitive) or on the pattern `\d+\s?%` |
 | Console | No errors or warnings in production builds |
-| Layout | No horizontal scroll at 375px; body text 16px or larger; tap targets 44px or larger |
+| Layout | At 375, 768, 1024, 1280 and 1440px: no horizontal scroll, and no content outside its card or panel. Body text 16px or larger; tap targets 44px or larger |
 
 ## Do not launch until
 

@@ -42,7 +42,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - "Spreadsheets and reports": "Calculations and past studies kept in separate files."
 - Value tags beside the panel titles: Observed on "Site photos", "Utility bills" and "Equipment records"; Calculated on "Spreadsheets and reports" [A]
 - Source tags in the panel headers: "SRC 01" to "SRC 04", in panel order [A]
-- Format chips in the panel headers [D]: "JPEG" (Site photos) · "PDF" (Utility bills) · "Paper" (Equipment records) · "XLSX · PDF" (Spreadsheets and reports)
+- Format chips in the panel headers [A]: "JPEG" (Site photos) · "PDF" (Utility bills) · "Paper" (Equipment records) · "XLSX · PDF" (Spreadsheets and reports)
 - Each panel holds an example of its source. The values are generic example data only (CLAUDE.md, rule 2):
   - "Site photos" [A]: a viewfinder frame with corner reticles around a line drawing of a boiler; tags "Boiler B-1 · Nameplate" and "Photo 014 · Mechanical room".
   - "Utility bills" [A]: "Account ••••4521 · Natural gas"; a 12-month line with no axis numbers, and one dashed gap labelled "Missing statement".
@@ -52,7 +52,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - "Site photos": "Not linked to equipment" · "Re-typed by hand" [A]
   - "Utility bills": "Separate accounts" · "Different billing periods" [A]
   - "Equipment records": "Paper cut sheets" · "Not digitized" [A]
-  - "Spreadsheets and reports": "Separate files" · "Re-entered by hand" [D]
+  - "Spreadsheets and reports": "Separate files" · "Re-entered by hand" [A]
 - Closing line: "Kept in different places and re-entered by hand." [A], with a keyboard icon and the chip "4 sources · 0 links" [A]
 
 ### 3. How it works (id `how-it-works`)

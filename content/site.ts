@@ -100,7 +100,7 @@ export const problem = {
       title: "Site photos",
       tag: "observed",
       sourceTag: "SRC 01",
-      format: "JPEG", // [D]
+      format: "JPEG",
       description: "Equipment, conditions and nameplates, photographed during inspections.",
       footer: ["Not linked to equipment", "Re-typed by hand"],
     },
@@ -109,7 +109,7 @@ export const problem = {
       title: "Utility bills",
       tag: "observed",
       sourceTag: "SRC 02",
-      format: "PDF", // [D]
+      format: "PDF",
       description: "Electricity, gas and water statements, often spread across several accounts.",
       footer: ["Separate accounts", "Different billing periods"],
     },
@@ -118,7 +118,7 @@ export const problem = {
       title: "Equipment records",
       tag: "observed",
       sourceTag: "SRC 03",
-      format: "Paper", // [D]
+      format: "Paper",
       description: "Nameplates, cut sheets and service logs, often on paper.",
       footer: ["Paper cut sheets", "Not digitized"],
     },
@@ -127,10 +127,8 @@ export const problem = {
       title: "Spreadsheets and reports",
       tag: "calculated",
       sourceTag: "SRC 04",
-      format: "XLSX · PDF", // [D]
+      format: "XLSX · PDF",
       description: "Calculations and past studies kept in separate files.",
-      // TODO(copy): Kian's brief gives no footer for this panel. A proposal [D],
-      // made of approved phrases: the description's and the closing line's.
       footer: ["Separate files", "Re-entered by hand"],
     },
   ],
