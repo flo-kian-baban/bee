@@ -10,6 +10,22 @@ This project may access exactly one GitHub repository, `flo-kian-baban/bee`, and
 
 `.claude/settings.json` enforces part of this. Claude Code's file tools (Read, Grep, Glob) cannot read outside this folder. Shell commands run in a sandbox: they cannot read `~/Development` (except this folder), `~/Desktop`, `~/Downloads`, `~/Documents` or `~/.claude/projects`, and they can write only here, to npm's cache and to Playwright's browser folder. Auto memory is off.
 
+## Decision authority
+
+Act without asking on anything inside this project folder and the `flo-kian-baban/bee` repository that is reversible and consistent with CLAUDE.md, DESIGN.md and CONTENT.md. That includes: editing files, running npm, npx, node and git, tests, builds, local commits, pushing milestone branches, opening pull requests, fixing failing checks, and unspecified design details such as spacing, timing and small layout calls. List those design decisions in the milestone report so Kian can veto them afterwards.
+
+Ask first only for:
+- anything outside this folder or the bee repository;
+- secrets, credentials, accounts or payments;
+- merging into `main`, force-pushing, rewriting history or deleting branches;
+- adding a new dependency;
+- changing security settings (`.claude/settings.json`, CSP, headers);
+- anything irreversible.
+
+Copy not in CONTENT.md: draft it, mark it [D], keep going, and list it in the report. Claim rules are never negotiable.
+
+Stop only at the end of a milestone for Kian's review. Never stop mid-milestone for confirmation.
+
 ## What this is
 
 The public marketing website for B.E.E. (Building Energy Engine), a building energy assessment platform that is still in development.
@@ -25,7 +41,7 @@ Read these before writing any code:
 
 ## Hard rules
 
-1. **Never write marketing copy.** All copy comes from `CONTENT.md`, moved into `content/site.ts`. If something needs copy that isn't there, insert `TODO(copy)` and list it in your milestone report.
+1. **Copy comes from CONTENT.md.** All copy comes from `CONTENT.md`, moved into `content/site.ts`. If something needs copy that isn't there, draft it, mark it [D] in `CONTENT.md` and `TODO(copy)` in `content/site.ts`, and list it in your milestone report (see Decision authority).
 2. **Claim rules.** Visible text must never contain:
    - accuracy, savings, cost or emissions-reduction figures;
    - compliance, certification or standard-conformance claims ("compliant", "certified", "ASHRAE Guideline 14", and similar);
