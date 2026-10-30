@@ -83,49 +83,95 @@ export const valueTags = {
 };
 export type ValueTagKind = keyof typeof valueTags;
 
-/** Home, section 2. */
+/**
+ * The label every section with example panels shows (CLAUDE.md, rule 2):
+ * Problem, How it works and Evidence chain.
+ */
+export const exampleLabel = "Illustrative example";
+
+/** Home, section 2. The panels hold generic example data, as its label says. */
 export const problem = {
   eyebrow: "Today",
   heading: "Building energy data is scattered.",
+  label: exampleLabel,
   panels: [
     {
       source: "photos",
       title: "Site photos",
       tag: "observed",
+      sourceTag: "SRC 01",
+      format: "JPEG", // [D]
       description: "Equipment, conditions and nameplates, photographed during inspections.",
+      footer: ["Not linked to equipment", "Re-typed by hand"],
     },
     {
       source: "bills",
       title: "Utility bills",
       tag: "observed",
+      sourceTag: "SRC 02",
+      format: "PDF", // [D]
       description: "Electricity, gas and water statements, often spread across several accounts.",
+      footer: ["Separate accounts", "Different billing periods"],
     },
     {
       source: "records",
       title: "Equipment records",
       tag: "observed",
+      sourceTag: "SRC 03",
+      format: "Paper", // [D]
       description: "Nameplates, cut sheets and service logs, often on paper.",
+      footer: ["Paper cut sheets", "Not digitized"],
     },
     {
       source: "spreadsheets",
       title: "Spreadsheets and reports",
       tag: "calculated",
+      sourceTag: "SRC 04",
+      format: "XLSX · PDF", // [D]
       description: "Calculations and past studies kept in separate files.",
+      // TODO(copy): Kian's brief gives no footer for this panel. A proposal [D],
+      // made of approved phrases: the description's and the closing line's.
+      footer: ["Separate files", "Re-entered by hand"],
     },
   ],
+  /** The example in each panel, by source. */
+  examples: {
+    photos: { equipment: "Boiler B-1 · Nameplate", photo: "Photo 014 · Mechanical room" },
+    bills: { account: "Account ••••4521 · Natural gas", gap: "Missing statement" },
+    records: {
+      title: "Submittal: hot water boiler",
+      fields: [
+        { label: "Rated input", value: "2,000 MBH" },
+        { label: "Supply", value: "180°F" },
+        { label: "Installed", value: "1998" },
+        { label: "Service log", value: "Paper only", severity: "warning" },
+      ],
+    },
+    spreadsheets: {
+      rows: [
+        { metric: "Baseline gas use", formula: "=SUM(B2:B13)", status: "Manual", severity: "warning" },
+        { metric: "Weather adjustment", formula: "=VLOOKUP(…)", status: "#REF!", severity: "error" },
+        { metric: "Emission factor", formula: "Pasted from a 2019 report", status: "Outdated", severity: "warning" },
+      ],
+    },
+  },
   closing: "Kept in different places and re-entered by hand.",
+  closingChip: "4 sources · 0 links",
 } as const;
 
-/** Home, section 3. */
+/** Home, section 3. The panels hold example data, as its label says. */
 export const howItWorks = {
   eyebrow: "How it works",
   heading: "Capture. Analyze. Optimize.",
+  label: exampleLabel,
   capture: {
     number: "01",
     title: "Capture",
     text: "Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow.",
     label: "INPUTS",
     inputs: ["Photos", "Thermal images", "Nameplates", "Utility bills", "Operating records"],
+    /** The status each input ticks to, one by one, as the card comes into view. */
+    captured: "Captured",
   },
   analyze: {
     number: "02",
@@ -158,7 +204,7 @@ export const evidenceChain: {
   eyebrow: "Traceability",
   heading: "Every number has a source.",
   lead: "Select any step to see where it came from.",
-  label: "Illustrative example · not real project data",
+  label: `${exampleLabel} · not real project data`,
   nodes: [
     {
       step: "STEP 01",

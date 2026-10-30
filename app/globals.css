@@ -35,6 +35,100 @@
   }
 }
 
+/* Scroll motion (DESIGN.md, Motion). An element marked data-reveal="up",
+   "draw" or "tick" shows its final state until components/Reveal.tsx finds it
+   below the viewport. Reveal then marks it data-pending, which hides it, and
+   swaps that for data-shown as it enters the viewport, which runs its motion
+   once, after --reveal-delay (its place among the elements entering with it)
+   plus --reveal-wait, if it has one (see reveal-behind).
+   The keyframes give only the start: each runs to the element's own style,
+   which is the final state, and fills backwards only, so hover transforms
+   still apply once it ends. Without motion (reduced, or no script) nothing
+   is pending, so every element shows its final state. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 var(--motion-reveal-distance);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+}
+
+/* A line drawn behind cards waits until up to four cards entering with it
+   have finished their reveal, so it never shows through them as they fade. */
+@utility reveal-behind {
+  --reveal-wait: calc(var(--motion-reveal-duration) + 4 * var(--motion-reveal-stagger));
+}
+
+/* A stroke that draws: give it pathLength="1". */
+@utility draw-stroke {
+  stroke-dasharray: 1;
+}
+
+/* A tick: the "to do" mark gives way to the "done" status. Their row sets
+   --tick-index, its place in the order. */
+@utility tick-todo {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Only opacity hides a pending element; changing its translate would set
+     off the transitions of tiles that lift on hover. */
+  [data-reveal="up"][data-pending] {
+    opacity: 0;
+  }
+  [data-reveal="up"][data-shown] {
+    animation: reveal-up var(--motion-reveal-duration) var(--ease-out)
+      calc(var(--reveal-delay, 0ms) + var(--reveal-wait, 0ms)) backwards;
+  }
+
+  [data-reveal="draw"][data-pending] .draw-stroke {
+    stroke-dashoffset: 1;
+  }
+  [data-reveal="draw"][data-shown] .draw-stroke {
+    animation: draw var(--motion-draw-duration) var(--ease-standard)
+      calc(var(--reveal-delay, 0ms) + var(--reveal-wait, 0ms)) backwards;
+  }
+
+  [data-reveal="tick"][data-pending] .tick-done {
+    opacity: 0;
+  }
+  [data-reveal="tick"][data-pending] .tick-todo {
+    opacity: 1;
+  }
+  /* The delay is worked out here, where each row's --tick-index applies. */
+  [data-reveal="tick"][data-shown] :is(.tick-done, .tick-todo) {
+    animation-duration: var(--motion-tick-duration);
+    animation-timing-function: var(--ease-out);
+    animation-delay: calc(
+      var(--reveal-delay, 0ms) + var(--motion-tick-start) + var(--tick-index, 0) * var(--motion-tick-stagger)
+    );
+    animation-fill-mode: backwards;
+  }
+  [data-reveal="tick"][data-shown] .tick-done {
+    animation-name: fade-in;
+  }
+  [data-reveal="tick"][data-shown] .tick-todo {
+    animation-name: fade-out;
+  }
+}
+
 /* With reduced motion, every transition and animation is off, and so is
    smooth scrolling. The hero light hides itself (see hero-light below). */
 @media (prefers-reduced-motion: reduce) {

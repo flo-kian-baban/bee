@@ -10,7 +10,10 @@ export function PilotBand() {
       className={`section-x bg-bg-alt py-20 ${flags.showTeam ? "border-t border-divider/70" : ""}`}
     >
       <div className="mx-auto max-w-6xl">
-        <div className="relative overflow-hidden rounded-card border border-edge bg-card p-10 shadow-2xl transition-colors duration-300 hover:border-brand/40 md:p-14">
+        <div
+          data-reveal="up"
+          className="relative overflow-hidden rounded-card border border-edge bg-card p-10 shadow-2xl transition-colors duration-200 hover:border-brand/40 md:p-14"
+        >
           <div aria-hidden className="pilot-edge absolute inset-x-0 top-0" />
           <div aria-hidden className="pilot-glow absolute top-0 right-10" />
 

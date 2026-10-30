@@ -1,4 +1,5 @@
 import { Braces, ClipboardList, ScanLine, Sigma } from "lucide-react";
+import { ExampleLabel } from "@/components/ExampleLabel";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ValueTag } from "@/components/ValueTag";
 import { evidenceChain } from "@/content/site";
@@ -17,20 +18,22 @@ export function EvidenceChain() {
   return (
     <section aria-labelledby="evidence-heading" className="section-x section-y border-y border-divider/70 bg-bg-alt">
       <div className="mx-auto flex max-w-6xl flex-col gap-12">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div data-reveal="up" className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div className="flex flex-col gap-3">
             <SectionHeading id="evidence-heading" eyebrow={evidenceChain.eyebrow} heading={evidenceChain.heading} />
             <p className="type-lead text-text-secondary">{evidenceChain.lead}</p>
           </div>
-          <p className="flex items-center gap-2 self-start rounded-chip border border-divider bg-card px-3.5 py-1.5 type-label text-text-secondary sm:self-auto">
-            <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-brand" />
-            {evidenceChain.label}
-          </p>
+          <ExampleLabel className="self-start sm:self-auto">{evidenceChain.label}</ExampleLabel>
         </div>
 
         <div className="relative">
-          {/* From 1024px, a dashed line joins the nodes behind the cards. */}
-          <svg aria-hidden="true" focusable="false" className="absolute inset-x-12 top-1/2 hidden h-0.5 w-[calc(100%-6rem)] -translate-y-1/2 lg:block">
+          {/* From 1024px, a dashed line joins the nodes behind the cards. It shows once they have faded in. */}
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-reveal="up"
+            className="reveal-behind absolute inset-x-12 top-1/2 hidden h-0.5 w-[calc(100%-6rem)] -translate-y-1/2 lg:block"
+          >
             <line x1="0" x2="100%" y1="1" y2="1" strokeWidth={2} className="stroke-divider" />
             <line x1="0" x2="100%" y1="1" y2="1" strokeWidth={2} strokeDasharray="6 6" className="stroke-brand/80" />
           </svg>
@@ -41,7 +44,8 @@ export function EvidenceChain() {
               return (
                 <li
                   key={node.title}
-                  className="group relative flex flex-col gap-5 rounded-container border border-edge bg-card p-6 shadow-lg transition-colors hover:border-brand/50"
+                  data-reveal="up"
+                  className="group relative flex flex-col gap-5 rounded-container border border-edge bg-card p-6 shadow-lg transition-colors duration-200 hover:border-brand/50"
                 >
                   <div className="flex items-center justify-between">
                     <span className="type-label font-medium text-text-secondary">{node.step}</span>

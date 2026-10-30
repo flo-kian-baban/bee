@@ -33,7 +33,7 @@ Read these before writing any code:
    - "autonomous", "revolutionary", "guaranteed", "real-time", "telemetry" or "live";
    - invented client names, logos, testimonials, statistics, legal names, domains, addresses or phone numbers.
 
-   Illustrative values may appear only inside the evidence-chain section, which carries the "Illustrative example" label.
+   Illustrative example panels may appear only in the Problem, How it works and Evidence chain sections, and each of those sections shows a small "Illustrative example" label. Their values may only be generic example data: equipment ratings, units, dates, masked account numbers, file names and formula errors. Never accuracy, savings, cost, emissions-reduction, compliance or statistical figures; no percentages; no real names, addresses or coordinates.
 3. **No invented business details.** The legal name, contact email, LinkedIn URL and domain come from environment variables or `CONTENT.md`. If one is missing, hide that element; never fill it with a made-up value.
 4. **Minimal dependencies.** Only the packages listed below. Ask before adding anything else.
 5. **Do not reuse the Stitch `code.html`.** It contains claims that break rule 2, and prototype-only code: Tailwind loaded from a CDN, images hosted on Google, an icon font.
@@ -98,6 +98,7 @@ next.config.ts          security headers and the noindex header
   - From 1024px: a horizontal row. Below 1024px: a vertical stack with downward connectors.
   - With reduced motion: no line animation; the highlight changes instantly.
   - The nameplate is an SVG illustration of a generic, made-up boiler nameplate. Never use a real photo.
+- **Scroll motion.** Reveal, draw and tick (DESIGN.md, Motion) run once, as an element enters the viewport, driven by one shared IntersectionObserver in `components/Reveal.tsx`. CSS only otherwise; no animation library. No infinite animations, and nothing moves for more than 5 seconds. With reduced motion, every element shows its final state and nothing moves.
 - **Hero.** A honeycomb built from the logo's hexagon geometry (inline SVG, yellow strokes at 4–6% opacity), with one soft radial yellow glow behind the headline. On desktop, a pointer-driven light brightens the cells around the pointer (DESIGN.md, Motion); on touch screens and with reduced motion, the honeycomb is static. No canvas, no particles, no looping animation.
 - **Pilot form.** Validate on both the client and the server.
   - States: idle, submitting (button disabled), success (the form is replaced by the success message from CONTENT.md), error (the message from CONTENT.md, form data kept).

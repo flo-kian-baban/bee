@@ -14,7 +14,9 @@ export function Buildings() {
       className="section-x section-y border-y border-divider/70 bg-bg-alt"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-12">
-        <SectionHeading id="buildings-heading" eyebrow={buildings.eyebrow} heading={buildings.heading} />
+        <div data-reveal="up">
+          <SectionHeading id="buildings-heading" eyebrow={buildings.eyebrow} heading={buildings.heading} />
+        </div>
 
         <ul className="grid gap-5 sm:grid-cols-2 md:grid-cols-4">
           {buildings.types.map((type, index) => {
@@ -22,6 +24,7 @@ export function Buildings() {
             return (
               <li
                 key={type}
+                data-reveal="up"
                 className="group flex flex-col justify-between gap-8 rounded-container border border-divider bg-card p-6 transition-[border-color,translate] duration-200 hover:-translate-y-1 hover:border-brand/40"
               >
                 <span className="flex size-10 items-center justify-center rounded-tile border border-divider bg-card-low text-text-secondary transition-colors group-hover:text-brand">

@@ -186,14 +186,26 @@
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
 
-  /* Motion: 150, 200 or 300ms on Stitch's easing; colour, background, border,
-     box-shadow and transform only. No looping animations, so Tailwind's spin,
-     ping, pulse and bounce are removed. */
+  /* Motion (DESIGN.md, Motion). Hover: 150ms for links and icons, 200ms for
+     buttons, cards and tiles, on Stitch's easing; colour, background, border,
+     box-shadow and transform only. Reveal, draw and tick run once, as an
+     element enters the viewport (app/globals.css). No looping animations, so
+     Tailwind's spin, ping, pulse and bounce are removed. */
   --ease-*: initial;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1); /* reveal and tick: the decelerating half of the standard curve */
   --animate-*: initial;
   --default-transition-duration: 150ms;
   --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-hover-duration: 200ms;
+  --motion-hover-lift: 4px; /* building tiles */
+  --motion-reveal-duration: 400ms;
+  --motion-reveal-distance: 12px; /* elements rise this far as they fade in */
+  --motion-reveal-stagger: 60ms; /* between elements that enter the viewport together */
+  --motion-draw-duration: 800ms;
+  --motion-tick-duration: 200ms;
+  --motion-tick-start: 400ms; /* the first tick waits for its card's reveal */
+  --motion-tick-stagger: 300ms; /* between ticks */
 
   /* Logo: the wordmark is 28px tall in the nav, never under 24px.
      Clear space is half its height on every side. */

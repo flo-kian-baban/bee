@@ -1,4 +1,5 @@
 import { test } from "@playwright/test";
+import { revealAll } from "./motion";
 import { pages, widths } from "./pages";
 
 // Screenshots for a milestone report: `MILESTONE=2 npm run screenshots`
@@ -13,6 +14,8 @@ for (const { name, path } of pages) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
       await page.evaluate(() => document.fonts.ready);
+      // Each element as a visitor sees it once scrolled into view.
+      await revealAll(page);
       await page.screenshot({
         path: `reports/m${milestone}/${name}-${width}.png`,
         fullPage: true,

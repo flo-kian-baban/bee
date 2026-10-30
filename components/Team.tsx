@@ -20,13 +20,16 @@ export function Team() {
   return (
     <section id={sectionIds.team} aria-labelledby="team-heading" className="section-x section-y">
       <div className="mx-auto flex max-w-6xl flex-col gap-12">
-        <SectionHeading id="team-heading" eyebrow={team.eyebrow} heading={team.heading} />
+        <div data-reveal="up">
+          <SectionHeading id="team-heading" eyebrow={team.eyebrow} heading={team.heading} />
+        </div>
 
         <ul className="grid gap-8 md:grid-cols-2">
           {team.members.map((member) => (
             <li
               key={member.title}
-              className="group flex flex-col items-start gap-6 rounded-card border border-divider bg-card p-8 transition-colors hover:border-brand/40 sm:flex-row sm:items-center"
+              data-reveal="up"
+              className="group flex flex-col items-start gap-6 rounded-card border border-divider bg-card p-8 transition-colors duration-200 hover:border-brand/40 sm:flex-row sm:items-center"
             >
               <span
                 aria-hidden

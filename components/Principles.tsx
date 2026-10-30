@@ -11,7 +11,7 @@ export function Principles() {
   return (
     <section aria-labelledby="principles-heading" className="section-x section-y">
       <div className="mx-auto flex max-w-4xl flex-col gap-10">
-        <div className="flex flex-col gap-3">
+        <div data-reveal="up" className="flex flex-col gap-3">
           <SectionHeading id="principles-heading" heading={principles.heading} />
           <p className="type-lead text-text-secondary">{principles.lead}</p>
         </div>
@@ -22,7 +22,8 @@ export function Principles() {
             return (
               <li
                 key={item.title}
-                className="flex items-start gap-5 rounded-container border border-divider bg-card p-6 transition-colors hover:border-brand/40"
+                data-reveal="up"
+                className="flex items-start gap-5 rounded-container border border-divider bg-card p-6 transition-colors duration-200 hover:border-brand/40"
               >
                 <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-tile border border-divider bg-card-low text-brand shadow-sm">
                   <Icon size={20} aria-hidden />

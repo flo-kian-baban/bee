@@ -34,20 +34,33 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ### 2. Problem (bg-alt)
 - Eyebrow: "Today" [A]
 - Heading: "Building energy data is scattered." [A]
+- Label: "Illustrative example" [A]
 - Four panels (title and description [A]):
   - "Site photos": "Equipment, conditions and nameplates, photographed during inspections."
   - "Utility bills": "Electricity, gas and water statements, often spread across several accounts."
   - "Equipment records": "Nameplates, cut sheets and service logs, often on paper."
   - "Spreadsheets and reports": "Calculations and past studies kept in separate files."
 - Value tags beside the panel titles: Observed on "Site photos", "Utility bills" and "Equipment records"; Calculated on "Spreadsheets and reports" [A]
-- Each panel's visual is a simple line illustration of its source type. No numbers, error states or statistics.
-- Closing line: "Kept in different places and re-entered by hand." [A]
+- Source tags in the panel headers: "SRC 01" to "SRC 04", in panel order [A]
+- Format chips in the panel headers [D]: "JPEG" (Site photos) · "PDF" (Utility bills) · "Paper" (Equipment records) · "XLSX · PDF" (Spreadsheets and reports)
+- Each panel holds an example of its source. The values are generic example data only (CLAUDE.md, rule 2):
+  - "Site photos" [A]: a viewfinder frame with corner reticles around a line drawing of a boiler; tags "Boiler B-1 · Nameplate" and "Photo 014 · Mechanical room".
+  - "Utility bills" [A]: "Account ••••4521 · Natural gas"; a 12-month line with no axis numbers, and one dashed gap labelled "Missing statement".
+  - "Equipment records" [A]: "Submittal: hot water boiler", with "Rated input" "2,000 MBH", "Supply" "180°F", "Installed" "1998" and "Service log" "Paper only".
+  - "Spreadsheets and reports" [A]: three rows of metric, formula and status: "Baseline gas use" · "=SUM(B2:B13)" · "Manual"; "Weather adjustment" · "=VLOOKUP(…)" · "#REF!"; "Emission factor" · "Pasted from a 2019 report" · "Outdated". Each status shows an icon and its text.
+- Two labels at the foot of each panel:
+  - "Site photos": "Not linked to equipment" · "Re-typed by hand" [A]
+  - "Utility bills": "Separate accounts" · "Different billing periods" [A]
+  - "Equipment records": "Paper cut sheets" · "Not digitized" [A]
+  - "Spreadsheets and reports": "Separate files" · "Re-entered by hand" [D]
+- Closing line: "Kept in different places and re-entered by hand." [A], with a keyboard icon and the chip "4 sources · 0 links" [A]
 
 ### 3. How it works (id `how-it-works`)
 - Eyebrow: "How it works" [A]
 - Heading: "Capture. Analyze. Optimize." [A]
+- Label: "Illustrative example" [A]
 - Card 01, "Capture": "Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow." [A]
-  - Panel: a list of input types (Photos, Thermal images, Nameplates, Utility bills, Operating records) [A]
+  - Panel: a list of input types (Photos, Thermal images, Nameplates, Utility bills, Operating records), each marked "Captured" in turn as the card comes into view [A]
 - Card 02, "Analyze": "Utility benchmarking, engineering calculations and energy conservation measures, with every assumption visible." [A]
   - Panel: three labelled rows: "Method", "Assumptions", "Units", each with a short placeholder line and no figures [A]
 - Card 03, "Optimize": "Energy, cost and greenhouse gas scenarios for retrofit decisions, prepared for qualified engineering review." [A]

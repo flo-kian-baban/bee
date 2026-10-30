@@ -71,9 +71,9 @@ Ratios are measured (WCAG 2.x).
 | brand | #F0EA0E | Primary buttons, highlighted words, active and selected states, focus ring, honeycomb | 14.81 | 15.44 | 14.18 | 13.34 |
 | brand-hover | #D9D30A | Primary button hover | n/a | n/a | n/a | n/a |
 | on-brand | #161500 | Text on brand fills: 14.44 on brand, 11.63 on brand-hover | n/a | n/a | n/a | n/a |
-| success | #4ADE80 | Form success state. Not in Stitch. | 10.83 | 11.29 | 10.37 | 9.76 |
-| warning | #FB923C | Warnings; never brand yellow. Not in Stitch. | 8.34 | 8.69 | 7.98 | 7.51 |
-| error | #F87171 | Form errors. Not in Stitch. | 6.82 | 7.11 | 6.53 | 6.15 |
+| success | #4ADE80 | Form success state; the "Captured" status in How it works. Not in Stitch. | 10.83 | 11.29 | 10.37 | 9.76 |
+| warning | #FB923C | Warning statuses in example panels, always with an icon or a dashed mark, and text; never brand yellow. Not in Stitch. | 8.34 | 8.69 | 7.98 | 7.51 |
+| error | #F87171 | Form errors; error statuses in example panels, always with an icon and text. Not in Stitch. | 6.82 | 7.11 | 6.53 | 6.15 |
 
 Opacity steps Stitch uses:
 - divider at 70% (borders of sections, the nav and card headers) and 60% (the footer's bottom row, rows inside panels);
@@ -82,7 +82,7 @@ Opacity steps Stitch uses:
 
 Not used from Stitch:
 - Its dimmest grey text, #71717A: 3.52 to 4.07:1, below the 4.5:1 that AA requires. That text uses text-secondary.
-- The colours of the error states in its Problem panels, which CONTENT.md rules out. The error token is for form errors only.
+- The red and amber of the statuses in its Problem panels. Example panels use the error and warning tokens instead, always with an icon or a dashed mark, and text.
 - The colours its config defines but its page never uses.
 
 Rules:
@@ -129,7 +129,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 - Nav height: 80px.
 - From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
 - Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Evidence chain, Principles), 20px (Buildings).
-- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (evidence nodes, principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px.
+- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (evidence nodes, principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
 - Tap targets: 44px or larger (CLAUDE.md), so the nav button is 44px tall where Stitch has 36–40px.
 
 ## Shape and depth
@@ -168,14 +168,25 @@ Backdrop blur: 24px behind the nav; 12px behind the badge and the secondary butt
 
 ## Motion
 
-- Easing: `cubic-bezier(0.4, 0, 0.2, 1)` on every transition.
-- Durations: 150ms for colour changes on links and icons, and for the nav button; 200ms for the hero and pilot buttons and the building tiles; 300ms for the Problem, How it works and pilot cards.
-- Only colour, background, border colour, box-shadow, opacity and transform change.
-- Hover: card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards); Problem and How it works cards deepen their shadow; building tiles rise 4px.
-- Press: primary buttons scale to 0.98.
+- Easing: `cubic-bezier(0.4, 0, 0.2, 1)` (ease-standard) on every transition and on draw. Reveal and tick use `cubic-bezier(0, 0, 0.2, 1)` (ease-out), its decelerating half.
+- Only colour, background, border colour, box-shadow, opacity, transform and stroke-dashoffset change.
+
+| Token | Timing | What changes | When |
+|---|---|---|---|
+| hover | 150ms for links, icons and the nav button; 200ms for buttons, cards and tiles | Colour, border colour, box-shadow; building tiles also rise 4px | While hovered |
+| reveal | 400ms, ease-out; 60ms stagger | Opacity 0 → 1 and translateY 12px → 0 | Once, as an element enters the viewport |
+| draw | 800ms, ease-standard | stroke-dashoffset to 0 | Once, as a line enters the viewport |
+| tick | 200ms, ease-out; the first 400ms after its list enters, then 300ms apart | A dashed circle gives way to a check and "Captured" | Once, as the Capture list enters the viewport |
+
+- **Hover:** card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards, as in Stitch); icons not already in brand turn brand; Problem and How it works cards deepen their shadow; building tiles rise 4px.
+- **Reveal:** section headers and cards in Home sections 2 to 8. Elements that enter together follow one another 60ms apart, in page order. The hero is not revealed: it is in view on arrival.
+- **Draw:** the How it works line joining 01, 02 and 03, from 1024px. A line behind cards (that one, and the Evidence chain's) waits until the cards entering with it have faded in (the reveal plus four staggers), so it never shows through them.
+- **Tick:** the five inputs in the Capture panel, one by one.
+- **How it runs:** one IntersectionObserver for the page (`components/Reveal.tsx`); each element starts once it is 10% of the viewport's height inside it, then is no longer watched. Elements in view or above it when the page loads keep their final state, and so does everything when script does not run. CSS runs the motion; no animation library.
+- **Press:** primary buttons scale to 0.98.
 - In-page links scroll smoothly.
-- No looping animations. Stitch has five, and none is used: the badge dot's ping, pulsing dots, dashes flowing along the How it works and Evidence chain lines, the honeycomb's breathing, and the bee particles.
-- With `prefers-reduced-motion: reduce`, every transition, smooth scrolling and the hero light are off.
+- No infinite animations, and nothing moves for more than 5 seconds: the longest sequence, the Capture ticks, ends about 2 seconds after its list enters. Stitch has five looping animations, and none is used: the badge dot's ping, pulsing dots, dashes flowing along the How it works and Evidence chain lines, the honeycomb's breathing, and the bee particles.
+- With `prefers-reduced-motion: reduce`, every element shows its final state, and every transition, animation, smooth scrolling and the hero light are off.
 
 ### Hero light
 
@@ -214,7 +225,19 @@ Differences from Stitch's canvas version:
 
 **Panel** (product-style detail inside a card): bg-alt fill, 1px divider border, container radius, 16px padding. The header row has a label on the left and a value or chip on the right.
 
-**Chip**: chip fill, 1px chip-border, tag radius, 2px 6px padding, label type in text-soft.
+**Chip**: chip fill, 1px chip-border, tag radius, 2px 6px padding, label type in text-soft. The format chips in the Problem card headers.
+
+**Status chip** (in example panels): card-low fill, 1px divider border, tile radius, 2px 8px padding, label type. An icon and its text, both in the warning token (triangle) or the error token (circle). Never colour alone.
+
+**"Illustrative example" label**: card fill, 1px divider border, chip radius, 6px 14px padding, label type in text-secondary, after a 6px brand dot. Beside the heading of every section with example panels: Problem, How it works and Evidence chain (CLAUDE.md, rule 2).
+
+**Problem card**:
+- Header, on a divider at 70%: the icon in brand, the title in label type at 500, and its value tag; on the right, the source tag (SRC 01 to SRC 04) in text-secondary and a format chip. Below 1024px the header wraps.
+- The example panel, which grows so the cards in a row share their height: Site photos, a viewfinder with 2px brand corner reticles at 70%, the photo's tag, a line drawing of a boiler and a dashed equipment tag; Utility bills, a 12-month line in text-secondary at 70% with brand dots and no axis numbers, the missing month dashed in warning, with a dashed tick and its label under it; Equipment records, a two-column list of ratings in a bg box; Spreadsheets and reports, rows of metric, status chip and formula.
+- The description, then two labels on a divider at 70%: the first after a 6px dot, in text-secondary; the second in text-soft.
+- The closing banner adds a chip on the right: bg-alt, tile radius, an unlinked-chain icon in warning and the text in text-secondary.
+
+**Capture list** (How it works): one row per input, the input's icon in brand and its name on the left; on the right a dashed circle in text-secondary that ticks over to a check and "Captured" in success (Motion, tick).
 
 **Value tag** (product vocabulary from CONTENT.md): in the evidence chain, beside the Problem card titles and the principle titles, and in the Optimize panel's label row, where Stitch had status chips. Tags use Stitch's chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
 
@@ -231,7 +254,7 @@ Differences from Stitch's canvas version:
 - Error: error-coloured border, plus the message under the field with an icon.
 - Checkbox: 20px, 1.5px control-border; when checked, brand fill with an on-brand check mark.
 
-**Section header**: a label eyebrow in text-secondary, then the h2. The Problem eyebrow follows an 8px brand dot; the How it works eyebrow is brand at 500, after the same dot. The Problem header stands on a divider at 60%, the How it works header on one at 70%. Stitch's status chips beside them hold text that CONTENT.md doesn't have, so they are left out.
+**Section header**: a label eyebrow in text-secondary, then the h2. The Problem eyebrow follows an 8px brand dot; the How it works eyebrow is brand at 500, after the same dot. The Problem header stands on a divider at 60%, the How it works header on one at 70%. Where Stitch puts a status chip beside them, the "Illustrative example" label sits instead; Stitch's chip text is not used.
 
 **Nav**:
 - Sticky, 80px tall, bg at 80% with a 24px backdrop blur, divider at 70% along the bottom.
@@ -255,8 +278,9 @@ Differences from Stitch's canvas version:
 
 ## Icons and imagery
 
-- Lucide icons, 1.5px stroke, at Stitch's sizes (14–24px), in Stitch's colours: brand in the Problem cards, the Problem closing line and the principles; text-soft or text-secondary elsewhere, turning brand on hover. Stitch uses the Material Symbols icon font, which CLAUDE.md rules out; each of its icons maps to the closest Lucide icon.
-- Illustrations are flat SVG line drawings using these tokens. The Problem cards show one of each kind of data (equipment with its nameplate, statements, a nameplate and cut sheet, a spreadsheet and report) in place of Stitch's mock screens, which hold numbers, error states and statistics that CONTENT.md rules out.
+- Lucide icons, 1.5px stroke, at Stitch's sizes (14–24px), in Stitch's colours: brand in the Problem cards, the Problem closing line and the principles; text-soft or text-secondary elsewhere, turning brand on hover. A status icon takes its status's token (warning, error or success) and always sits beside its text. Stitch uses the Material Symbols icon font, which CLAUDE.md rules out; each of its icons maps to the closest Lucide icon.
+- Illustrations are flat SVG line drawings using these tokens.
+- The Problem cards keep the structure of Stitch's mock screens, but hold only the generic example data in CONTENT.md (CLAUDE.md, rule 2): none of Stitch's statistics, percentages, coordinates or compliance terms. The Site photos viewfinder shows a line drawing of a boiler, never a photo.
 - No stock photos of people.
 - No photos from employers' or clients' projects.
 - Thermal images only if licensed or captured by B.E.E. itself.

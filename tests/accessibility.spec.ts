@@ -1,6 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { ui } from "../content/site";
+import { revealAll } from "./motion";
 import { home, pages, widths } from "./pages";
 
 // WCAG 2.2 A and AA, plus axe's best practices.
@@ -16,6 +17,7 @@ for (const { name, path } of pages) {
     test(`${name} at ${width}px has no axe violations`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
+      await revealAll(page);
       expect(await axeViolations(page)).toEqual([]);
     });
   }
@@ -24,6 +26,7 @@ for (const { name, path } of pages) {
 test("the open mobile menu has no axe violations", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 900 });
   await page.goto(home.path);
+  await revealAll(page);
   await page.getByRole("button", { name: ui.menu }).click();
   await expect(page.locator("#mobile-menu")).toBeVisible();
   expect(await axeViolations(page)).toEqual([]);

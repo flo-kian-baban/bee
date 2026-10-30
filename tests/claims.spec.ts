@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { pages, widths } from "./pages";
+import { evidenceChain, exampleLabel, howItWorks, problem } from "../content/site";
+import { home, pages, widths } from "./pages";
 
 /** The banned terms in CLAUDE.md, hard rule 2. */
 const bannedTerms = [
@@ -44,3 +45,13 @@ for (const { name, path } of pages) {
     });
   }
 }
+
+// CLAUDE.md, rule 2: example panels appear only in these sections, and each
+// of them shows the "Illustrative example" label.
+test("every section with example panels shows the Illustrative example label", async ({ page }) => {
+  await page.goto(home.path);
+  for (const heading of [problem.heading, howItWorks.heading, evidenceChain.heading]) {
+    const section = page.locator("section").filter({ has: page.getByRole("heading", { level: 2, name: heading }) });
+    await expect(section.getByText(exampleLabel), heading).toBeVisible();
+  }
+});
