@@ -129,6 +129,83 @@
   }
 }
 
+/* The Evidence chain's trace (DESIGN.md, Motion). On the way to the selected
+   step, a dot travels each connector and lights the dotted line behind it, and
+   each step lights as its dot arrives: after --trace-step connectors, each a
+   leg long and a beat apart. Steps and connectors on the trail carry data-lit.
+   The trace runs once when Reveal shows the comb, and again whenever
+   components/EvidenceTrace.tsx sets data-run to "go" after "reset". As with
+   reveal, the keyframes give only the unlit start, so each runs to the
+   element's own, lit, style. */
+@keyframes trace-outline {
+  from {
+    stroke: var(--color-edge);
+    fill: var(--color-card);
+  }
+}
+
+@keyframes trace-ink {
+  from {
+    color: var(--color-text-secondary);
+  }
+}
+
+@keyframes trace-travel {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* A dot that travels its path: give the path pathLength="1". The dash pattern
+   leaves one round dot, which rests just past the path's end. */
+@utility trace-dot {
+  stroke-dasharray: 0 2;
+  stroke-dashoffset: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Until the comb is first seen, nothing is lit. */
+  [data-reveal="trace"][data-pending] .trace-outline {
+    stroke: var(--color-edge);
+    fill: var(--color-card);
+  }
+  [data-reveal="trace"][data-pending] .trace-ink {
+    color: var(--color-text-secondary);
+  }
+  [data-reveal="trace"][data-pending] .trace-trail {
+    stroke-dashoffset: 1;
+  }
+
+  /* The first trace waits until the comb is well into view; a replay starts at once. */
+  [data-reveal="trace"] {
+    --trace-wait: var(--trace-start);
+  }
+  [data-reveal="trace"][data-run] {
+    --trace-wait: 0ms;
+  }
+
+  /* While a trace runs, each step on it lights when the trace arrives, and the
+     dot on each connector leaves one leg before that. */
+  [data-reveal="trace"]:is([data-shown], [data-run="go"]):not([data-run="reset"]) [data-lit] {
+    --trace-arrive: calc(var(--trace-wait) + var(--trace-step) * (var(--trace-leg) + var(--trace-beat)));
+  }
+  [data-reveal="trace"]:is([data-shown], [data-run="go"]):not([data-run="reset"]) [data-lit] .trace-outline {
+    animation: trace-outline var(--trace-light) var(--ease-out) var(--trace-arrive) backwards;
+  }
+  [data-reveal="trace"]:is([data-shown], [data-run="go"]):not([data-run="reset"]) [data-lit] .trace-ink {
+    animation: trace-ink var(--trace-light) var(--ease-out) var(--trace-arrive) backwards;
+  }
+  [data-reveal="trace"]:is([data-shown], [data-run="go"]):not([data-run="reset"]) [data-lit] .trace-trail {
+    animation: draw var(--trace-leg) var(--ease-standard) calc(var(--trace-arrive) - var(--trace-leg)) backwards;
+  }
+  [data-reveal="trace"]:is([data-shown], [data-run="go"]):not([data-run="reset"]) [data-lit] .trace-dot {
+    animation: trace-travel var(--trace-leg) var(--ease-standard) calc(var(--trace-arrive) - var(--trace-leg));
+  }
+}
+
 /* With reduced motion, every transition and animation is off, and so is
    smooth scrolling. The hero light hides itself (see hero-light below). */
 @media (prefers-reduced-motion: reduce) {
@@ -212,33 +289,22 @@
   background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand) 30%, transparent), transparent);
 }
 
-/* The Evidence chain's comb (DESIGN.md, Evidence chain). Each cell is a
-   regular pointy-top hexagon, the logo's shape. Cells that share a wall sit
-   half a cell plus half a gap apart across, and (cell + gap) × √3/2 apart
-   down, so the gap between their walls is --comb-gap all round. Percentage
-   margins here are of the cell's width. */
+/* The Evidence chain's comb, from 768px (DESIGN.md, Evidence chain): seven
+   regular pointy-top cells, the logo's shape, on a honeycomb. Neighbours sit a
+   pitch apart (a cell plus a gap), so the gap between their walls is
+   --comb-gap all round: columns are half a pitch apart, and rows a pitch ×
+   √3/2. Each cell gives its column and row in --comb-col and --comb-row. */
+@utility comb {
+  position: relative;
+  width: var(--comb-width);
+  height: var(--comb-height);
+}
 @utility comb-cell {
+  position: absolute;
+  left: calc(var(--comb-col) * (var(--comb-cell) + var(--comb-gap)) / 2);
+  top: calc(var(--comb-row) * 0.8660254 * (var(--comb-cell) + var(--comb-gap)));
+  width: var(--comb-cell);
   aspect-ratio: 0.8660254; /* √3 : 2 */
-}
-
-/* From 640px: one cell and a half wide, the cells alternating left and right
-   down the page. Each overlaps the one above it by a corner's height (28.87%
-   of its width), less the gap. */
-@utility comb-column {
-  max-width: calc(1.5 * var(--comb-cell) + 0.5 * var(--comb-gap));
-}
-@utility comb-nest {
-  margin-top: calc(0.8660254 * var(--comb-gap) - 28.86751%);
-}
-
-/* From 1024px: two cells and a half wide, the cells running left to right and
-   alternating between two rows. The lower row starts (cell + gap) × √3/2
-   below the upper. */
-@utility comb-row {
-  max-width: calc(2.5 * var(--comb-cell) + 1.5 * var(--comb-gap));
-}
-@utility comb-drop {
-  margin-top: calc(86.60254% + 0.8660254 * var(--comb-gap));
 }
 
 /* The Team avatars' background: brand dots at 20%, 8px apart, on bg-alt. */
@@ -309,6 +375,14 @@
   font-weight: var(--type-title-weight);
   font-size: var(--type-title-size);
   line-height: var(--type-title-leading);
+}
+
+/* Evidence chain step titles: two lines fit a cell. */
+@utility type-cell {
+  font-family: var(--font-display);
+  font-weight: var(--type-title-weight);
+  font-size: var(--type-cell-size);
+  line-height: var(--type-cell-leading);
 }
 
 /* Building tiles: 16/24, then title from 640px. */

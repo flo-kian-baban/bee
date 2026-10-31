@@ -108,13 +108,14 @@ next.config.ts          security headers and the noindex header
 
 ## Key behaviours
 
-- **Evidence chain (Home).** Four nodes: Nameplate photo → Extracted value → Calculation → Finding.
-  - Each node is a `<button>`. Selecting a node highlights it and every node upstream of it, plus the connectors between them. Selecting Extracted value also outlines the matching region on the nameplate illustration.
-  - Works with mouse, touch and keyboard (arrow keys move between nodes; Enter or Space selects). The selected node's details are announced through `aria-live="polite"`.
-  - The nodes are hexagonal cells of a comb, joined by dotted connectors (DESIGN.md, Evidence chain). From 1024px they run left to right, alternating between two rows. Below 1024px they run down the page with downward connectors: alternating left and right from 640px, stacked below it.
-  - With reduced motion: no line animation; the highlight changes instantly.
-  - The nameplate is an SVG illustration of a generic, made-up boiler nameplate. Never use a real photo.
-- **Scroll motion.** Reveal, draw and tick (DESIGN.md, Motion) run once, as an element enters the viewport, driven by one shared IntersectionObserver in `components/Reveal.tsx`. CSS only otherwise; no animation library. No infinite animations, and nothing moves for more than 5 seconds. With reduced motion, every element shows its final state and nothing moves.
+- **Evidence chain (Home).** Seven steps in three streams that converge: 01 Capture → 02 Extract → 06; 03 Collect → 04 Normalize → 06; 05 Assume → 06; then 06 Model → 07 Review (CONTENT.md, section 4).
+  - From 768px: seven pointy-top hexagon cells on a true honeycomb grid, 06 at the centre of the cluster, about 200px wide and 56px apart. Dotted connectors (2px dots) join the midpoints of facing walls. Each cell holds only its number and action word in the label style, one icon, a title of at most two lines and its value tag, on the same internal grid so every cell lines up. No paragraphs in cells.
+  - Below 768px: a vertical list with a small hexagon number badge on a dotted vertical rail, grouped as Equipment, Utility and Engineer input, merging into Model and Review.
+  - A detail panel shows the selected step's panel text and its "Based on" trail: beside the comb where it fits, below it where it doesn't. After the first trace it shows 07.
+  - Trace: on first view, a yellow dot travels each connector, the streams in parallel, converging on 06, then 07; each cell lights as its dot arrives; about 4 seconds in all, then it rests. Hovering, focusing or tapping a cell replays the trace up to that cell and updates the panel; a "Replay" text button replays it all. Nothing loops.
+  - Cells are buttons; arrow keys move between them in step order. The panel is announced through `aria-live="polite"`.
+  - With reduced motion: no moving dots; states change instantly.
+- **Scroll motion.** Reveal, draw, tick and the Evidence chain's first trace (DESIGN.md, Motion) run once, as an element enters the viewport, driven by one shared IntersectionObserver in `components/Reveal.tsx`. CSS only otherwise; no animation library. No infinite animations, and nothing moves for more than 5 seconds. With reduced motion, every element shows its final state and nothing moves.
 - **Hero.** A honeycomb built from the logo's hexagon geometry (inline SVG, yellow strokes at 4–6% opacity), with one soft radial yellow glow behind the headline. On desktop, a pointer-driven light brightens the cells around the pointer (DESIGN.md, Motion); on touch screens and with reduced motion, the honeycomb is static. No canvas, no particles, no looping animation.
 - **Pilot form.** Validate on both the client and the server.
   - States: idle, submitting (button disabled), success (the form is replaced by the success message from CONTENT.md), error (the message from CONTENT.md, form data kept).
@@ -157,7 +158,7 @@ Each milestone ends with a pull request, its preview URL and a short report: wha
 | 1 | Scaffold, tokens, fonts, Nav, Footer, 404 page, Vercel preview | The preview deploys; tokens match DESIGN.md exactly |
 | 1b | Infrastructure: branch workflow, CI, security headers, Dependabot, report screenshots | CI passes on the pull request; Vercel builds its preview |
 | 2 | All Home sections, static | Matches CONTENT.md word for word; responsive from 375px to 1440px |
-| 3 | Evidence chain interaction | Keyboard, touch and reduced-motion behaviour as specified |
+| 3 | Evidence chain redesign: seven-cell comb, trace and detail panel | Keyboard, touch and reduced-motion behaviour as specified |
 | 4 | Pilot page and form handler, Privacy page shell | A test submission reaches `PILOT_INBOX`; spam protection works |
 | 5 | QA: tests, Lighthouse, accessibility, SEO metadata, Open Graph image, sitemap | Every check in the quality bar passes, and no temporary test exception remains |
 

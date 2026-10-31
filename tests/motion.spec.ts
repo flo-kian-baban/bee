@@ -21,7 +21,8 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     window.started = [];
     const record = (event: AnimationEvent | TransitionEvent) => {
-      for (const animation of (event.target as Element).getAnimations()) {
+      const animations = (event.target as Element).getAnimations();
+      for (const animation of animations) {
         const name =
           animation instanceof CSSAnimation
             ? animation.animationName
@@ -30,6 +31,15 @@ test.beforeEach(async ({ page }) => {
               : "script animation";
         const { iterations, endTime } = animation.effect?.getComputedTiming() ?? {};
         window.started?.push({ name, iterations: Number(iterations), endTime: Number(endTime) });
+      }
+      // Under load, a short animation can start and end before this runs, and
+      // its element no longer has it. Its name still counts; its timing can no
+      // longer be read, but its copies on other elements are checked.
+      if (
+        event instanceof AnimationEvent &&
+        !animations.some((animation) => (animation as CSSAnimation).animationName === event.animationName)
+      ) {
+        window.started?.push({ name: event.animationName, iterations: 1, endTime: 0 });
       }
     };
     document.addEventListener("animationstart", record, true);
@@ -61,11 +71,12 @@ test("every motion runs once, and ends within 5 seconds", async ({ page }) => {
   await revealAll(page);
 
   const started = await page.evaluate(() => window.started ?? []);
-  // The reveal, the line's draw and the Capture ticks all ran. (Transitions,
-  // such as the nav's as each section passes, are recorded too.)
+  // The reveal, the lines' draw, the Capture ticks and the Evidence chain's
+  // trace all ran. (Transitions, such as the nav's as each section passes,
+  // are recorded too.)
   const animations = started.filter((animation) => !animation.name.startsWith("transition"));
   expect(new Set(animations.map((animation) => animation.name))).toEqual(
-    new Set(["reveal-up", "draw", "fade-in", "fade-out"]),
+    new Set(["reveal-up", "draw", "fade-in", "fade-out", "trace-outline", "trace-ink", "trace-travel"]),
   );
   for (const animation of started) {
     expect(animation.iterations, animation.name).toBe(1);

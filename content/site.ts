@@ -189,7 +189,19 @@ export const howItWorks = {
   },
 };
 
-type EvidenceNode = { step: string; title: string; text: string; meta: { text?: string; tag: ValueTagKind }[] };
+export type StepNumber = "01" | "02" | "03" | "04" | "05" | "06" | "07";
+
+type EvidenceStep = {
+  number: StepNumber;
+  /** Shown after the number, in the label style. */
+  action: string;
+  title: string;
+  tag: ValueTagKind;
+  /** What the detail panel says about the step. */
+  text: string;
+  /** The steps it is worked out from directly. */
+  from: StepNumber[];
+};
 
 /** Home, section 4. Its values are illustrative, as its label says. */
 export const evidenceChain: {
@@ -197,41 +209,81 @@ export const evidenceChain: {
   heading: string;
   lead: string;
   label: string;
-  nodes: EvidenceNode[];
+  steps: EvidenceStep[];
+  /** Below 768px, the stream each label starts, by its first step. */
+  groups: Partial<Record<StepNumber, string>>;
+  basedOn: string;
+  noEarlier: string;
+  replay: string;
 } = {
   eyebrow: "Traceability",
   heading: "Every number has a source.",
-  lead: "Select any step to see where it came from.",
+  lead: "Seven steps from a site photo to a draft finding. Select any step to trace where it came from.", // [D]
   label: `${exampleLabel} · not real project data`,
-  nodes: [
+  // [D] Three streams converge: 01 → 02 → 06, 03 → 04 → 06 and 05 → 06; then 06 → 07.
+  steps: [
     {
-      step: "STEP 01",
+      number: "01",
+      action: "Capture",
       title: "Nameplate photo",
-      text: "Photographed on site during the inspection.",
-      meta: [{ text: "Source: site photo 014", tag: "observed" }],
+      tag: "observed",
+      text: "Site photo 014, taken during the inspection of Boiler B-1.",
+      from: [],
     },
     {
-      step: "STEP 02",
-      title: "Extracted value",
-      text: "Rated input: 2,000 MBH",
-      meta: [{ text: "Extracted from site photo 014", tag: "observed" }],
+      number: "02",
+      action: "Extract",
+      title: "Rated input: 2,000 MBH",
+      tag: "observed",
+      text: "Read from the nameplate in site photo 014.",
+      from: ["01"],
     },
     {
-      step: "STEP 03",
-      title: "Calculation",
-      text: "Annual heating energy, weather-normalized against heating degree days.",
-      meta: [
-        { text: "Seasonal efficiency: engineer input", tag: "assumed" },
-        { text: "Annual heating energy", tag: "calculated" },
-      ],
+      number: "03",
+      action: "Collect",
+      title: "Gas statements",
+      tag: "observed",
+      text: "Account ••••4521, natural gas, monthly statements; one flagged as missing.",
+      from: [],
     },
     {
-      step: "STEP 04",
-      title: "Finding",
-      text: "Draft measure: boiler replacement option.",
-      meta: [{ tag: "awaitingReview" }],
+      number: "04",
+      action: "Normalize",
+      title: "Weather-normalized baseline",
+      tag: "calculated",
+      text: "Gas use compared against heating degree days.",
+      from: ["03"],
+    },
+    {
+      number: "05",
+      action: "Assume",
+      title: "Seasonal efficiency",
+      tag: "assumed",
+      text: "Entered by the engineer and labelled as an assumption wherever it is used.",
+      from: [],
+    },
+    {
+      number: "06",
+      action: "Model",
+      title: "Boiler replacement scenario",
+      tag: "calculated",
+      text: "Energy, cost and GHG compared against the baseline. No values shown in this example.",
+      from: ["02", "04", "05"],
+    },
+    {
+      number: "07",
+      action: "Review",
+      title: "Draft finding",
+      tag: "awaitingReview",
+      text: "Boiler replacement option, prepared for review by a qualified professional.",
+      from: ["06"],
     },
   ],
+  groups: { "01": "Equipment", "03": "Utility", "05": "Engineer input" }, // [D]
+  basedOn: "Based on", // [D]
+  // TODO(copy): drafted for steps with nothing earlier; not in the brief.
+  noEarlier: "Nothing earlier: this step starts a stream.", // [D]
+  replay: "Replay", // [D]
 };
 
 type Principle = { title: string; tags: ValueTagKind[]; text: string };

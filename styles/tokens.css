@@ -80,6 +80,8 @@
   --type-title-size: 1.125rem; /* 18px */
   --type-title-leading: 1.75rem; /* 28px */
   --type-title-weight: 500;
+  --type-cell-size: 1rem; /* 16px: Evidence chain step titles, two lines at most */
+  --type-cell-leading: 1.375rem; /* 22px */
   --type-tile-size: 1rem; /* 16px: building tiles below 640px, then title */
   --type-tile-leading: 1.5rem; /* 24px */
 
@@ -174,11 +176,22 @@
   /* The hero light (DESIGN.md, Motion), at every screen size. */
   --hero-light-radius: 175px;
 
-  /* The Evidence chain's comb (DESIGN.md, Evidence chain): pointy-top cells
-     at most this wide, and the gap between cells that share a wall, which
-     each dotted link crosses. */
-  --comb-cell: 380px;
-  --comb-gap: 40px;
+  /* The Evidence chain's comb, from 768px (DESIGN.md, Evidence chain): pointy-
+     top cells this wide, the gap between cells that share a wall, which each
+     connector crosses, and the comb's size. components/EvidenceTrace.tsx
+     draws the connectors from the same cell and gap. */
+  --comb-cell: 200px;
+  --comb-gap: 56px;
+  --comb-width: calc(3 * var(--comb-cell) + 2 * var(--comb-gap)); /* 712px */
+  --comb-height: calc(1.1547005 * var(--comb-cell) + 1.7320508 * (var(--comb-cell) + var(--comb-gap))); /* 674px */
+
+  /* The Evidence chain's trace (DESIGN.md, Motion): a dot crosses each
+     connector in one leg, a beat apart, and each step lights as it arrives.
+     The first trace waits until the comb is well into view. */
+  --trace-start: 400ms;
+  --trace-leg: 900ms;
+  --trace-beat: 250ms;
+  --trace-light: 200ms;
 
   /* The pilot card: a glow at its top right, and a line along its top edge. */
   --pilot-glow-size: 288px;
