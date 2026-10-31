@@ -72,18 +72,17 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Heading: "Every number has a source." [A]
 - Lead: "Seven steps from a site photo to a draft finding. Select any step to trace where it came from." [D]
 - Label: "Illustrative example · not real project data" [A, expanded]
-- Seven steps, each with its number and action word (shown in the uppercase label style), title, value tag and panel text [D]:
+- Seven steps, each with its number and action word (shown in the uppercase label style), title, value tag and text [D]:
   - 01 Capture · "Nameplate photo" · Observed · "Site photo 014, taken during the inspection of Boiler B-1."
-  - 02 Extract · "Rated input: 2,000 MBH" · Observed · "Read from the nameplate in site photo 014."
-  - 03 Collect · "Gas statements" · Observed · "Account ••••4521, natural gas, monthly statements; one flagged as missing."
-  - 04 Normalize · "Weather-normalized baseline" · Calculated · "Gas use compared against heating degree days."
-  - 05 Assume · "Seasonal efficiency" · Assumed · "Entered by the engineer and labelled as an assumption wherever it is used."
+  - 02 Collect · "Gas statements" · Observed · "Account ••••4521, natural gas, monthly statements; one flagged as missing."
+  - 03 Assume · "Seasonal efficiency" · Assumed · "Entered by the engineer and labelled as an assumption wherever it is used."
+  - 04 Extract · "Rated input: 2,000 MBH" · Observed · "Read from the nameplate in site photo 014."
+  - 05 Normalize · "Weather-normalized baseline" · Calculated · "Gas use compared against heating degree days."
   - 06 Model · "Boiler replacement scenario" · Calculated · "Energy, cost and GHG compared against the baseline. No values shown in this example."
   - 07 Review · "Draft finding" · Awaiting review · "Boiler replacement option, prepared for review by a qualified professional."
-- Three streams converge: 01 → 02 → 06; 03 → 04 → 06; 05 → 06; then 06 → 07.
-- Stream labels in the list below 768px: "Equipment" (01, 02), "Utility" (03, 04), "Engineer input" (05) [D]
-- Detail panel: the selected step's number, action word, title, tag and panel text, then "Based on" [D] and every earlier step on its trail, by number and title. A step with none: "Nothing earlier: this step starts a stream." [D]
-- Button: "Replay" [D]
+- How the steps connect: 01 → 04; 02 → 05; 03, 04 and 05 → 06; then 06 → 07.
+- For screen readers, each step names the steps it is based on: "Based on" [D], then their numbers and action words.
+- Button: "Pause animation", and "Play animation" while paused [D]
 
 ### 5. Principles
 - Heading: "AI assists engineers. It doesn't replace them." [A]

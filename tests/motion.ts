@@ -3,9 +3,10 @@ import { expect, type Page } from "@playwright/test";
 /**
  * Scrolls through the whole page, so every element marked data-reveal enters
  * the viewport and runs its motion (DESIGN.md, Motion), waits until all of it
- * has ended, and scrolls back to the top. Tests that read or photograph the
- * page call this first: a pending element is hidden, and axe skips hidden
- * elements.
+ * has ended, and scrolls back to the top. The Evidence chain's flow, which
+ * loops while it is in view, is the one motion that does not end. Tests that
+ * read or photograph the page call this first: a pending element is hidden,
+ * and axe skips hidden elements.
  */
 export async function revealAll(page: Page) {
   await page.evaluate(async () => {
@@ -17,14 +18,19 @@ export async function revealAll(page: Page) {
     }
   });
   await expect(page.locator("[data-pending]")).toHaveCount(0);
-  await page.waitForFunction(() => document.getAnimations().length === 0);
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .every((animation) => animation instanceof CSSAnimation && animation.animationName.startsWith("flow-")),
+  );
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
 }
 
 /**
  * Every element with scroll motion that is not in its final state: nothing
- * pending or still moving, revealed elements fully opaque, drawn lines whole,
- * and every Capture input ticked to "Captured".
+ * pending or still moving, apart from the Evidence chain's flow, revealed
+ * elements fully opaque, drawn lines whole, and every Capture input ticked to
+ * "Captured".
  */
 export function notInFinalState(page: Page) {
   return page.evaluate(() => {
@@ -39,6 +45,7 @@ export function notInFinalState(page: Page) {
     };
     for (const element of document.querySelectorAll("[data-pending]")) problems.push(`${name(element)} is pending`);
     for (const animation of document.getAnimations()) {
+      if (animation instanceof CSSAnimation && animation.animationName.startsWith("flow-")) continue;
       problems.push(`${animation instanceof CSSAnimation ? animation.animationName : "a transition"} is running`);
     }
     check('[data-reveal="up"]', "opacity", "1");

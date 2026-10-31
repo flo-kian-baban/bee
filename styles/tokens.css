@@ -80,7 +80,7 @@
   --type-title-size: 1.125rem; /* 18px */
   --type-title-leading: 1.75rem; /* 28px */
   --type-title-weight: 500;
-  --type-cell-size: 1rem; /* 16px: Evidence chain step titles, two lines at most */
+  --type-cell-size: 1rem; /* 16px: Evidence chain step titles in the comb, one line */
   --type-cell-leading: 1.375rem; /* 22px */
   --type-tile-size: 1rem; /* 16px: building tiles below 640px, then title */
   --type-tile-leading: 1.5rem; /* 24px */
@@ -160,7 +160,7 @@
   --shadow-glow-lg-hover: 0 0 36px rgb(240 234 14 / 0.4);
   --drop-shadow-*: initial;
   --drop-shadow-glow: 0 0 28px rgb(240 234 14 / 0.3); /* highlighted headline words */
-  --drop-shadow-light: 0 0 12px rgb(240 234 14 / 0.4); /* strokes in the hero light */
+  --drop-shadow-light: 0 0 12px rgb(240 234 14 / 0.4); /* strokes in the hero light; outlines the Evidence chain's flow lights */
   --blur-*: initial;
   --blur-md: 12px; /* behind the badge and the secondary button */
   --blur-xl: 24px; /* behind the nav */
@@ -176,22 +176,26 @@
   /* The hero light (DESIGN.md, Motion), at every screen size. */
   --hero-light-radius: 175px;
 
-  /* The Evidence chain's comb, from 768px (DESIGN.md, Evidence chain): pointy-
-     top cells this wide, the gap between cells that share a wall, which each
-     connector crosses, and the comb's size. components/EvidenceTrace.tsx
-     draws the connectors from the same cell and gap. */
-  --comb-cell: 200px;
-  --comb-gap: 56px;
-  --comb-width: calc(3 * var(--comb-cell) + 2 * var(--comb-gap)); /* 712px */
-  --comb-height: calc(1.1547005 * var(--comb-cell) + 1.7320508 * (var(--comb-cell) + var(--comb-gap))); /* 674px */
+  /* The Evidence chain's comb, from 1024px (DESIGN.md, Evidence chain): pointy-
+     top cells this wide, and the gap between cells that share a wall, which
+     each connector crosses. Three and a half cells across and three rows
+     down, the comb fills the section's 1152px column; in a narrower column it
+     scales down whole (app/globals.css, comb). */
+  --comb-cell: 272px;
+  --comb-gap: 80px;
+  --comb-width: calc(3.5 * var(--comb-cell) + 2.5 * var(--comb-gap)); /* 1152px */
+  --comb-height: calc(1.7320508 * (var(--comb-cell) + var(--comb-gap)) + 1.1547005 * var(--comb-cell)); /* 923.76px */
 
-  /* The Evidence chain's trace (DESIGN.md, Motion): a dot crosses each
-     connector in one leg, a beat apart, and each step lights as it arrives.
-     The first trace waits until the comb is well into view. */
-  --trace-start: 400ms;
-  --trace-leg: 900ms;
-  --trace-beat: 250ms;
-  --trace-light: 200ms;
+  /* The Evidence chain's flow (DESIGN.md, Motion): in each cycle, a train of
+     dots crosses each connector in one leg, the first 1s of the cycle, and
+     legs a step apart run in turn (app/globals.css, flow-leg). A step lights
+     as the dots reach it. */
+  --flow-cycle: 4500ms;
+  --flow-step: 1150ms;
+  --flow-arrive: 700ms; /* into a leg, when its first dot reaches the far wall */
+  --flow-track: 24px; /* a connector's track, wide enough for a dot's glow */
+  --flow-train: 25px; /* three dots, 4, 5 and 6px, 5px apart */
+  --flow-glow: 8px;
 
   /* The pilot card: a glow at its top right, and a line along its top edge. */
   --pilot-glow-size: 288px;
@@ -208,8 +212,8 @@
   /* Motion (DESIGN.md, Motion). Hover: 150ms for links and icons, 200ms for
      buttons, cards and tiles, on Stitch's easing; colour, background, border,
      box-shadow and transform only. Reveal, draw and tick run once, as an
-     element enters the viewport (app/globals.css). No looping animations, so
-     Tailwind's spin, ping, pulse and bounce are removed. */
+     element enters the viewport (app/globals.css). The Evidence chain's flow
+     is the only loop, so Tailwind's spin, ping, pulse and bounce are removed. */
   --ease-*: initial;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1); /* reveal and tick: the decelerating half of the standard curve */

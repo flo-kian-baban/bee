@@ -197,7 +197,7 @@ type EvidenceStep = {
   action: string;
   title: string;
   tag: ValueTagKind;
-  /** What the detail panel says about the step. */
+  /** What the step says under its title. */
   text: string;
   /** The steps it is worked out from directly. */
   from: StepNumber[];
@@ -210,17 +210,17 @@ export const evidenceChain: {
   lead: string;
   label: string;
   steps: EvidenceStep[];
-  /** Below 768px, the stream each label starts, by its first step. */
-  groups: Partial<Record<StepNumber, string>>;
+  /** Read out before the steps a step is worked out from; screen readers only. */
   basedOn: string;
-  noEarlier: string;
-  replay: string;
+  /** The flow's pause button, while the flow runs and while it is paused. */
+  pause: string;
+  play: string;
 } = {
   eyebrow: "Traceability",
   heading: "Every number has a source.",
   lead: "Seven steps from a site photo to a draft finding. Select any step to trace where it came from.", // [D]
   label: `${exampleLabel} · not real project data`,
-  // [D] Three streams converge: 01 → 02 → 06, 03 → 04 → 06 and 05 → 06; then 06 → 07.
+  // [D] 01 → 04; 02 → 05; 03, 04 and 05 → 06; then 06 → 07.
   steps: [
     {
       number: "01",
@@ -232,14 +232,6 @@ export const evidenceChain: {
     },
     {
       number: "02",
-      action: "Extract",
-      title: "Rated input: 2,000 MBH",
-      tag: "observed",
-      text: "Read from the nameplate in site photo 014.",
-      from: ["01"],
-    },
-    {
-      number: "03",
       action: "Collect",
       title: "Gas statements",
       tag: "observed",
@@ -247,15 +239,7 @@ export const evidenceChain: {
       from: [],
     },
     {
-      number: "04",
-      action: "Normalize",
-      title: "Weather-normalized baseline",
-      tag: "calculated",
-      text: "Gas use compared against heating degree days.",
-      from: ["03"],
-    },
-    {
-      number: "05",
+      number: "03",
       action: "Assume",
       title: "Seasonal efficiency",
       tag: "assumed",
@@ -263,12 +247,28 @@ export const evidenceChain: {
       from: [],
     },
     {
+      number: "04",
+      action: "Extract",
+      title: "Rated input: 2,000 MBH",
+      tag: "observed",
+      text: "Read from the nameplate in site photo 014.",
+      from: ["01"],
+    },
+    {
+      number: "05",
+      action: "Normalize",
+      title: "Weather-normalized baseline",
+      tag: "calculated",
+      text: "Gas use compared against heating degree days.",
+      from: ["02"],
+    },
+    {
       number: "06",
       action: "Model",
       title: "Boiler replacement scenario",
       tag: "calculated",
       text: "Energy, cost and GHG compared against the baseline. No values shown in this example.",
-      from: ["02", "04", "05"],
+      from: ["03", "04", "05"],
     },
     {
       number: "07",
@@ -279,11 +279,9 @@ export const evidenceChain: {
       from: ["06"],
     },
   ],
-  groups: { "01": "Equipment", "03": "Utility", "05": "Engineer input" }, // [D]
   basedOn: "Based on", // [D]
-  // TODO(copy): drafted for steps with nothing earlier; not in the brief.
-  noEarlier: "Nothing earlier: this step starts a stream.", // [D]
-  replay: "Replay", // [D]
+  pause: "Pause animation", // [D]
+  play: "Play animation", // [D]
 };
 
 type Principle = { title: string; tags: ValueTagKind[]; text: string };

@@ -52,8 +52,11 @@ for (const { name, path, status } of pages) {
             if (parent instanceof SVGElement) continue;
             const style = getComputedStyle(parent);
             const box = parent.getBoundingClientRect();
-            const left = box.left + parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft);
-            const right = box.right - parseFloat(style.borderRightWidth) - parseFloat(style.paddingRight);
+            // The Evidence chain's comb is drawn at full size and scaled to
+            // its column, and the borders and padding inside it scale too.
+            const scale = parent instanceof HTMLElement && parent.offsetWidth ? box.width / parent.offsetWidth : 1;
+            const left = box.left + (parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft)) * scale;
+            const right = box.right - (parseFloat(style.borderRightWidth) + parseFloat(style.paddingRight)) * scale;
             for (const child of parent.children) {
               const { position } = getComputedStyle(child);
               if (position === "absolute" || position === "fixed") continue;

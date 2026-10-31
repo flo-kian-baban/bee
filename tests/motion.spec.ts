@@ -3,9 +3,10 @@ import { notInFinalState, revealAll } from "./motion";
 import { home } from "./pages";
 
 // Scroll motion (DESIGN.md, Motion): reveal, draw and tick run once, as an
-// element enters the viewport. No animation is infinite, nothing moves for
-// more than 5 seconds, and with reduced motion every element shows its final
-// state and nothing moves.
+// element enters the viewport. No animation but the Evidence chain's flow is
+// infinite, nothing else moves for more than 5 seconds, and with reduced
+// motion every element shows its final state and nothing moves. The flow has
+// its own tests in evidence.spec.ts.
 
 declare global {
   interface Window {
@@ -47,7 +48,7 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("no stylesheet sets an infinite animation", async ({ page }) => {
+test("only the Evidence chain's flow sets an infinite animation", async ({ page }) => {
   await page.goto(home.path);
   const infinite = await page.evaluate(() => {
     const found: string[] = [];
@@ -60,10 +61,11 @@ test("no stylesheet sets an infinite animation", async ({ page }) => {
     for (const sheet of document.styleSheets) walk(sheet.cssRules);
     return found;
   });
-  expect(infinite).toEqual([]);
+  expect(infinite.length).toBeGreaterThan(0);
+  for (const selector of infinite) expect(selector).toMatch(/^\.flow-(train|light)$/);
 });
 
-test("every motion runs once, and ends within 5 seconds", async ({ page }) => {
+test("every motion but the flow runs once, and ends within 5 seconds", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(home.path);
   // Scroll only once the page has hydrated and the elements below the viewport wait.
@@ -71,14 +73,16 @@ test("every motion runs once, and ends within 5 seconds", async ({ page }) => {
   await revealAll(page);
 
   const started = await page.evaluate(() => window.started ?? []);
-  // The reveal, the lines' draw, the Capture ticks and the Evidence chain's
-  // trace all ran. (Transitions, such as the nav's as each section passes,
-  // are recorded too.)
-  const animations = started.filter((animation) => !animation.name.startsWith("transition"));
-  expect(new Set(animations.map((animation) => animation.name))).toEqual(
-    new Set(["reveal-up", "draw", "fade-in", "fade-out", "trace-outline", "trace-ink", "trace-travel"]),
-  );
+  // The reveal, the lines' draw and the Capture ticks all ran, and the
+  // Evidence chain's flow may have, as it passed through the viewport.
+  // (Transitions, such as the nav's as each section passes, are recorded too.)
+  const names = [
+    ...new Set(started.map((animation) => animation.name).filter((name) => !name.startsWith("transition"))),
+  ];
+  expect(names).toEqual(expect.arrayContaining(["reveal-up", "draw", "fade-in", "fade-out"]));
+  expect(names.filter((name) => !["reveal-up", "draw", "fade-in", "fade-out", "flow-leg", "flow-light"].includes(name))).toEqual([]);
   for (const animation of started) {
+    if (animation.name.startsWith("flow-")) continue;
     expect(animation.iterations, animation.name).toBe(1);
     expect(animation.endTime, animation.name).toBeLessThanOrEqual(MAX_MS);
   }
