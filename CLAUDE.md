@@ -100,8 +100,8 @@ components/             one component per section, plus primitives (Button, Badg
 content/site.ts         all copy and feature flags, typed
 styles/tokens.css       design tokens as CSS variables
 public/brand/           logo files (SVG when supplied; the PNG placeholder until then)
-tests/                  smoke, accessibility, claims, form; screenshots.spec.ts for milestone reports
-reports/m<N>/           milestone screenshots at 375, 768 and 1440px
+tests/                  smoke, accessibility, claims, form; screenshots.spec.ts when Kian asks for screenshots
+reports/m<N>/           screenshots Kian asked for, at 375, 768 and 1440px
 .github/                CI workflow and Dependabot configuration
 next.config.ts          security headers and the noindex header
 ```
@@ -141,12 +141,16 @@ The policy allows inline scripts (`'unsafe-inline'`), because Next.js inlines th
 - **Merge gate:** a pull request's CI result and Vercel preview. Merge only when CI passes, the preview builds, and Kian approves.
 - **CI:** GitHub Actions runs on every pull request: type check, ESLint, production build, and the Playwright smoke, axe and claims tests (`npm test`). From milestone 2, Lighthouse CI also runs against the pull request's Vercel preview URL, with the thresholds in the quality bar.
 - **Dependabot:** weekly, with minor and patch updates grouped. Its pull requests also wait for Kian's approval.
-- **Screenshots:** every milestone report includes Playwright screenshots of every changed page at 375, 768 and 1440px, committed under `reports/m<N>/` (`MILESTONE=<N> npm run screenshots`).
+- **Testing:**
+  - While iterating on design, run nothing: Kian reviews on localhost.
+  - Before each commit, run the type check, ESLint and the claims test only: `npm run typecheck`, `npm run lint` and `npx playwright test tests/claims.spec.ts --project=checks`, with `BASE_URL` set to the running dev server.
+  - The full suite runs in CI on the pull request. Run it locally only to fix a CI failure.
+  - No screenshots and no repeated proving runs unless Kian asks. Quarantine a flaky test with `test.fixme` and a `TODO(M<n>)` (below) instead of proving it. When Kian asks for screenshots, `MILESTONE=<N> npm run screenshots` saves them under `reports/m<N>/`.
 - **Temporary test exceptions:** mark each with `TODO(M<n>)`, where `<n>` is the milestone that removes it. `tests/exceptions.spec.ts` fails on that milestone's branch while the exception remains, and from milestone 5 on it fails if any remain.
 
 ## Milestones
 
-Each milestone ends with a pull request, its preview URL and a short report: what was built, `TODO(copy)` items, open issues, and the screenshots described under Workflow. Stop and wait for Kian's review before starting the next one.
+Each milestone ends with a pull request, its preview URL and a short report: what was built, `TODO(copy)` items and open issues. Stop and wait for Kian's review before starting the next one.
 
 | # | Scope | Done when |
 |---|---|---|
