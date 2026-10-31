@@ -212,6 +212,35 @@
   background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand) 30%, transparent), transparent);
 }
 
+/* The Evidence chain's comb (DESIGN.md, Evidence chain). Each cell is a
+   regular pointy-top hexagon, the logo's shape. Cells that share a wall sit
+   half a cell plus half a gap apart across, and (cell + gap) × √3/2 apart
+   down, so the gap between their walls is --comb-gap all round. Percentage
+   margins here are of the cell's width. */
+@utility comb-cell {
+  aspect-ratio: 0.8660254; /* √3 : 2 */
+}
+
+/* From 640px: one cell and a half wide, the cells alternating left and right
+   down the page. Each overlaps the one above it by a corner's height (28.87%
+   of its width), less the gap. */
+@utility comb-column {
+  max-width: calc(1.5 * var(--comb-cell) + 0.5 * var(--comb-gap));
+}
+@utility comb-nest {
+  margin-top: calc(0.8660254 * var(--comb-gap) - 28.86751%);
+}
+
+/* From 1024px: two cells and a half wide, the cells running left to right and
+   alternating between two rows. The lower row starts (cell + gap) × √3/2
+   below the upper. */
+@utility comb-row {
+  max-width: calc(2.5 * var(--comb-cell) + 1.5 * var(--comb-gap));
+}
+@utility comb-drop {
+  margin-top: calc(86.60254% + 0.8660254 * var(--comb-gap));
+}
+
 /* The Team avatars' background: brand dots at 20%, 8px apart, on bg-alt. */
 @utility dot-grid {
   background-color: var(--color-bg-alt);

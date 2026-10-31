@@ -128,8 +128,8 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 - Section padding, top and bottom, at every width: hero 96px (128px from 640px); Problem 96px; How it works, Evidence chain, Principles, Buildings and Team 112px; Pilot 80px; footer 64px.
 - Nav height: 80px.
 - From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
-- Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Evidence chain, Principles), 20px (Buildings).
-- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (evidence nodes, principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
+- Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Principles), 20px (Buildings). The Evidence chain's cells are 40px apart (Components, Evidence chain).
+- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
 - From 1024 to 1279px, where its three cards are narrowest, How it works takes 20px at the sides of its cards and 12px at the sides of their panels, so the Optimize table fits. From 1280px it is back to 28px and 16px.
 - Tap targets: 44px or larger (CLAUDE.md), so the nav button is 44px tall where Stitch has 36–40px.
 
@@ -140,7 +140,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | tag | 4px | `rounded` | Chips, value tags, rows inside panels |
 | chip | 6px | `rounded-md` | The "Illustrative example" label |
 | tile | 8px | `rounded-lg` | Icon tiles, the nav button, status chips |
-| container | 12px | `rounded-xl` | Buttons, panels inside cards, evidence nodes, principles, building tiles, form fields |
+| container | 12px | `rounded-xl` | Buttons, panels inside cards, principles, building tiles, form fields |
 | card | 16px | `rounded-2xl` | Problem, How it works, Team and pilot cards |
 | full | | `rounded-full` | Badge, dots |
 
@@ -150,7 +150,7 @@ Borders are 1px: divider (often at 70%), or edge on How it works cards, evidence
 |---|---|---|
 | shadow-sm | 0 1px 2px 0 rgb(0 0 0 / 0.05) | Badge, secondary button, icon tiles |
 | shadow-md | 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) | Problem closing banner |
-| shadow-lg | 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) | Problem cards, evidence nodes |
+| shadow-lg | 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) | Problem cards |
 | shadow-xl | 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) | How it works cards |
 | shadow-2xl | 0 25px 50px -12px rgb(0 0 0 / 0.25) | Pilot card |
 | shadow-card-hover | 0 8px 30px rgb(0 0 0 / 0.6) | Problem cards on hover |
@@ -181,7 +181,7 @@ Backdrop blur: 24px behind the nav; 12px behind the badge and the secondary butt
 
 - **Hover:** card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards, as in Stitch); icons not already in brand turn brand; Problem and How it works cards deepen their shadow; building tiles rise 4px.
 - **Reveal:** section headers and cards in Home sections 2 to 8. Elements that enter together follow one another 60ms apart, in page order. The hero is not revealed: it is in view on arrival.
-- **Draw:** the How it works line joining 01, 02 and 03, from 1024px. A line behind cards (that one, and the Evidence chain's) waits until the cards entering with it have faded in (the reveal plus four staggers), so it never shows through them.
+- **Draw:** the How it works line joining 01, 02 and 03, from 1024px; and each Evidence chain connector, at every width, from the earlier node to the later. A line drawn among cards (any of these) waits until the cards entering with it have faded in (the reveal plus four staggers), so it never shows through them.
 - **Tick:** the five inputs in the Capture panel, one by one.
 - **How it runs:** one IntersectionObserver for the page (`components/Reveal.tsx`); each element starts once it is 10% of the viewport's height inside it, then is no longer watched. Elements in view or above it when the page loads keep their final state, and so does everything when script does not run. CSS runs the motion; no animation library.
 - **Press:** primary buttons scale to 0.98.
@@ -239,6 +239,16 @@ Differences from Stitch's canvas version:
 - The closing banner adds a chip on the right: bg-alt, tile radius, an unlinked-chain icon in warning and the text in text-secondary.
 
 **Capture list** (How it works): one row per input, the input's icon in brand and its name on the left; on the right a dashed circle in text-secondary that ticks over to a check and "Captured" in success (Motion, tick).
+
+**Evidence chain** (not from Stitch, which has a row of four cards): the nodes are cells of a comb, the honeycomb of the logo and the hero.
+- Each node is a cell: a regular pointy-top hexagon, the logo's shape, √3 wide to 2 tall. Card fill, a 1px edge outline, no shadow. On hover, the outline turns brand at 50% and the icon brand.
+- Inside, centred and at most 280px wide, so the wide lines stay in the cell's middle and only short ones reach into its corners: the icon (20px) and the step label in one line, at 500; the title; the text; then each value's label above its value tag. Text wraps balanced. At least 48px above and below the content, and at least 12px between any of it and a wall.
+- The cells nest like comb cells: cells that share a wall are 40px apart all round (`--comb-gap`), and cells are at most 380px wide (`--comb-cell`).
+  - From 1024px: left to right, alternating between an upper row (01, 03) and a lower one (02, 04). Two and a half cells wide, centred: 1,010px at most, and 347px cells at 1024px.
+  - From 640px: down the page, alternating left (01, 03) and right (02, 04). One and a half cells wide, centred.
+  - Below 640px: stacked corner to corner, as wide as the column, up to 380px.
+- Connectors: each node joins the next across the gap. A 6px brand port sits on the middle of each of the two walls (on the corners, while the cells stack), with 2px brand dots at 80%, 5px apart, between them. Each draws once (Motion, draw).
+- Only the hexagon takes the pointer, not the corners of the cell's box, which reach into its neighbours.
 
 **Value tag** (product vocabulary from CONTENT.md): in the evidence chain, beside the Problem card titles and the principle titles, and in the Optimize panel's label row, where Stitch had status chips. Tags use Stitch's chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
 

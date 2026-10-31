@@ -109,9 +109,9 @@ next.config.ts          security headers and the noindex header
 ## Key behaviours
 
 - **Evidence chain (Home).** Four nodes: Nameplate photo → Extracted value → Calculation → Finding.
-  - Each node is a `<button>`. Selecting a node highlights it and every node upstream of it, plus the connecting lines. Selecting Extracted value also outlines the matching region on the nameplate illustration.
+  - Each node is a `<button>`. Selecting a node highlights it and every node upstream of it, plus the connectors between them. Selecting Extracted value also outlines the matching region on the nameplate illustration.
   - Works with mouse, touch and keyboard (arrow keys move between nodes; Enter or Space selects). The selected node's details are announced through `aria-live="polite"`.
-  - From 1024px: a horizontal row. Below 1024px: a vertical stack with downward connectors.
+  - The nodes are hexagonal cells of a comb, joined by dotted connectors (DESIGN.md, Evidence chain). From 1024px they run left to right, alternating between two rows. Below 1024px they run down the page with downward connectors: alternating left and right from 640px, stacked below it.
   - With reduced motion: no line animation; the highlight changes instantly.
   - The nameplate is an SVG illustration of a generic, made-up boiler nameplate. Never use a real photo.
 - **Scroll motion.** Reveal, draw and tick (DESIGN.md, Motion) run once, as an element enters the viewport, driven by one shared IntersectionObserver in `components/Reveal.tsx`. CSS only otherwise; no animation library. No infinite animations, and nothing moves for more than 5 seconds. With reduced motion, every element shows its final state and nothing moves.
