@@ -53,8 +53,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - "Utility bills": "Separate accounts" · "Different billing periods" [A]
   - "Equipment records": "Paper cut sheets" · "Not digitized" [A]
   - "Spreadsheets and reports": "Separate files" · "Re-entered by hand" [A]
-- Hub: a hexagon with the logo, which the four panels connect to; its accessible name is "{BRAND}" [A]. Its connectors are decorative.
-- Closing line: "Kept in different places and re-entered by hand." [A], with a keyboard icon; then "{BRAND} connects them in one structured workflow." [D], with a hexagon icon. It replaces the chip "4 sources · 0 links".
+- Closing line: "Kept in different places and re-entered by hand." [A], with a keyboard icon and the chip "4 sources · 0 links" [A]
 
 ### 3. How it works (id `how-it-works`)
 - Eyebrow: "How it works" [A]
