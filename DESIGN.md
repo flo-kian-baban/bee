@@ -285,6 +285,10 @@ Differences from Stitch's canvas version:
 - Bottom row, 32px below a divider at 60%: privacy link and copyright in label type, text-secondary.
 - Not used from Stitch: its column headings and descriptor (text not in CONTENT.md), its invented email address and legal name, and its status line.
 
+**Placeholder pages** (until milestone 4), both `noindex`:
+- Pilot: a 672px column on bg with section padding; the headline in h2-lg type, the placeholder line in body-lg text-secondary, then "What happens next" in a card like the pilot band's (card fill, edge border, card radius, shadow-2xl, 32px padding, 40px from 768px): its h3, then the three steps, each its number in brand label type at 500 and its text in title type, divided by lines at 70%.
+- Privacy: as the 404 page: the heading in h2 type, then the placeholder line in body-lg text-secondary.
+
 ## Logo
 
 - Use the "bee" wordmark on dark backgrounds only, at 28px tall in the nav (minimum 24px).

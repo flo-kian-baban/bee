@@ -107,16 +107,11 @@ for (const { name, path, status } of pages) {
             const source = new URL(message.location().url, baseURL).pathname;
             // The not-found page's own response is a 404.
             if (status === 404 && source === path) return;
-            // TODO(M4): remove once /pilot and /privacy exist. Next.js prefetches
-            // their links, and the browser logs the 404 responses until then.
-            if (source === "/pilot" || source === "/privacy") return;
           }
           problems.push(`${message.type()}: ${message.text()}`);
         });
         await page.goto(path);
-        // Give hydration and link prefetching a moment to report problems. The
-        // network never goes idle while the prefetches above get 404s: Next.js
-        // leaves those responses unread, so the browser keeps them open.
+        // Give hydration and link prefetching a moment to report problems.
         await page.waitForTimeout(1000);
         expect(problems).toEqual([]);
       });

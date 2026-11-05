@@ -358,6 +358,24 @@ export const pilotBand = {
 };
 
 /**
+ * The Pilot page (CONTENT.md, Pilot page) until its form arrives in
+ * milestone 4: the headline, a placeholder line and "What happens next".
+ */
+export const pilotPage = {
+  headline: `Join the ${BRAND} pilot program.`,
+  // TODO(copy): stands in for the subtext and form until milestone 4.
+  placeholder: "The application form is coming soon.", // [D]
+  nextHeading: "What happens next",
+  nextSteps: ["We review your request", "We schedule a short call", "We agree on scope and data use in writing"],
+};
+
+/** The Privacy page: its heading, and the placeholder CONTENT.md sets until the approved text arrives. */
+export const privacyPage = {
+  heading: "Privacy policy",
+  placeholder: "This policy is being finalized.",
+};
+
+/**
  * TODO(copy): interface labels CONTENT.md does not cover. Screen readers need
  * them (skip link, landmark names, icon-only buttons), so these are proposals
  * for Kian to approve or replace.

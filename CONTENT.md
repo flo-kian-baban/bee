@@ -111,6 +111,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 
 ## Pilot page (`/pilot`)
 
+- Until the form ships (milestone 4), the page is a placeholder: the headline, then "The application form is coming soon." [D] in place of the subtext and form, then "What happens next". No form.
 - Headline: "Join the {BRAND} pilot program." [A]
 - Subtext: "Tell us about your building or portfolio. We will contact you to discuss whether it is a fit for the pilot." [A]
 - Form fields (labels [A]):
