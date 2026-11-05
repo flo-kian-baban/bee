@@ -168,7 +168,8 @@ export const problem = {
     },
   },
   closing: "Kept in different places and re-entered by hand.",
-  closingChip: "4 sources · 0 links",
+  /** After the closing line: what the hub stands for. */
+  closingHub: `${BRAND} connects them in one structured workflow.`, // [D]
 } as const;
 
 /** Home, section 3. The panels hold example data, as its label says. */

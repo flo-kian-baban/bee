@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 import { notInFinalState, revealAll } from "./motion";
 import { home } from "./pages";
 
-// Scroll motion (DESIGN.md, Motion): reveal, draw and tick run once, as an
-// element enters the viewport. No animation but the Evidence chain's flow is
+// Scroll motion (DESIGN.md, Motion): reveal, draw, tick and the Problem
+// hub's flow run once, as an element enters the viewport. No animation but the Evidence chain's flow is
 // infinite, nothing else moves for more than 5 seconds, and with reduced
 // motion every element shows its final state and nothing moves. The flow has
 // its own tests in evidence.spec.ts.
@@ -73,14 +73,16 @@ test("every motion but the flow runs once, and ends within 5 seconds", async ({ 
   await revealAll(page);
 
   const started = await page.evaluate(() => window.started ?? []);
-  // The reveal, the lines' draw and the Capture ticks all ran, and the
-  // Evidence chain's flow may have, as it passed through the viewport.
+  // The reveal, the lines' draw, the Capture ticks and the Problem hub's
+  // flow all ran, and the Evidence chain's flow may have, as it passed
+  // through the viewport.
   // (Transitions, such as the nav's as each section passes, are recorded too.)
   const names = [
     ...new Set(started.map((animation) => animation.name).filter((name) => !name.startsWith("transition"))),
   ];
-  expect(names).toEqual(expect.arrayContaining(["reveal-up", "draw", "fade-in", "fade-out"]));
-  expect(names.filter((name) => !["reveal-up", "draw", "fade-in", "fade-out", "flow-leg", "flow-light"].includes(name))).toEqual([]);
+  const once = ["reveal-up", "draw", "fade-in", "fade-out", "hub-leg", "hub-light"];
+  expect(names).toEqual(expect.arrayContaining(once));
+  expect(names.filter((name) => ![...once, "flow-leg", "flow-light"].includes(name))).toEqual([]);
   for (const animation of started) {
     if (animation.name.startsWith("flow-")) continue;
     expect(animation.iterations, animation.name).toBe(1);

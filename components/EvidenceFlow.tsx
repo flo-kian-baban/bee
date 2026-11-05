@@ -4,6 +4,7 @@ import { Pause, Play } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { Button } from "@/components/Button";
 import { ExampleLabel } from "@/components/ExampleLabel";
+import { FlowTrack, HEX_WIDTH, hexOutline as outline } from "@/components/Flow";
 import { hexagon } from "@/components/Honeycomb";
 import { ValueTag } from "@/components/ValueTag";
 import { evidenceChain, type StepNumber } from "@/content/site";
@@ -66,58 +67,29 @@ function wallOf({ from, to }: Connector) {
 // proportions, and a cell's focus ring: a 2px line 2px clear of its walls.
 // CELL is --comb-cell, the comb's cell width at full size.
 const CELL = 272;
-const HEX_WIDTH = Math.sqrt(3) * 500;
-const outline = hexagon(HEX_WIDTH / 2, 500, 500);
 const ring = hexagon(HEX_WIDTH / 2, 500, 500 * (1 + 3 / (CELL / 2)));
 
 /** The outline at rest: an edge line, or brand at 60% on 06, the hub. */
 const rest = (number: StepNumber) => (number === "06" ? "stroke-brand/60" : "stroke-edge");
-
-/** A connector's dots: 2px, 6px apart. */
-const dots = { fill: "none", strokeWidth: 2, strokeLinecap: "round", strokeDasharray: "0 6" } as const;
 
 /** "Based on 03 Assume, 04 Extract, 05 Normalize": what a step is worked out from, for screen readers. */
 const basedOn = (step: Step) =>
   `${evidenceChain.basedOn} ${step.from.map((number) => `${number} ${byNumber.get(number)?.action}`).join(", ")}`;
 
 /**
- * A dotted line down its box, and the train of dots that crosses it in its
- * stage's leg. In the comb, ports mark the walls it joins, and the line and
- * ports turn brand when its group is lit.
+ * A connector's track, whose train crosses it in its stage's leg. In the
+ * comb, ports mark the walls it joins, and the line and ports turn brand when
+ * its group is lit.
  */
 function Track({ stage, ports = false }: { stage: number; ports?: boolean }) {
   const ink = "transition-colors duration-200";
   return (
-    <>
-      <svg aria-hidden="true" focusable="false" className="absolute inset-0 size-full overflow-visible">
-        <line
-          x1="50%"
-          y1="0"
-          x2="50%"
-          y2="100%"
-          {...dots}
-          className={`stroke-chip-border group-data-lit:stroke-brand/80 ${ink}`}
-        />
-        {ports &&
-          ["0", "100%"].map((y) => (
-            <circle
-              key={y}
-              data-port=""
-              cx="50%"
-              cy={y}
-              r={3}
-              className={`fill-chip-border group-data-lit:fill-brand ${ink}`}
-            />
-          ))}
-      </svg>
-      <span className="flow-track">
-        <span className={`flow-train ${stages[stage]}`}>
-          <span className="flow-dot size-1 opacity-50" />
-          <span className="flow-dot size-[5px] opacity-75" />
-          <span className="flow-dot size-1.5" />
-        </span>
-      </span>
-    </>
+    <FlowTrack
+      ports={ports ? ["start", "end"] : []}
+      lineClassName={`group-data-lit:stroke-brand/80 ${ink}`}
+      portClassName={`group-data-lit:fill-brand ${ink}`}
+      trainClassName={stages[stage]}
+    />
   );
 }
 

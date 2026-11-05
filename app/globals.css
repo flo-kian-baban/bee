@@ -213,6 +213,75 @@
   }
 }
 
+/* The Problem hub's flow (DESIGN.md, Motion): the same trains on the same
+   tracks, crossing once. A flow (data-hub-flow) holds tracks and a trigger
+   marked data-reveal="hub", placed where the whole flow is in view once it
+   is: components/Reveal.tsx marks it shown as it enters the viewport, which
+   sends each train across once, a stagger apart in card order, and lights
+   the hexagon when the dots reach it. Each train then rests past the end of
+   its track, out of sight. Hovering over a card replays its own connector
+   (components/HubBoard.tsx). Transform and opacity only; without motion
+   there are no dots and nothing lights. */
+@keyframes hub-leg {
+  from {
+    transform: translateY(calc(-100% - var(--flow-glow)));
+  }
+  to {
+    transform: translateY(calc(var(--flow-train) + var(--flow-glow)));
+  }
+}
+
+/* Up in 250ms, held until 600ms, out by 1.3s, as the Evidence chain's lights. */
+@keyframes hub-light {
+  from {
+    opacity: 0;
+  }
+  19.231%,
+  46.154% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* The hexagon's outline as the dots light it: dark until they reach it. */
+@utility hub-light {
+  opacity: 0;
+}
+
+/* When the light comes on: from 1024px, as the last card's dots reach the
+   hexagon, or as one card's do when it replays; below, as the dots from the
+   rail's last stretch do. */
+[data-hub-board] {
+  --hub-into: calc(var(--hub-rail-leg) + var(--hub-stub-arrive));
+  --hub-first: var(--hub-into);
+  @variant lg {
+    --hub-into: var(--hub-arrive);
+    --hub-first: calc(3 * var(--hub-stagger) + var(--hub-arrive));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-hub-flow] .flow-train {
+    animation: none;
+    transform: translateY(calc(var(--flow-train) + var(--flow-glow)));
+  }
+  [data-hub-flow]:where(:has([data-reveal="hub"][data-shown])) .flow-train {
+    animation: hub-leg var(--hub-track-leg, var(--hub-leg)) linear
+      calc(var(--hub-track-order, 0) * var(--hub-stagger) + var(--hub-track-then, 0ms)) backwards;
+  }
+  [data-hub-link][data-replay] .flow-train {
+    animation: hub-leg var(--hub-track-leg, var(--hub-leg)) linear var(--hub-track-then, 0ms) backwards;
+  }
+  [data-hub-board]:where(:has([data-hub-into] [data-reveal="hub"][data-shown])) .hub-light {
+    animation: hub-light var(--hub-light) var(--ease-standard) var(--hub-first) backwards;
+  }
+  .hub-light[data-replay] {
+    animation: hub-light var(--hub-light) var(--ease-standard) var(--hub-into) backwards;
+  }
+}
+
 /* With reduced motion, every transition and animation is off, and so is
    smooth scrolling. The hero light hides itself (see hero-light below). */
 @media (prefers-reduced-motion: reduce) {
@@ -381,6 +450,58 @@
   --comb-link-x: calc(0.75 * var(--comb-cell));
   --comb-link-y: calc(0.1443376 * var(--comb-cell));
   --comb-link-turn: -150deg;
+}
+
+/* The Problem hub's corner connectors, from 1024px (DESIGN.md, Problem
+   card): from each card's inner corner, where its rounded border is nearest
+   the centre, along the diagonal to the hexagon's nearest wall. A connector's
+   box hangs from the centre of the hub's cell, turned toward its corner by
+   --hub-turn, and starts --hub-reach out, where the diagonal meets the wall
+   (the wall's distance, half the width, over cos 15°). It ends at the
+   card's corner: the cell's corner, half the gap out along both axes, then
+   out to the middle of the 16px rounded corner. The train runs inward. */
+@utility hub-link {
+  --hub-reach: calc(var(--hub-width) / 2 / 0.9659258);
+  --hub-corner: calc(0.7071068 * var(--hub-gap) + 0.4142136 * var(--radius-card));
+  position: absolute;
+  bottom: 50%;
+  left: calc(50% - var(--flow-track) / 2);
+  width: var(--flow-track);
+  height: calc(var(--hub-corner) - var(--hub-reach));
+  transform-origin: 50% 100%;
+  transform: rotate(var(--hub-turn)) translateY(calc(-1 * var(--hub-reach)));
+}
+
+/* Below 1024px, a card's stretch of the rail: in the gutter left of the
+   stack, from its port, beside the card's header, down to the next card's.
+   The last card's runs down to the middle of the hexagon after the stack. */
+@utility hub-rail {
+  --hub-track-leg: var(--hub-rail-leg);
+  position: absolute;
+  top: var(--hub-rail-port);
+  left: calc(var(--hub-rail-x) - var(--hub-rail-gutter) - var(--flow-track) / 2);
+  width: var(--flow-track);
+  height: calc(100% + var(--hub-stack-gap));
+}
+
+@utility hub-rail-last {
+  height: calc(100% - var(--hub-rail-port) + var(--hub-stack-gap) + var(--hub-height) / 2);
+}
+
+/* From the foot of the rail, right into the hexagon's left wall: the
+   hexagon is centred under the cards, so the stub runs half the stack's
+   width (50cqw of the hub board) on from the gutter's middle, less half the
+   hexagon and the rail's own offset. Its train follows the rail's. */
+@utility hub-stub {
+  --hub-track-leg: var(--hub-stub-leg);
+  --hub-track-then: var(--hub-rail-leg);
+  position: absolute;
+  top: calc(100% + var(--hub-stack-gap) + var(--hub-height) / 2);
+  left: calc(var(--hub-rail-x) - var(--hub-rail-gutter) - var(--flow-track) / 2);
+  width: var(--flow-track);
+  height: calc(50cqw + var(--hub-rail-gutter) / 2 - var(--hub-width) / 2 - var(--hub-rail-x));
+  transform-origin: 50% 0;
+  rotate: -90deg;
 }
 
 /* The Team avatars' background: brand dots at 20%, 8px apart, on bg-alt. */

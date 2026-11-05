@@ -13,8 +13,10 @@ const MOTION = "(prefers-reduced-motion: no-preference)";
  * which hides it, until it enters the viewport; then it is marked shown,
  * which runs its motion once, and is no longer observed. Elements that enter
  * together follow one another, --motion-reveal-stagger apart, in page order.
- * The Evidence chain's flow, marked data-reveal="flow", stays observed: it is
- * marked in view whenever it is, and its dots move only then. Nothing happens
+ * The Problem hub's triggers, marked data-reveal="hub", run its flow once the
+ * same way (app/globals.css, hub flow). The Evidence chain's flow, marked
+ * data-reveal="flow", stays observed: it is marked in view whenever it is,
+ * and its dots move only then. Nothing happens
  * with reduced motion, so every element keeps its final state and the flow
  * never runs.
  */

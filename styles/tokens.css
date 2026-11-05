@@ -201,6 +201,31 @@
   --flow-train: 25px; /* three dots, 4, 5 and 6px, 5px apart */
   --flow-glow: 8px;
 
+  /* The Problem hub (DESIGN.md, Problem card): the B.E.E. hexagon the four
+     cards connect to. From 1024px the cards sit around a centre cell
+     --hub-gap square, with the hexagon in it; below, they stack 24px apart
+     with a rail down their left side, in a gutter, and the hexagon after them. */
+  --hub-gap: 120px;
+  --hub-width: 112px;
+  --hub-height: calc(1.1547005 * var(--hub-width)); /* 129.33px, pointy-top */
+  --hub-stack-gap: 24px;
+  --hub-rail-gutter: 32px;
+  --hub-rail-x: 12px; /* the rail, from the left of the stack */
+  --hub-rail-port: 34px; /* each card's port on the rail, from its top: beside its header */
+
+  /* The hub's flow (DESIGN.md, Motion), which runs once: a train of dots
+     crosses each corner connector in one leg, card by card a stagger apart,
+     and the hexagon lights once the last dots reach it. Below 1024px a train
+     runs down each card's stretch of the rail, and from the last card on
+     into the hexagon. */
+  --hub-leg: 600ms;
+  --hub-stagger: 400ms;
+  --hub-arrive: 330ms; /* into a corner leg, when its first dot reaches the hexagon */
+  --hub-rail-leg: 1200ms;
+  --hub-stub-leg: 500ms;
+  --hub-stub-arrive: 400ms;
+  --hub-light: 1300ms; /* the hexagon lights: up in 250ms, held 350ms, out in 700ms */
+
   /* The pilot card: a glow at its top right, and a line along its top edge. */
   --pilot-glow-size: 288px;
   --pilot-glow-opacity: 0.05;
