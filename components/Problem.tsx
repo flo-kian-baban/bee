@@ -13,15 +13,19 @@ const icons = { photos: Camera, bills: Receipt, records: Wrench, spreadsheets: S
 
 /**
  * From 1024px, each card's corner around the hub, in card order: its place
- * on the grid, and its connector's turn toward it and place in the flow's
- * order (app/globals.css, hub-link).
+ * on the grid, its side of the hub (left or right, above or below) for its
+ * connector, and the connector's place in the flow's order (app/globals.css,
+ * hub-link).
  */
 const corners = [
-  { place: "lg:col-start-1 lg:row-start-1", link: "[--hub-turn:-45deg] [--hub-track-order:0]" },
-  { place: "lg:col-start-3 lg:row-start-1", link: "[--hub-turn:45deg] [--hub-track-order:1]" },
-  { place: "lg:col-start-1 lg:row-start-3", link: "[--hub-turn:-135deg] [--hub-track-order:2]" },
-  { place: "lg:col-start-3 lg:row-start-3", link: "[--hub-turn:135deg] [--hub-track-order:3]" },
+  { place: "lg:col-start-1 lg:row-start-1", link: "[--hub-sx:-1] [--hub-sy:-1] [--hub-track-order:0]" },
+  { place: "lg:col-start-3 lg:row-start-1", link: "[--hub-sx:1] [--hub-sy:-1] [--hub-track-order:1]" },
+  { place: "lg:col-start-1 lg:row-start-3", link: "[--hub-sx:-1] [--hub-sy:1] [--hub-track-order:2]" },
+  { place: "lg:col-start-3 lg:row-start-3", link: "[--hub-sx:1] [--hub-sy:1] [--hub-track-order:3]" },
 ];
+
+/** The hub's dotted lines and anchor dots at rest: brand at 50%. */
+const ink = { lineClassName: "stroke-brand/50", portClassName: "fill-brand/50" };
 
 /**
  * A card header's two groups stack, title over value tag and source over
@@ -45,12 +49,12 @@ function Rail({ index, last }: { index: number; last: boolean }) {
       className="pointer-events-none absolute inset-0 lg:hidden"
     >
       <span className={`hub-rail ${last ? "hub-rail-last" : ""}`}>
-        <FlowTrack ports={["start"]} />
+        <FlowTrack ports={["start"]} {...ink} />
         <span data-reveal="hub" className="absolute bottom-0 left-1/2 size-px" />
       </span>
       {last && (
         <span className="hub-stub">
-          <FlowTrack />
+          <FlowTrack {...ink} />
         </span>
       )}
     </span>
@@ -59,9 +63,10 @@ function Rail({ index, last }: { index: number; last: boolean }) {
 
 /**
  * The hub: the B.E.E. hexagon the cards connect to. From 1024px it sits
- * where the cards' central gaps cross, with a dotted connector from each
- * card's inner corner, and the connectors' trigger just below the lower
- * cards' corners; below, it sits after the stack.
+ * where the cards' central gaps cross, its points reaching into the column
+ * gap, with a dotted connector from an anchor on each card's facing edge,
+ * and the connectors' trigger level with the lower cards' anchors; below,
+ * it sits after the stack.
  */
 function Hub() {
   return (
@@ -77,7 +82,7 @@ function Hub() {
       >
         {corners.map((corner, index) => (
           <span key={corner.place} data-hub-link={index} className={`hub-link ${corner.link}`}>
-            <FlowTrack ports={["start"]} />
+            <FlowTrack ports={["start"]} {...ink} />
           </span>
         ))}
         <span data-reveal="hub" className="absolute top-full left-1/2 size-px" />
@@ -133,7 +138,7 @@ export function Problem() {
 
         {/* From 1024px, the cards on a 2 × 2 grid around the hub's cell; below, a
             stack with the rail in a gutter on its left, and the hub after it. */}
-        <HubBoard className="@container flex flex-col gap-(--hub-stack-gap) lg:grid lg:grid-cols-[1fr_var(--hub-gap)_1fr] lg:grid-rows-[auto_var(--hub-gap)_auto] lg:gap-0">
+        <HubBoard className="@container flex flex-col gap-(--hub-stack-gap) lg:grid lg:grid-cols-[1fr_var(--hub-gap-x)_1fr] lg:grid-rows-[auto_var(--hub-gap-y)_auto] lg:gap-0">
           <ul className="grid gap-(--hub-stack-gap) pl-(--hub-rail-gutter) lg:col-span-full lg:row-span-full lg:grid-cols-subgrid lg:grid-rows-subgrid lg:gap-0 lg:pl-0">
             {problem.panels.map((panel, index) => {
               const Icon = icons[panel.source];

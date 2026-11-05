@@ -17,7 +17,7 @@ const dots = { fill: "none", strokeWidth: 2, strokeLinecap: "round", strokeDasha
 type FlowTrackProps = {
   /** Ports, 6px dots, at the track's start (top), end (bottom), or both. */
   ports?: ("start" | "end")[];
-  /** Classes for the dotted line and the ports, such as their lit states. */
+  /** The dotted line's and the ports' colours, and any lit states: chip-border unless given. */
   lineClassName?: string;
   portClassName?: string;
   /** Classes for the train, such as its stage in the Evidence chain's cycle. */
@@ -30,11 +30,16 @@ type FlowTrackProps = {
  * connector turns its box to point its way. The CSS of each flow decides
  * when the train moves.
  */
-export function FlowTrack({ ports = [], lineClassName = "", portClassName = "", trainClassName = "" }: FlowTrackProps) {
+export function FlowTrack({
+  ports = [],
+  lineClassName = "stroke-chip-border",
+  portClassName = "fill-chip-border",
+  trainClassName = "",
+}: FlowTrackProps) {
   return (
     <>
       <svg aria-hidden="true" focusable="false" className="absolute inset-0 size-full overflow-visible">
-        <line x1="50%" y1="0" x2="50%" y2="100%" {...dots} className={`stroke-chip-border ${lineClassName}`} />
+        <line x1="50%" y1="0" x2="50%" y2="100%" {...dots} className={lineClassName} />
         {ports.map((end) => (
           <circle
             key={end}
@@ -42,7 +47,7 @@ export function FlowTrack({ ports = [], lineClassName = "", portClassName = "", 
             cx="50%"
             cy={end === "start" ? "0" : "100%"}
             r={3}
-            className={`fill-chip-border ${portClassName}`}
+            className={portClassName}
           />
         ))}
       </svg>
