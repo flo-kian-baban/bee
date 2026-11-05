@@ -86,8 +86,8 @@ function Track({ stage, ports = false }: { stage: number; ports?: boolean }) {
   return (
     <FlowTrack
       ports={ports ? ["start", "end"] : []}
-      lineClassName={`stroke-chip-border group-data-lit:stroke-brand/80 ${ink}`}
-      portClassName={`fill-chip-border group-data-lit:fill-brand ${ink}`}
+      lineClassName={`group-data-lit:stroke-brand/80 ${ink}`}
+      portClassName={`group-data-lit:fill-brand ${ink}`}
       trainClassName={stages[stage]}
     />
   );

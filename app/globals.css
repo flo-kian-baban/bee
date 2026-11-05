@@ -218,8 +218,8 @@
    marked data-reveal="hub", placed where the whole flow is in view once it
    is: components/Reveal.tsx marks it shown as it enters the viewport, which
    sends each train across once, a stagger apart in card order, and lights
-   the hexagon when the dots reach it, which then keeps a soft glow. Each
-   train then rests past the end of its track, out of sight. Hovering over a card replays its own connector
+   the hexagon when the dots reach it. Each train then rests past the end of
+   its track, out of sight. Hovering over a card replays its own connector
    (components/HubBoard.tsx). Transform and opacity only; without motion
    there are no dots and nothing lights. */
 @keyframes hub-leg {
@@ -231,8 +231,7 @@
   }
 }
 
-/* The first time the dots arrive: up from dark in 250ms, held until 600ms,
-   then down by 1.3s to the soft level the outline keeps (hub-light). */
+/* Up in 250ms, held until 600ms, out by 1.3s, as the Evidence chain's lights. */
 @keyframes hub-light {
   from {
     opacity: 0;
@@ -241,24 +240,13 @@
   46.154% {
     opacity: 1;
   }
-}
-
-/* A replay: up from the soft level, held, and back to it. */
-@keyframes hub-light-again {
-  19.231%,
-  46.154% {
-    opacity: 1;
+  to {
+    opacity: 0;
   }
 }
 
-/* The hexagon's lit outline: at its soft level once the flow has run, and
-   from the start wherever it will not run (in view on arrival, reduced
-   motion, no script); dark only while its flow waits to run. */
+/* The hexagon's outline as the dots light it: dark until they reach it. */
 @utility hub-light {
-  opacity: var(--hub-light-soft);
-}
-
-[data-hub-board]:has([data-hub-into] [data-reveal="hub"][data-pending]) .hub-light {
   opacity: 0;
 }
 
@@ -290,7 +278,7 @@
     animation: hub-light var(--hub-light) var(--ease-standard) var(--hub-first) backwards;
   }
   .hub-light[data-replay] {
-    animation: hub-light-again var(--hub-light) var(--ease-standard) var(--hub-into) backwards;
+    animation: hub-light var(--hub-light) var(--ease-standard) var(--hub-into) backwards;
   }
 }
 
@@ -464,24 +452,24 @@
   --comb-link-turn: -150deg;
 }
 
-/* The Problem hub's connectors, from 1024px (DESIGN.md, Problem card): from
-   each card's anchor, on its edge facing the hub --hub-anchor-in from the
-   inner corner, through the gap between the rows to the middle of the
-   hexagon's side wall on its side. The slanted walls' middles lie level with
-   the cards' edges or beyond them, so a line to one would run along a card.
-   A card gives its side in --hub-sx and --hub-sy (-1 or 1). The box hangs
-   from the anchor, as long as the line, and turns to point at the wall;
-   its train runs toward the hexagon. */
+/* The Problem hub's corner connectors, from 1024px (DESIGN.md, Problem
+   card): from each card's inner corner, where its rounded border is nearest
+   the centre, along the diagonal to the hexagon's nearest wall. A connector's
+   box hangs from the centre of the hub's cell, turned toward its corner by
+   --hub-turn, and starts --hub-reach out, where the diagonal meets the wall
+   (the wall's distance, half the width, over cos 15°). It ends at the
+   card's corner: the cell's corner, half the gap out along both axes, then
+   out to the middle of the 16px rounded corner. The train runs inward. */
 @utility hub-link {
-  --hub-dx: calc(var(--hub-gap-x) / 2 + var(--hub-anchor-in) - var(--hub-width) / 2);
-  --hub-dy: calc(var(--hub-gap-y) / 2);
+  --hub-reach: calc(var(--hub-width) / 2 / 0.9659258);
+  --hub-corner: calc(0.7071068 * var(--hub-gap) + 0.4142136 * var(--radius-card));
   position: absolute;
-  top: calc(50% + var(--hub-sy) * var(--hub-dy));
-  left: calc(50% + var(--hub-sx) * (var(--hub-gap-x) / 2 + var(--hub-anchor-in)) - var(--flow-track) / 2);
+  bottom: 50%;
+  left: calc(50% - var(--flow-track) / 2);
   width: var(--flow-track);
-  height: hypot(var(--hub-dx), var(--hub-dy));
-  transform-origin: 50% 0;
-  rotate: atan2(calc(var(--hub-sx) * var(--hub-dx)), calc(-1 * var(--hub-sy) * var(--hub-dy)));
+  height: calc(var(--hub-corner) - var(--hub-reach));
+  transform-origin: 50% 100%;
+  transform: rotate(var(--hub-turn)) translateY(calc(-1 * var(--hub-reach)));
 }
 
 /* Below 1024px, a card's stretch of the rail: in the gutter left of the
