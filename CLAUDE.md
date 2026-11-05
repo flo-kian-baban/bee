@@ -12,12 +12,13 @@ This project may access exactly one GitHub repository, `flo-kian-baban/bee`, and
 
 ## Decision authority
 
-Act without asking on anything inside this project folder and the `flo-kian-baban/bee` repository that is reversible and consistent with CLAUDE.md, DESIGN.md and CONTENT.md. That includes: editing files, running npm, npx, node and git, tests, builds, local commits, pushing milestone branches, opening pull requests, fixing failing checks, and unspecified design details such as spacing, timing and small layout calls. List those design decisions in the milestone report so Kian can veto them afterwards.
+Act without asking on anything inside this project folder and the `flo-kian-baban/bee` repository that is reversible and consistent with CLAUDE.md, DESIGN.md and CONTENT.md. That includes: editing files, running npm, npx, node and git, tests, builds, local commits, fixing failing checks, and unspecified design details such as spacing, timing and small layout calls. List those design decisions in the milestone report so Kian can veto them afterwards.
 
 Ask first only for:
 - anything outside this folder or the bee repository;
 - secrets, credentials, accounts or payments;
-- merging into `main`, force-pushing, rewriting history or deleting branches;
+- pushing to `main`, which goes live: only when Kian says "push" (see Workflow);
+- deleting branches;
 - adding a new dependency;
 - changing security settings (`.claude/settings.json`, CSP, headers);
 - anything irreversible.
@@ -65,10 +66,10 @@ Read these before writing any code:
 | Icons | `lucide-react`, 1.5px stroke |
 | Form | A Next.js route handler at `app/api/pilot/route.ts`. Input validated with `zod`. Spam protection: a honeypot field plus Cloudflare Turnstile. Email sent through Resend to `PILOT_INBOX`. |
 | Analytics | Vercel Web Analytics (no cookies) |
-| Hosting | Vercel, connected to the GitHub repo. `main` is production; every branch gets a preview deployment. Production stays `noindex` until launch is approved. |
+| Hosting | Vercel (project `bee-4ylb`), connected to the GitHub repo. `main` is production: every push to `main` deploys the live site. Production stays `noindex` until launch is approved. |
 | Tests | Playwright, `@axe-core/playwright`, Lighthouse CI |
 | Lint | ESLint 9 with `eslint-config-next`, which does not support ESLint 10 yet |
-| CI | GitHub Actions on every pull request (see Workflow) |
+| CI | GitHub Actions on every push to `main` and every pull request (see Workflow) |
 | Dependency updates | Dependabot, weekly, with minor and patch updates grouped |
 
 Not allowed without approval: UI kits, CSS-in-JS, animation libraries (use CSS only), a CMS, databases, cookie-based trackers, external image hosts.
@@ -138,21 +139,22 @@ The policy allows inline scripts (`'unsafe-inline'`), because Next.js inlines th
 
 ## Workflow
 
-- **Development:** run `npm run dev` and iterate with Kian on localhost. Merging still goes through a pull request.
-- **Branches:** `main` is production. Work on one branch per milestone (`m1b-infra`, `m2-home`, `m3-evidence-chain`, ...), open a pull request, and let Vercel build its preview. Never push directly to `main`.
-- **Merge gate:** a pull request's CI result and Vercel preview. Merge only when CI passes, the preview builds, and Kian approves.
-- **CI:** GitHub Actions runs on every pull request: type check, ESLint, production build, and the Playwright smoke, axe and claims tests (`npm test`). From milestone 2, Lighthouse CI also runs against the pull request's Vercel preview URL, with the thresholds in the quality bar.
-- **Dependabot:** weekly, with minor and patch updates grouped. Its pull requests also wait for Kian's approval.
+- **One branch:** `main` is production and the only branch. Work directly on `main`; Kian reviews on localhost (`npm run dev`). No feature branches; Dependabot's update branches are the only others.
+- **Commits and pushes:** commit locally as often as needed. Push to `main` only when Kian says "push": every push goes live on the production site.
+- **Before every push:** the type check, ESLint, the claims test and the full test suite (`npm run build`, then `npm test`). Never push with a failing check.
+- **History:** never force-push or rewrite `main`'s history. To undo something, use `git revert`.
+- **CI:** GitHub Actions runs on every push to `main` and on every pull request: type check, ESLint, production build, and the Playwright smoke, axe and claims tests (`npm test`). Lighthouse CI is not set up yet (milestone 5); with no pull request previews, it will have to run against the production site.
+- **Dependabot:** weekly, with minor and patch updates grouped. Its pull requests wait for Kian's approval; merging one is a push to production.
 - **Testing:**
   - While iterating on design, run nothing: Kian reviews on localhost.
   - Before each commit, run the type check, ESLint and the claims test only: `npm run typecheck`, `npm run lint` and `npx playwright test tests/claims.spec.ts --project=checks`, with `BASE_URL` set to the running dev server.
-  - The full suite runs in CI on the pull request. Run it locally only to fix a CI failure.
+  - Before each push, run the full suite as well (above). Otherwise, run it locally only to fix a CI failure.
   - No screenshots and no repeated proving runs unless Kian asks. Quarantine a flaky test with `test.fixme` and a `TODO(M<n>)` (below) instead of proving it. When Kian asks for screenshots, `MILESTONE=<N> npm run screenshots` saves them under `reports/m<N>/`.
 - **Temporary test exceptions:** mark each with `TODO(M<n>)`, where `<n>` is the milestone that removes it. `tests/exceptions.spec.ts` fails on that milestone's branch while the exception remains, and from milestone 5 on it fails if any remain.
 
 ## Milestones
 
-Each milestone ends with a pull request, its preview URL and a short report: what was built, `TODO(copy)` items and open issues. Stop and wait for Kian's review before starting the next one.
+Each milestone ends with a short report: what was built, `TODO(copy)` items and open issues. Kian reviews on localhost; stop and wait for that review before starting the next one.
 
 | # | Scope | Done when |
 |---|---|---|
