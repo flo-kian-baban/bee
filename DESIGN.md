@@ -125,10 +125,12 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 
 - Spacing: a 4px base. Stitch uses 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 112 and 128.
 - Breakpoints: 640px, 768px and 1024px.
-- Content widths: 1280px (nav and footer, including their side padding; Problem; How it works), 1152px (Evidence chain, Buildings, Team, Pilot), 896px (Principles; the hero headline), 768px (the hero subtext), 672px (the Pilot text).
-- Side padding: 24px. From 1024px: 48px on sections, 40px in the nav and footer.
-- Section padding, top and bottom, at every width: hero 96px (128px from 640px); Problem 96px; How it works, Evidence chain, Principles, Buildings and Team 112px; Pilot 80px; footer 64px.
+- Content widths: 1280px (Problem; How it works; the nav and footer, whose logo and button line up with this column), 1152px (Evidence chain, Buildings, Team, Pilot), 896px (Principles; the hero headline), 768px (the hero subtext), 672px (the Pilot text).
+- Side padding: 24px, and 48px from 1024px, on sections, the nav and the footer alike.
+- Section padding, top and bottom, at every width: hero 96px (128px from 640 to 767px); Problem 96px; How it works, Evidence chain, Principles, Buildings and Team 112px; Pilot 80px; footer 64px.
 - Nav height: 80px.
+- Hero height: on phones, its content's. From 768px, at least 90% of the screen below the nav (`svh` units), never under 560px or over 880px, with its content centred vertically, so the top of the Problem section shows below it. Its 96px padding is then the least space above and below the content.
+- Hero headline: from 1024px it breaks after "Every Building.", so the second line reads "Better Energy Intelligence."; below that it wraps by itself, balanced.
 - From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
 - Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Principles), 20px (Buildings). The Evidence chain's cells are 272px wide and 80px apart at full size (Components, Evidence chain).
 - Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
@@ -162,7 +164,7 @@ Borders are 1px: divider (often at 70%), or edge on How it works cards, Evidence
 | shadow-glow-lg | 0 0 24px rgb(240 234 14 / 0.2); hover 0 0 36px rgb(240 234 14 / 0.4) | Pilot button |
 
 Glows:
-- Hero: a 700 × 360px ellipse of brand at 5%, blurred 120px, centred, 40px below the top of the hero, behind the headline.
+- Hero: a 700 × 360px ellipse of brand at 5%, blurred 120px, centred on the headline, so it stays behind it at any hero height.
 - Highlighted headline words: a drop shadow, 0 0 28px rgb(240 234 14 / 0.3).
 - Pilot card: a 288px circle of brand at 5%, blurred 90px, 40px in from the top right; and along the top edge a 2px line, `linear-gradient(90deg, transparent, rgb(240 234 14 / 0.3), transparent)` at 90% opacity.
 - Hero light: see Motion.

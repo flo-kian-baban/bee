@@ -4,14 +4,18 @@ import { ExampleLabel } from "@/components/ExampleLabel";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SourcePanel } from "@/components/SourcePanel";
 import { ValueTag } from "@/components/ValueTag";
-import { problem } from "@/content/site";
+import { problem, sectionIds } from "@/content/site";
 
 const icons = { photos: Camera, bills: Receipt, records: Wrench, spreadsheets: Sheet };
 
 /** Home, section 2: where building energy data lives today. */
 export function Problem() {
   return (
-    <section aria-labelledby="problem-heading" className="section-x border-y border-divider/70 bg-bg-alt py-24">
+    <section
+      id={sectionIds.problem}
+      aria-labelledby="problem-heading"
+      className="section-x border-y border-divider/70 bg-bg-alt py-24"
+    >
       <div className="mx-auto flex max-w-7xl flex-col gap-12">
         <div
           data-reveal="up"

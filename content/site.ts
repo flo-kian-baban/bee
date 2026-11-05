@@ -30,10 +30,19 @@ export const business = {
 export type SiteLink = { label: string; href: string };
 
 /** The Home sections the nav links to. */
-export const sectionIds = { howItWorks: "how-it-works", buildings: "buildings", team: "team" };
+export const sectionIds = {
+  problem: "why-bee",
+  howItWorks: "how-it-works",
+  evidenceChain: "traceability",
+  buildings: "buildings",
+  team: "team",
+};
 
+/** In page order. The nav and the footer share them. */
 const sectionLinks: SiteLink[] = [
+  { label: `Why ${BRAND}`, href: `/#${sectionIds.problem}` }, // [D]
   { label: "How it works", href: `/#${sectionIds.howItWorks}` },
+  { label: "Traceability", href: `/#${sectionIds.evidenceChain}` }, // [D]
   { label: "Buildings", href: `/#${sectionIds.buildings}` },
   ...(flags.showTeam ? [{ label: "Team", href: `/#${sectionIds.team}` }] : []),
 ];
@@ -63,10 +72,15 @@ export const meta = {
   description: `${BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open.`,
 };
 
+/** The hero headline's two sentences. */
+const heroHeadline = ["Every Building.", "Better Energy Intelligence."] as const;
+
 /** Home, section 1. */
 export const hero = {
   badge: "In development · Pilot program open",
-  headline: "Every Building. Better Energy Intelligence.",
+  headline: heroHeadline.join(" "),
+  /** From 1024px each sentence is a line of its own; on smaller screens the headline wraps by itself. */
+  headlineLines: heroHeadline,
   /** The words of the headline shown in brand yellow. */
   headlineHighlight: "Energy Intelligence",
   subtext: `${BRAND} connects physical building inspections, intelligent data processing and engineering-based analysis to turn fragmented building information into transparent, actionable energy intelligence.`,

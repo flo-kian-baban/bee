@@ -11,12 +11,12 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ## Global
 
 **Nav**
-- Links: "How it works" → `#how-it-works` · "Buildings" → `#buildings` · "Team" → `#team` (hidden while `showTeam` is false) [A]
+- Links, in page order: "Why {BRAND}" → `#why-bee` [D] · "How it works" → `#how-it-works` [A] · "Traceability" → `#traceability` [D] · "Buildings" → `#buildings` [A] · "Team" → `#team` (hidden while `showTeam` is false) [A]
 - Button: "Join the pilot" → `/pilot` [A]
 
 **Footer**
 - Descriptor: "From building data to engineering decisions." [A, in sentence case]
-- Link column: How it works, Buildings, Team (if shown), Join the pilot [A]
+- Link column: the nav links, then "Join the pilot": Why {BRAND} [D], How it works, Traceability [D], Buildings, Team (if shown), Join the pilot [A]
 - Contact: `NEXT_PUBLIC_CONTACT_EMAIL`; LinkedIn icon if `showLinkedIn` is true [A]
 - Bottom row: "Privacy policy" → `/privacy` · "© 2026 {LEGAL_NAME or BRAND}" [A]
 
@@ -31,7 +31,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Primary button: "Join the pilot program" → `/pilot` [A]
 - Secondary button: "See how it works" → `#how-it-works` [A]
 
-### 2. Problem (bg-alt)
+### 2. Problem (id `why-bee`, bg-alt)
 - Eyebrow: "Today" [A]
 - Heading: "Building energy data is scattered." [A]
 - Label: "Illustrative example" [A]
@@ -67,7 +67,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - Panel: two scenario rows ("Scenario A", "Scenario B"), columns "Energy", "Cost", "GHG" with "—" values, and an "Awaiting review" tag [A]
 - Panel labels: "INPUTS" (Card 01), "METHOD" (Card 02) and "SCENARIOS" (Card 03, with the "Awaiting review" tag beside it) [A]
 
-### 4. Evidence chain (bg-alt)
+### 4. Evidence chain (id `traceability`, bg-alt)
 - Eyebrow: "Traceability" [A]
 - Heading: "Every number has a source." [A]
 - Lead: "Seven steps from a site photo to a draft finding. Select any step to trace where it came from." [D]

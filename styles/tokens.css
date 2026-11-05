@@ -128,10 +128,15 @@
   --container-6xl: 72rem; /* 1152px: Evidence chain, Buildings, Team, Pilot */
   --container-7xl: 80rem; /* 1280px: nav and footer (with their padding), Problem, How it works */
   --page-padding: 24px;
-  --page-padding-lg: 48px; /* sections, from 1024px */
-  --bar-padding-lg: 40px; /* nav and footer, from 1024px */
+  --page-padding-lg: 48px; /* sections, nav and footer, from 1024px */
   --section-padding: 112px; /* top and bottom of most sections */
   --nav-height: 80px;
+
+  /* The hero's height from 768px: this share of the screen below the nav, so
+     the top of the next section shows, kept between the two heights. */
+  --hero-fill: 0.9;
+  --hero-min-height: 560px;
+  --hero-max-height: 880px;
 
   /* Shape. rounded-full (dots, badge) is built in. */
   --radius-*: initial;
@@ -167,10 +172,9 @@
   --blur-pilot: 90px;
   --blur-hero: 120px;
 
-  /* The hero glow: an ellipse of brand behind the headline. */
+  /* The hero glow: an ellipse of brand, centred behind the headline. */
   --hero-glow-width: 700px;
   --hero-glow-height: 360px;
-  --hero-glow-top: 40px;
   --hero-glow-opacity: 0.05;
 
   /* The hero light (DESIGN.md, Motion), at every screen size. */
