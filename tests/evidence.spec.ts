@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { evidenceChain } from "../content/site";
+import { evidenceChain, valueTags } from "../content/site";
 import { home } from "./pages";
 
 // The Evidence chain (CLAUDE.md, Key behaviours; DESIGN.md, Evidence chain):
@@ -248,12 +248,16 @@ test("hovering or focusing a cell lights it and every cell and connector upstrea
   await expectLit(page, ["01", "04"]);
 });
 
-test("each cell is named by its number, action word and title, and tells screen readers what it is based on", async ({
+test("each cell is named by all it shows, in order, and tells screen readers what it is based on", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(home.path);
-  const name = (step: Step) => new RegExp(`^${step.number} ${step.action} ${step.title}$`, "i");
+  // Its number, action word, title, text and value tag: the name holds the
+  // button's visible text (WCAG 2.5.3, Label in Name).
+  const shown = (step: Step) => [step.number, step.action, step.title, step.text, valueTags[step.tag]].join(" ");
+  const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const name = (step: Step) => new RegExp(`^${escape(shown(step))}$`, "i");
   for (const step of steps) await expect(section(page).getByRole("button", { name: name(step) })).toBeVisible();
   const model = steps.find((step) => step.number === "06");
   if (!model) throw new Error("No step 06");

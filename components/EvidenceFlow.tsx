@@ -159,8 +159,8 @@ function Comb() {
                     data-step={step.number}
                     data-lit={lit.has(step.number) ? "" : undefined}
                     data-active={step.number === active ? "" : undefined}
-                    aria-labelledby={`${id}-label ${id}-title`}
-                    aria-describedby={[`${id}-text`, `${id}-tag`, ...(step.from.length ? [`${id}-from`] : [])].join(" ")}
+                    aria-labelledby={`${id}-label ${id}-title ${id}-text ${id}-tag`}
+                    aria-describedby={step.from.length ? `${id}-from` : undefined}
                     onPointerEnter={(event) => {
                       if (event.pointerType === "mouse") setActive(step.number);
                     }}
@@ -195,23 +195,27 @@ function Comb() {
                     {lights.has(step.number) && <Light number={step.number} />}
 
                     {/* One grid for every cell: rows 16, 22, 104 (four lines) and
-                        22px tall, centred, so the lines in each row of cells align. */}
+                        22px tall, centred, so the lines in each row of cells align.
+                        The button is named by all it shows, in order, so its name
+                        holds its visible text (WCAG 2.5.3, Label in Name); the
+                        spaces keep the parts apart as words. The steps it is
+                        based on describe it. */}
                     <span id={`${id}-label`} data-part="label" className="h-4 type-label font-medium whitespace-nowrap">
                       <span className="text-brand">{step.number}</span>{" "}
                       <span className="text-text-secondary transition-colors duration-200 group-data-lit:text-brand">
                         {step.action}
                       </span>
-                    </span>
+                    </span>{" "}
                     <span id={`${id}-title`} data-part="title" className="mt-2 h-5.5 w-59 type-cell text-text">
                       {step.title}
-                    </span>
+                    </span>{" "}
                     <span
                       id={`${id}-text`}
                       data-part="text"
                       className="mt-1.5 h-26 w-59 type-body text-balance text-text-secondary"
                     >
                       {step.text}
-                    </span>
+                    </span>{" "}
                     <span id={`${id}-tag`} data-part="tag" className="mt-3 flex h-5.5 items-center">
                       <ValueTag kind={step.tag} />
                     </span>
