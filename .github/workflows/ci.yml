@@ -1,14 +1,20 @@
 name: CI
 
+# Every push to main goes live, so each one is checked; pull requests are
+# Dependabot's.
 on:
+  push:
+    branches: [main]
   pull_request:
 
 permissions:
   contents: read
 
+# A newer push to a pull request cancels its older run. Each push to main
+# keeps its own run and result.
 concurrency:
-  group: ci-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   checks:
