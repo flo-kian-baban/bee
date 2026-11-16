@@ -102,7 +102,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | display | Space Grotesk | 36/40.32 | 60/60 | 68/68 | 600 | −0.025em | Hero headline |
 | h2-lg | Space Grotesk | 30/36 | 48/48 | | 500 | −0.025em | Problem and How it works headings |
 | h2 | Space Grotesk | 30/36 | 36/40 | | 500 | −0.025em | Other section headings |
-| h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works part names; Who it's for primary tiles; Team card titles |
+| h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works, Who it's for primary and Team card titles |
 | numeral | Space Grotesk | 36/40 | | | 700 | −0.025em | How it works step numbers |
 | title | Space Grotesk | 18/28 | | | 500 | 0 | Principles; Evidence chain step titles in the list below 1024px; the Who it's for audit row's title |
 | cell | Space Grotesk | 16/22 | | | 500 | 0 | Evidence chain step titles in the comb, up to two lines |
@@ -113,7 +113,7 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | small | Inter | 14/20 | | | 400; 500 when active | 0 | Nav and footer links |
 | badge | Inter | 14/20 | | | 400 | 0.025em | Hero badge (Stitch: 12/16) |
 | button | Space Grotesk | 14/20 | | | 600 primary, 400 secondary | 0 | Buttons (Stitch: the nav button at 12/16 below 640px) |
-| label | JetBrains Mono | 12/16 | | | 400; 500 for the How it works eyebrow and what each part is, Problem card titles and step numbers | 0.1em, uppercase | Eyebrows, card and panel labels, chips, value tags, the footer's bottom row |
+| label | JetBrains Mono | 12/16 | | | 400; 500 for the How it works eyebrow and card action words, Problem card titles and step numbers | 0.1em, uppercase | Eyebrows, card and panel labels, chips, value tags, the footer's bottom row |
 
 - Paragraphs are 16px or larger (CLAUDE.md quality bar). Stitch sets card text at 14/22.75, and at 12px in the evidence nodes; here every paragraph is body, 16/26.
 - One exception: the Evidence chain's comb scales whole with its column, text included, so between 1024 and 1247px its type is smaller than these sizes, down to 0.81 of them at 1024px, where body text renders at about 13px (Components, Evidence chain).
@@ -245,7 +245,7 @@ Differences from Stitch's canvas version:
 - The description, then two labels on a divider at 70%: the first after a 6px dot, in text-secondary; the second in text-soft.
 - The closing banner adds a chip on the right: bg-alt, tile radius, an unlinked-chain icon in warning and the text in text-secondary.
 
-**How it works card**: the number (numeral) and an icon tile on a divider; the part's name (h3) with what it is under it (label type at 500, text-secondary); its text; then its panel, at the foot of the card. The panels:
+**How it works card**: the number (numeral) and an icon tile on a divider; its title (h3) with its action word under it (label type at 500, text-secondary); its text; then its panel, at the foot of the card. The panels:
 - **Input list** (01, Field app): one row per input, the input's icon in brand and its name on the left; on the right a dashed circle in text-secondary that ticks over to a check and "Captured" in success (Motion, tick).
 - **Analysis rows** (02, Engineering analysis): each row a label in text-secondary and a placeholder line in divider, never a figure. The labels share one column, as wide as the longest, so the lines start together.
 - **Report rows** (03, Client results): each row a label in text-soft and "—" in text-secondary, with the Awaiting review tag in the panel's label row.

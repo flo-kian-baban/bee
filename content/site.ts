@@ -176,18 +176,19 @@ export const problem = {
 
 /**
  * Home, section 3: the product's three parts, each a card with its number,
- * name and what it is. The panels hold example data, as its label says.
+ * title and action word. The panels hold example data, as its label says.
  */
 export const howItWorks = {
   eyebrow: "How it works",
   heading: "Collect. Calculate. Deliver.", // [D]
   label: exampleLabel,
-  // [D] The three cards: name, what it is, text and panel rows. Approved: the
-  // INPUTS, ANALYSIS and REPORT labels, the "Captured" status and the "—".
+  // [D] The three cards: title, action word (shown in the uppercase label
+  // style), text and panel rows. Approved: the INPUTS, ANALYSIS and REPORT
+  // labels, the "Captured" status and the "—".
   collect: {
     number: "01",
-    name: "Bee",
-    kind: "Field app",
+    title: "Field app",
+    action: "Collect",
     text: "A checklist-driven app for site visits: photos, nameplates, the superintendent interview and building automation data, captured in one place.",
     label: "INPUTS",
     inputs: ["Photos", "Nameplates", "Interview", "Automation data", "Utility bills"],
@@ -196,8 +197,8 @@ export const howItWorks = {
   },
   calculate: {
     number: "02",
-    name: "Colony",
-    kind: "Engineering analysis",
+    title: "Engineering analysis",
+    action: "Calculate",
     text: "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer.",
     label: "ANALYSIS",
     /** Each row shows a placeholder line, never a figure. */
@@ -205,8 +206,8 @@ export const howItWorks = {
   },
   deliver: {
     number: "03",
-    name: "Honey",
-    kind: "Client results",
+    title: "Client results",
+    action: "Deliver",
     text: "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions.",
     label: "REPORT",
     rows: ["Executive summary", "Benchmark", "Measures", "Pathways"],

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { evidenceChain, exampleLabel, howItWorks, problem } from "../content/site";
+import { BRAND, evidenceChain, exampleLabel, howItWorks, problem } from "../content/site";
 import { home, pages, widths } from "./pages";
 
 /** The banned terms in CLAUDE.md, hard rule 2. */
@@ -30,6 +30,10 @@ const bannedTerms = [
   "accurate",
   "accuracy",
   "free audit",
+  // The product's internal names, which never appear on the site.
+  "Bee",
+  "Colony",
+  "Honey",
 ];
 
 const escape = (term: string) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -48,6 +52,8 @@ test("the matcher finds every banned term and percentage, and only whole words",
   expect(findClaims("Up to 30% less, or 30 % more")).toEqual(["30%", "30 %"]);
   expect(findClaims("Delivered alive, with timestamps and a sealing plan")).toEqual([]);
   expect(findClaims("Detailed maintenance logs, kept by hand")).toEqual([]);
+  // The brand name, as the site writes it, holds no whole word "bee".
+  expect(findClaims(`${BRAND} draws a honeycomb`)).toEqual([]);
 });
 
 for (const { name, path } of pages) {

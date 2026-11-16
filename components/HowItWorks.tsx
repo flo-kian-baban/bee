@@ -32,9 +32,9 @@ const narrowPanel = "lg:max-[1280px]:px-3";
 
 type StepProps = {
   number: string;
-  /** The part's name, then what it is, under it. */
-  name: string;
-  kind: string;
+  /** The card's title, then its action word, under it. */
+  title: string;
+  action: string;
   text: string;
   icon: LucideIcon;
   /** Stitch shows the first step's number in brand; the others turn brand on hover. */
@@ -42,7 +42,7 @@ type StepProps = {
   children: ReactNode;
 };
 
-function Step({ number, name, kind, text, icon: Icon, first = false, children }: StepProps) {
+function Step({ number, title, action, text, icon: Icon, first = false, children }: StepProps) {
   return (
     <li
       data-reveal="up"
@@ -59,10 +59,10 @@ function Step({ number, name, kind, text, icon: Icon, first = false, children }:
         </span>
       </div>
       <div className="flex flex-col gap-3">
-        {/* The space keeps the name and what it is apart as words for screen readers. */}
+        {/* The space keeps the title and action word apart as words for screen readers. */}
         <h3 className="flex flex-col gap-1">
-          <span className="type-h3 text-text transition-colors group-hover:text-brand">{name}</span>{" "}
-          <span className="type-label font-medium text-text-secondary">{kind}</span>
+          <span className="type-h3 text-text transition-colors group-hover:text-brand">{title}</span>{" "}
+          <span className="type-label font-medium text-text-secondary">{action}</span>
         </h3>
         <p className="type-body text-text-secondary">{text}</p>
       </div>
@@ -105,8 +105,8 @@ export function HowItWorks() {
           <ol className="relative grid gap-8 lg:grid-cols-3">
             <Step
               number={collect.number}
-              name={collect.name}
-              kind={collect.kind}
+              title={collect.title}
+              action={collect.action}
               text={collect.text}
               icon={ScanLine}
               first
@@ -145,8 +145,8 @@ export function HowItWorks() {
 
             <Step
               number={calculate.number}
-              name={calculate.name}
-              kind={calculate.kind}
+              title={calculate.title}
+              action={calculate.action}
               text={calculate.text}
               icon={ChartColumn}
             >
@@ -167,8 +167,8 @@ export function HowItWorks() {
 
             <Step
               number={deliver.number}
-              name={deliver.name}
-              kind={deliver.kind}
+              title={deliver.title}
+              action={deliver.action}
               text={deliver.text}
               icon={SlidersHorizontal}
             >

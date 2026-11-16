@@ -54,6 +54,7 @@ Build rules live only in these files and this one. Kian keeps the master decisio
    - "estimate" in any form: "estimate", "estimated", "estimates", "estimating" or "estimation";
    - "accurate" or "accuracy", until accuracy is validated;
    - an offer of a free audit ("free audit");
+   - "Bee", "Colony" or "Honey", the product's internal names ("B.E.E." itself is fine);
    - invented client names, logos, testimonials, statistics, legal names, domains, addresses or phone numbers.
 
    Illustrative example panels may appear only in the Problem, How it works and Evidence chain sections, and each of those sections shows a small "Illustrative example" label. Their values may only be generic example data: equipment ratings, units, dates, masked account numbers, file names and formula errors. Never accuracy, savings, cost, emissions-reduction, compliance or statistical figures; no percentages; no real names, addresses or coordinates.

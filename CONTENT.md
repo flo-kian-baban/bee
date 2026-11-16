@@ -59,12 +59,12 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Eyebrow: "How it works" [A]
 - Heading: "Collect. Calculate. Deliver." [D]
 - Label: "Illustrative example" [A]
-- Each card shows its number, the part's name, then what it is, then its text [D]:
-- Card 01, "Bee" · "Field app": "A checklist-driven app for site visits: photos, nameplates, the superintendent interview and building automation data, captured in one place." [D]
+- Each card shows its number, its title, then its action word in the uppercase label style, then its text [D]. The product's internal names (Bee, Colony, Honey) never appear on the site (CLAUDE.md, rule 2).
+- Card 01, "Field app" · "Collect": "A checklist-driven app for site visits: photos, nameplates, the superintendent interview and building automation data, captured in one place." [D]
   - Panel: a list of inputs (Photos, Nameplates, Interview, Automation data, Utility bills) [D], each marked "Captured" in turn as the card comes into view [A]
-- Card 02, "Colony" · "Engineering analysis": "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer." [D]
+- Card 02, "Engineering analysis" · "Calculate": "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer." [D]
   - Panel: four labelled rows: "Utility analysis", "Benchmark", "Measures", "Pathways", each with a short placeholder line and no figures [D]
-- Card 03, "Honey" · "Client results": "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions." [D]
+- Card 03, "Client results" · "Deliver": "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions." [D]
   - Panel: four rows: "Executive summary", "Benchmark", "Measures", "Pathways" [D], each with a "—" value [A], and an "Awaiting review" tag [A]
 - Panel labels: "INPUTS" (Card 01), "ANALYSIS" (Card 02) and "REPORT" (Card 03, with the "Awaiting review" tag beside it) [A]
 
