@@ -38,6 +38,8 @@ Read these before writing any code:
 2. `CONTENT.md`: every word on the site, plus feature flags and pending items. The single source of truth for copy.
 3. `reference/stitch-home-desktop.png`: layout reference only. Do not copy any text from it.
 
+Build rules live only in these files and this one. Kian keeps the master decision log outside this repository, so don't add one here.
+
 `AGENTS.md` holds Next.js's own guidance for AI coding agents; `next dev` writes it. If AGENTS.md and CLAUDE.md conflict, CLAUDE.md wins.
 
 ## Hard rules
