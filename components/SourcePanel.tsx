@@ -107,7 +107,7 @@ function BillPanel() {
   );
 }
 
-/** A submittal for a boiler: its ratings, and a service log kept on paper. */
+/** A submittal for a boiler: its ratings, in both unit systems, and a service log kept on paper. */
 function RecordPanel() {
   return (
     <Panel label={records.title} className="flex flex-1 flex-col">
@@ -115,7 +115,11 @@ function RecordPanel() {
         {records.fields.map((field) => (
           <div key={field.label} className="flex flex-col gap-0.5">
             <dt className="type-label text-text-secondary">{field.label}</dt>
-            <dd className={`type-label ${"severity" in field ? "text-warning" : "text-text-soft"}`}>{field.value}</dd>
+            <dd className={`type-label ${"severity" in field ? "text-warning" : "text-text-soft"}`}>
+              {field.value}
+              {/* The SI value keeps its symbols' case (kW, not KW) inside the uppercase label. */}
+              {"si" in field && <span className="normal-case"> ({field.si})</span>}
+            </dd>
           </div>
         ))}
       </dl>

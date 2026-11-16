@@ -459,18 +459,7 @@
   font-weight: var(--type-title-weight);
   font-size: var(--type-cell-size);
   line-height: var(--type-cell-leading);
-}
-
-/* Building tiles: 16/24, then title from 640px. */
-@utility type-tile {
-  font-family: var(--font-display);
-  font-weight: var(--type-title-weight);
-  font-size: var(--type-tile-size);
-  line-height: var(--type-tile-leading);
-  @variant sm {
-    font-size: var(--type-title-size);
-    line-height: var(--type-title-leading);
-  }
+  letter-spacing: var(--type-cell-tracking);
 }
 
 @utility type-body-lg {

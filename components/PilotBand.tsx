@@ -22,7 +22,9 @@ export function PilotBand() {
               <h2 id="pilot-heading" className="type-h2 text-text">
                 {pilotBand.heading}
               </h2>
-              <p className="type-body text-text-secondary">{pilotBand.text}</p>
+              <p className="type-body text-text-secondary">
+                {pilotBand.text} {pilotBand.focus}
+              </p>
             </div>
             <Button href={pilotBand.cta.href} size="lg" className="shrink-0">
               {pilotBand.cta.label}

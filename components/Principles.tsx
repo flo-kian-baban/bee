@@ -1,12 +1,13 @@
-import { Route, Tag, UserCheck } from "lucide-react";
+import { History, Route, Tag, UserCheck } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ValueTag } from "@/components/ValueTag";
 import { principles } from "@/content/site";
 
-// One icon per principle: labelled values, methods that travel, people who review.
-const icons = [Tag, Route, UserCheck];
+// One icon per principle: labelled values, methods that travel, people who
+// review, decisions that can be revisited.
+const icons = [Tag, Route, UserCheck, History];
 
-/** Home, section 5: how B.E.E. keeps engineers in charge. */
+/** Home, section 5: how B.E.E. keeps engineers in charge of every decision. */
 export function Principles() {
   return (
     <section aria-labelledby="principles-heading" className="section-x section-y">
@@ -31,11 +32,13 @@ export function Principles() {
                 <div className="flex flex-col gap-1">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <h3 className="type-title text-text">{item.title}</h3>
-                    <span className="flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <ValueTag key={tag} kind={tag} />
-                      ))}
-                    </span>
+                    {item.tags.length > 0 && (
+                      <span className="flex flex-wrap gap-2">
+                        {item.tags.map((tag) => (
+                          <ValueTag key={tag} kind={tag} />
+                        ))}
+                      </span>
+                    )}
                   </div>
                   <p className="type-body text-text-secondary">{item.text}</p>
                 </div>

@@ -43,7 +43,7 @@ const sectionLinks: SiteLink[] = [
   { label: `Why ${BRAND}`, href: `/#${sectionIds.problem}` }, // [D]
   { label: "How it works", href: `/#${sectionIds.howItWorks}` },
   { label: "Traceability", href: `/#${sectionIds.evidenceChain}` }, // [D]
-  { label: "Buildings", href: `/#${sectionIds.buildings}` },
+  { label: "Who it's for", href: `/#${sectionIds.buildings}` }, // [D]
   ...(flags.showTeam ? [{ label: "Team", href: `/#${sectionIds.team}` }] : []),
 ];
 
@@ -69,7 +69,8 @@ export const notFoundPage = {
 
 export const meta = {
   title: `${BRAND} · Building Energy Intelligence`,
-  description: `${BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open.`,
+  // [D] The hero subtext, shortened, plus where the product stands.
+  description: `${BRAND} connects on-site inspections, utility data and detailed engineering calculations into clear, traceable energy decisions. In development, with a pilot program open.`,
 };
 
 /** The hero headline's two sentences. */
@@ -83,7 +84,7 @@ export const hero = {
   headlineLines: heroHeadline,
   /** The words of the headline shown in brand yellow. */
   headlineHighlight: "Energy Intelligence",
-  subtext: `${BRAND} connects physical building inspections, intelligent data processing and engineering-based analysis to turn fragmented building information into transparent, actionable energy intelligence.`,
+  subtext: `${BRAND} connects on-site inspections, utility data and detailed engineering calculations to turn scattered building information into clear, traceable energy decisions.`, // [D]
   primaryCta: { label: "Join the pilot program", href: "/pilot" },
   secondaryCta: { label: "See how it works", href: `#${sectionIds.howItWorks}` },
 };
@@ -152,9 +153,11 @@ export const problem = {
     bills: { account: "Account ••••4521 · Natural gas", gap: "Missing statement" },
     records: {
       title: "Submittal: hot water boiler",
+      // A rating shows its nameplate value, then the same value in SI units
+      // in brackets [D]. A no-break space keeps each number with its unit.
       fields: [
-        { label: "Rated input", value: "2,000 MBH" },
-        { label: "Supply", value: "180°F" },
+        { label: "Rated input", value: "2,000 MBH", si: "586 kW" },
+        { label: "Supply", value: "180°F", si: "82°C" },
         { label: "Installed", value: "1998" },
         { label: "Service log", value: "Paper only", severity: "warning" },
       ],
@@ -171,34 +174,43 @@ export const problem = {
   closingChip: "4 sources · 0 links",
 } as const;
 
-/** Home, section 3. The panels hold example data, as its label says. */
+/**
+ * Home, section 3: the product's three parts, each a card with its number,
+ * name and what it is. The panels hold example data, as its label says.
+ */
 export const howItWorks = {
   eyebrow: "How it works",
-  heading: "Capture. Analyze. Optimize.",
+  heading: "Collect. Calculate. Deliver.", // [D]
   label: exampleLabel,
-  capture: {
+  // [D] The three cards: name, what it is, text and panel rows, except the
+  // INPUTS label and the "Captured" status, which are approved.
+  collect: {
     number: "01",
-    title: "Capture",
-    text: "Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow.",
+    name: "Bee",
+    kind: "Field app",
+    text: "A checklist-driven app for site visits: photos, nameplates, the superintendent interview and building automation data, captured in one place.",
     label: "INPUTS",
-    inputs: ["Photos", "Thermal images", "Nameplates", "Utility bills", "Operating records"],
+    inputs: ["Photos", "Nameplates", "Interview", "Automation data", "Utility bills"],
     /** The status each input ticks to, one by one, as the card comes into view. */
     captured: "Captured",
   },
-  analyze: {
+  calculate: {
     number: "02",
-    title: "Analyze",
-    text: "Utility benchmarking, engineering calculations and energy conservation measures, with every assumption visible.",
-    label: "METHOD",
-    rows: ["Method", "Assumptions", "Units"],
+    name: "Colony",
+    kind: "Engineering analysis",
+    text: "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer.",
+    label: "ANALYSIS",
+    /** Each row shows a placeholder line, never a figure. */
+    rows: ["Utility analysis", "Benchmark", "Measures", "Pathways"],
   },
-  optimize: {
+  deliver: {
     number: "03",
-    title: "Optimize",
-    text: "Energy, cost and greenhouse gas scenarios for retrofit decisions, prepared for qualified engineering review.",
-    label: "SCENARIOS",
-    scenarios: ["Scenario A", "Scenario B"],
-    columns: ["Energy", "Cost", "GHG"],
+    name: "Honey",
+    kind: "Client results",
+    text: "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions.",
+    label: "REPORT",
+    rows: ["Executive summary", "Benchmark", "Measures", "Pathways"],
+    /** What each row shows in place of a result. */
     empty: "—",
   },
 };
@@ -263,7 +275,7 @@ export const evidenceChain: {
     {
       number: "04",
       action: "Extract",
-      title: "Rated input: 2,000 MBH",
+      title: "Rated input: 2,000 MBH (586 kW)", // [D] the SI value
       tag: "observed",
       text: "Read from the nameplate in site photo 014.",
       from: ["01"],
@@ -300,9 +312,9 @@ export const evidenceChain: {
 
 type Principle = { title: string; tags: ValueTagKind[]; text: string };
 
-/** Home, section 5. */
+/** Home, section 5. A principle may have no value tag. */
 export const principles: { heading: string; lead: string; items: Principle[] } = {
-  heading: "AI assists engineers. It doesn't replace them.",
+  heading: `Engineers decide. ${BRAND} does the groundwork.`, // [D]
   lead: `${BRAND} is designed so that:`,
   items: [
     {
@@ -320,23 +332,45 @@ export const principles: { heading: string; lead: string; items: Principle[] } =
       tags: ["awaitingReview"],
       text: "Findings are prepared for review by qualified professionals.",
     },
+    {
+      title: "Decisions are recorded", // [D]
+      tags: [],
+      text: "Each engineering decision is saved with its reason, so every result can be traced and revisited.", // [D]
+    },
   ],
 };
 
-/** Home, section 6. */
+/** Home, section 6: who B.E.E. is built for first, why owners start an audit, and what follows. */
 export const buildings = {
-  eyebrow: "Building types",
-  heading: "Designed for every building type.",
-  types: [
-    "Condominiums",
-    "Rental apartments",
-    "Offices and retail",
-    "Government buildings",
-    "Schools and institutions",
-    "Hotels",
-    "Industrial and warehouses",
-    "Arenas, pools and community centres",
+  eyebrow: "Who it's for", // [D]
+  heading: "Built first for offices and multi-unit residential buildings.", // [D]
+  // [D] The two building types it is built for first.
+  primary: [
+    { title: "Offices", text: "For portfolio and property managers." },
+    { title: "Multi-unit residential", text: "Condos and rental apartments, for boards and property managers." },
   ],
+  // [D]
+  reasons: {
+    title: "Owners usually start an audit for:",
+    items: [
+      "Certifications such as LEED and BOMA BEST",
+      "Incentive and funding applications",
+      "Emissions reduction targets",
+      "Capital planning and budgets",
+    ],
+  },
+  planned: {
+    title: "Planned next", // [D]
+    // Approved building types, except "Retail" [D].
+    types: [
+      "Government buildings",
+      "Schools and institutions",
+      "Hotels",
+      "Retail",
+      "Industrial and warehouses",
+      "Arenas, pools and community centres",
+    ],
+  },
 };
 
 /** Home, section 7, shown only when flags.showTeam is true. The titles are approved. */
@@ -344,16 +378,23 @@ export const team = {
   eyebrow: "Founders", // [D]
   heading: "Team",
   // TODO(copy): the founders' names, pending their consent (CONTENT.md, Pending).
+  // TODO(copy): the second title contains "AI", which the claim rules now ban;
+  // it needs a new title before showTeam is turned on.
   members: [
     { name: "", title: "Co-Founder, Engineering & Building Energy Intelligence" },
     { name: "", title: "Co-Founder, AI & Technology Development" },
   ],
 };
 
+/** The buildings the pilot starts with: the pilot band and the Pilot page. Never mention a free audit. */
+const pilotFocus = "We're starting with mid- and high-rise residential buildings."; // [D]
+
 /** Home, section 8. */
 export const pilotBand = {
   heading: `Help shape ${BRAND} on real buildings.`,
   text: "We are looking for building owners, property managers and engineering firms to join our pilot program.",
+  /** Follows the text, in the same paragraph. */
+  focus: pilotFocus,
   cta: { label: "Apply for the pilot", href: "/pilot" },
 };
 
@@ -363,6 +404,8 @@ export const pilotBand = {
  */
 export const pilotPage = {
   headline: `Join the ${BRAND} pilot program.`,
+  /** Under the headline. */
+  focus: pilotFocus,
   // TODO(copy): stands in for the subtext and form until milestone 4.
   placeholder: "The application form is coming soon.", // [D]
   nextHeading: "What happens next",

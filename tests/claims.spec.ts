@@ -17,6 +17,14 @@ const bannedTerms = [
   "real-time",
   "telemetry",
   "live",
+  "AI",
+  "ballpark",
+  "generative",
+  "estimate",
+  // Until accuracy is validated.
+  "accurate",
+  "accuracy",
+  "free audit",
 ];
 
 const escape = (term: string) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -34,6 +42,7 @@ test("the matcher finds every banned term and percentage, and only whole words",
   }
   expect(findClaims("Up to 30% less, or 30 % more")).toEqual(["30%", "30 %"]);
   expect(findClaims("Delivered alive, with timestamps and a sealing plan")).toEqual([]);
+  expect(findClaims("Detailed maintenance logs, kept by hand")).toEqual([]);
 });
 
 for (const { name, path } of pages) {

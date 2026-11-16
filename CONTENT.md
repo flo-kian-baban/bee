@@ -11,12 +11,12 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ## Global
 
 **Nav**
-- Links, in page order: "Why {BRAND}" → `#why-bee` [D] · "How it works" → `#how-it-works` [A] · "Traceability" → `#traceability` [D] · "Buildings" → `#buildings` [A] · "Team" → `#team` (hidden while `showTeam` is false) [A]
+- Links, in page order: "Why {BRAND}" → `#why-bee` [D] · "How it works" → `#how-it-works` [A] · "Traceability" → `#traceability` [D] · "Who it's for" → `#buildings` [D] · "Team" → `#team` (hidden while `showTeam` is false) [A]
 - Button: "Join the pilot" → `/pilot` [A]
 
 **Footer**
 - Descriptor: "From building data to engineering decisions." [A, in sentence case]
-- Link column: the nav links, then "Join the pilot": Why {BRAND} [D], How it works, Traceability [D], Buildings, Team (if shown), Join the pilot [A]
+- Link column: the nav links, then "Join the pilot": Why {BRAND} [D], How it works, Traceability [D], Who it's for [D], Team (if shown), Join the pilot [A]
 - Contact: `NEXT_PUBLIC_CONTACT_EMAIL`; LinkedIn icon if `showLinkedIn` is true [A]
 - Bottom row: "Privacy policy" → `/privacy` · "© 2026 {LEGAL_NAME or BRAND}" [A]
 
@@ -27,7 +27,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ### 1. Hero
 - Badge: "In development · Pilot program open" [A]
 - Headline: "Every Building. Better Energy Intelligence." The words "Energy Intelligence" are in brand yellow. [A]
-- Subtext: "{BRAND} connects physical building inspections, intelligent data processing and engineering-based analysis to turn fragmented building information into transparent, actionable energy intelligence." [A]
+- Subtext: "{BRAND} connects on-site inspections, utility data and detailed engineering calculations to turn scattered building information into clear, traceable energy decisions." [D]
 - Primary button: "Join the pilot program" → `/pilot` [A]
 - Secondary button: "See how it works" → `#how-it-works` [A]
 
@@ -46,7 +46,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Each panel holds an example of its source. The values are generic example data only (CLAUDE.md, rule 2):
   - "Site photos" [A]: a viewfinder frame with corner reticles around a line drawing of a boiler; tags "Boiler B-1 · Nameplate" and "Photo 014 · Mechanical room".
   - "Utility bills" [A]: "Account ••••4521 · Natural gas"; a 12-month line with no axis numbers, and one dashed gap labelled "Missing statement".
-  - "Equipment records" [A]: "Submittal: hot water boiler", with "Rated input" "2,000 MBH", "Supply" "180°F", "Installed" "1998" and "Service log" "Paper only".
+  - "Equipment records" [A]: "Submittal: hot water boiler", with "Rated input" "2,000 MBH (586 kW)", "Supply" "180°F (82°C)", "Installed" "1998" and "Service log" "Paper only". The SI values in brackets are [D].
   - "Spreadsheets and reports" [A]: three rows of metric, formula and status: "Baseline gas use" · "=SUM(B2:B13)" · "Manual"; "Weather adjustment" · "=VLOOKUP(…)" · "#REF!"; "Emission factor" · "Pasted from a 2019 report" · "Outdated". Each status shows an icon and its text.
 - Two labels at the foot of each panel:
   - "Site photos": "Not linked to equipment" · "Re-typed by hand" [A]
@@ -57,15 +57,16 @@ Every visible word on the site comes from this file. Move it into `content/site.
 
 ### 3. How it works (id `how-it-works`)
 - Eyebrow: "How it works" [A]
-- Heading: "Capture. Analyze. Optimize." [A]
+- Heading: "Collect. Calculate. Deliver." [D]
 - Label: "Illustrative example" [A]
-- Card 01, "Capture": "Site photographs, thermal images, equipment nameplates, utility bills and operating records, collected in one structured workflow." [A]
-  - Panel: a list of input types (Photos, Thermal images, Nameplates, Utility bills, Operating records), each marked "Captured" in turn as the card comes into view [A]
-- Card 02, "Analyze": "Utility benchmarking, engineering calculations and energy conservation measures, with every assumption visible." [A]
-  - Panel: three labelled rows: "Method", "Assumptions", "Units", each with a short placeholder line and no figures [A]
-- Card 03, "Optimize": "Energy, cost and greenhouse gas scenarios for retrofit decisions, prepared for qualified engineering review." [A]
-  - Panel: two scenario rows ("Scenario A", "Scenario B"), columns "Energy", "Cost", "GHG" with "—" values, and an "Awaiting review" tag [A]
-- Panel labels: "INPUTS" (Card 01), "METHOD" (Card 02) and "SCENARIOS" (Card 03, with the "Awaiting review" tag beside it) [A]
+- Each card shows its number, the part's name, then what it is, then its text [D]:
+- Card 01, "Bee" · "Field app": "A checklist-driven app for site visits: photos, nameplates, the superintendent interview and building automation data, captured in one place." [D]
+  - Panel: a list of inputs (Photos, Nameplates, Interview, Automation data, Utility bills) [D], each marked "Captured" in turn as the card comes into view [A]
+- Card 02, "Colony" · "Engineering analysis": "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer." [D]
+  - Panel: four labelled rows: "Utility analysis", "Benchmark", "Measures", "Pathways", each with a short placeholder line and no figures [D]
+- Card 03, "Honey" · "Client results": "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions." [D]
+  - Panel: four rows: "Executive summary", "Benchmark", "Measures", "Pathways", each with a "—" value, and an "Awaiting review" tag [D]
+- Panel labels: "INPUTS" (Card 01) [A], "ANALYSIS" (Card 02) [D] and "REPORT" (Card 03, with the "Awaiting review" tag beside it) [D]
 
 ### 4. Evidence chain (id `traceability`, bg-alt)
 - Eyebrow: "Traceability" [A]
@@ -76,7 +77,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - 01 Capture · "Nameplate photo" · Observed · "Site photo 014, taken during the inspection of Boiler B-1."
   - 02 Collect · "Gas statements" · Observed · "Account ••••4521, natural gas, monthly statements; one flagged as missing."
   - 03 Assume · "Seasonal efficiency" · Assumed · "Entered by the engineer and labelled as an assumption wherever it is used."
-  - 04 Extract · "Rated input: 2,000 MBH" · Observed · "Read from the nameplate in site photo 014."
+  - 04 Extract · "Rated input: 2,000 MBH (586 kW)" · Observed · "Read from the nameplate in site photo 014."
   - 05 Normalize · "Weather-normalized baseline" · Calculated · "Gas use compared against heating degree days."
   - 06 Model · "Boiler replacement scenario" · Calculated · "Energy, cost and GHG compared against the baseline. No values shown in this example."
   - 07 Review · "Draft finding" · Awaiting review · "Boiler replacement option, prepared for review by a qualified professional."
@@ -85,41 +86,49 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Button: "Pause animation", and "Play animation" while paused [D]
 
 ### 5. Principles
-- Heading: "AI assists engineers. It doesn't replace them." [A]
+- Heading: "Engineers decide. {BRAND} does the groundwork." [D]
 - Lead: "{BRAND} is designed so that:" [A]
 - "Every value is labelled" [A]: "Observed, assumed and calculated values are labelled separately." [A]
 - "Methods travel with results" [A]: "Methods, units and assumptions travel with every result." [A]
 - "Qualified people review findings" [A]: "Findings are prepared for review by qualified professionals." [A]
-- Value tags beside the titles: Observed, Assumed and Calculated; Calculated; Awaiting review [A]
+- "Decisions are recorded" [D]: "Each engineering decision is saved with its reason, so every result can be traced and revisited." [D]
+- Value tags beside the titles: Observed, Assumed and Calculated; Calculated; Awaiting review [A]; none beside "Decisions are recorded" [D]
 
-### 6. Buildings (id `buildings`, bg-alt)
-- Eyebrow: "Building types" [A]
-- Heading: "Designed for every building type." [A]
-- Tiles: Condominiums · Rental apartments · Offices and retail · Government buildings · Schools and institutions · Hotels · Industrial and warehouses · Arenas, pools and community centres [A]
+### 6. Who it's for (id `buildings`, bg-alt)
+- Eyebrow: "Who it's for" [D]
+- Heading: "Built first for offices and multi-unit residential buildings." [D]
+- Two large primary tiles, each a title and a line [D]:
+  - "Offices": "For portfolio and property managers."
+  - "Multi-unit residential": "Condos and rental apartments, for boards and property managers."
+- A row titled "Owners usually start an audit for:" with four items [D]: "Certifications such as LEED and BOMA BEST" · "Incentive and funding applications" · "Emissions reduction targets" · "Capital planning and budgets"
+- A smaller, secondary row titled "Planned next" [D]: Government buildings · Schools and institutions · Hotels · Retail [D] · Industrial and warehouses · Arenas, pools and community centres [A, except "Retail"]
 
 ### 7. Team (id `team`, only when `showTeam` is true)
 - Eyebrow: "Founders" [D]
 - Heading: "Team" [A]
 - Card 1: "{NAME_1}" · "Co-Founder, Engineering & Building Energy Intelligence" [A titles; names pending]
 - Card 2: "{NAME_2}" · "Co-Founder, AI & Technology Development" [A titles; names pending]
+  - This title contains "AI", which the claim rules now ban (CLAUDE.md, rule 2): it needs a new title before `showTeam` is turned on.
 - No other people. No photos until consent is given; use the initials on a card background meanwhile.
 
 ### 8. Pilot band
 - Heading: "Help shape {BRAND} on real buildings." [A]
-- Text: "We are looking for building owners, property managers and engineering firms to join our pilot program." [A]
+- Text: "We are looking for building owners, property managers and engineering firms to join our pilot program." [A], then, in the same paragraph, "We're starting with mid- and high-rise residential buildings." [D]
 - Button: "Apply for the pilot" → `/pilot` [A]
+- Never mention a free audit, here or on the Pilot page.
 
 ## Pilot page (`/pilot`)
 
-- Until the form ships (milestone 4), the page is a placeholder: the headline, then "The application form is coming soon." [D] in place of the subtext and form, then "What happens next". No form.
+- Until the form ships (milestone 4), the page is a placeholder: the headline, the focus line, then "The application form is coming soon." [D] in place of the subtext and form, then "What happens next". No form.
 - Headline: "Join the {BRAND} pilot program." [A]
+- Focus line, under the headline: "We're starting with mid- and high-rise residential buildings." [D]
 - Subtext: "Tell us about your building or portfolio. We will contact you to discuss whether it is a fit for the pilot." [A]
 - Form fields (labels [A]):
   - Full name* (text)
   - Work email* (email)
   - Organization* (text)
   - Role (select): Building owner · Property or facility manager · Engineering or energy firm · Other
-  - Building type (select): the eight building types from Home section 6
+  - Building type (select): the eight building types from Home section 6: the two primary types, then the six planned next
   - Number of buildings (select): 1 · 2–5 · 6–20 · 20+
   - Message (textarea, optional, max 2,000 characters)
   - Hidden honeypot field, plus Turnstile
@@ -157,7 +166,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ## Metadata
 
 - Title: "{BRAND} · Building Energy Intelligence" [A]
-- Description: "{BRAND} connects building inspections, data processing and engineering analysis into traceable energy intelligence. In development, with a pilot program open." [A]
+- Description: "{BRAND} connects on-site inspections, utility data and detailed engineering calculations into clear, traceable energy decisions. In development, with a pilot program open." [D, from the hero subtext]
 - Open Graph image: the wordmark plus "Every Building. Better Energy Intelligence." on #111112 [D]
 - Structured data: Organization with name {BRAND}, plus `url` and `logo` once the domain is set [D]
 

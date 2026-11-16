@@ -196,6 +196,8 @@ function Comb() {
 
                     {/* One grid for every cell: rows 16, 22, 104 (four lines) and
                         22px tall, centred, so the lines in each row of cells align.
+                        The title is one line, up to 248px: the row lies between the
+                        side walls, 12px clear of each. The text is 236px wide.
                         The button is named by all it shows, in order, so its name
                         holds its visible text (WCAG 2.5.3, Label in Name); the
                         spaces keep the parts apart as words. The steps it is
@@ -206,7 +208,11 @@ function Comb() {
                         {step.action}
                       </span>
                     </span>{" "}
-                    <span id={`${id}-title`} data-part="title" className="mt-2 h-5.5 w-59 type-cell text-text">
+                    <span
+                      id={`${id}-title`}
+                      data-part="title"
+                      className="mt-2 h-5.5 w-62 type-cell whitespace-nowrap text-text"
+                    >
                       {step.title}
                     </span>{" "}
                     <span

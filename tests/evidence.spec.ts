@@ -254,8 +254,10 @@ test("each cell is named by all it shows, in order, and tells screen readers wha
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(home.path);
   // Its number, action word, title, text and value tag: the name holds the
-  // button's visible text (WCAG 2.5.3, Label in Name).
-  const shown = (step: Step) => [step.number, step.action, step.title, step.text, valueTags[step.tag]].join(" ");
+  // button's visible text (WCAG 2.5.3, Label in Name). Names read no-break
+  // spaces, which join numbers to their units, as plain spaces.
+  const shown = (step: Step) =>
+    [step.number, step.action, step.title, step.text, valueTags[step.tag]].join(" ").replace(/\s/g, " ");
   const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const name = (step: Step) => new RegExp(`^${escape(shown(step))}$`, "i");
   for (const step of steps) await expect(section(page).getByRole("button", { name: name(step) })).toBeVisible();

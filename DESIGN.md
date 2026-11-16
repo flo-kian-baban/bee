@@ -56,9 +56,9 @@ Ratios are measured (WCAG 2.x).
 | Token | Value | Use | On bg | On bg-alt | On card-low | On card |
 |---|---|---|---|---|---|---|
 | bg | #111112 | Page background: hero, How it works, Principles, Team | n/a | n/a | n/a | n/a |
-| bg-alt | #0B0B0C | Problem, Evidence chain, Buildings and Pilot sections; footer; panels inside cards | n/a | n/a | n/a | n/a |
-| card-low | #161618 | Problem and How it works cards; icon tiles; status chips | n/a | n/a | n/a | n/a |
-| card | #1C1C1F | Evidence nodes, principles, building tiles, Team and pilot cards; badge; secondary button | n/a | n/a | n/a | n/a |
+| bg-alt | #0B0B0C | Problem, Evidence chain, Who it's for and Pilot sections; footer; panels inside cards | n/a | n/a | n/a | n/a |
+| card-low | #161618 | Problem and How it works cards; icon tiles; status chips; the Who it's for audit row and planned-next tiles | n/a | n/a | n/a | n/a |
+| card | #1C1C1F | Evidence nodes, principles, primary building tiles, Team and pilot cards; badge; secondary button | n/a | n/a | n/a | n/a |
 | divider | #2E2E33 | Borders of cards, sections and the nav; secondary button border | 1.40 | 1.46 | 1.34 | 1.26 |
 | edge | white at 10% | Borders of How it works cards, evidence nodes and the pilot card | 1.30 | 1.25 | 1.31 | 1.35 |
 | chip | #27272A | Chip fill | n/a | n/a | n/a | n/a |
@@ -102,11 +102,10 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | display | Space Grotesk | 36/40.32 | 60/60 | 68/68 | 600 | −0.025em | Hero headline |
 | h2-lg | Space Grotesk | 30/36 | 48/48 | | 500 | −0.025em | Problem and How it works headings |
 | h2 | Space Grotesk | 30/36 | 36/40 | | 500 | −0.025em | Other section headings |
-| h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works and Team card titles |
+| h3 | Space Grotesk | 24/32 | | | 500 | 0 | How it works part names; Who it's for primary tiles; Team card titles |
 | numeral | Space Grotesk | 36/40 | | | 700 | −0.025em | How it works step numbers |
-| title | Space Grotesk | 18/28 | | | 500 | 0 | Principles; Evidence chain step titles in the list below 1024px |
-| cell | Space Grotesk | 16/22 | | | 500 | 0 | Evidence chain step titles in the comb, one line |
-| tile | Space Grotesk | 16/24 | 18/28 | | 500 | 0 | Building tiles |
+| title | Space Grotesk | 18/28 | | | 500 | 0 | Principles; Evidence chain step titles in the list below 1024px; the Who it's for audit row's title |
+| cell | Space Grotesk | 16/22 | | | 500 | −0.025em | Evidence chain step titles in the comb, one line |
 | body-lg | Inter | 16/26 | 18/28 | | 400 | 0 | Hero subtext |
 | lead | Inter | 18/28 | | | 400 | 0 | Section leads |
 | body | Inter | 16/26 | | | 400 | 0 | Every paragraph |
@@ -114,27 +113,28 @@ Sizes are px, as size/line height. Where a style changes with width, the later c
 | small | Inter | 14/20 | | | 400; 500 when active | 0 | Nav and footer links |
 | badge | Inter | 14/20 | | | 400 | 0.025em | Hero badge (Stitch: 12/16) |
 | button | Space Grotesk | 14/20 | | | 600 primary, 400 secondary | 0 | Buttons (Stitch: the nav button at 12/16 below 640px) |
-| label | JetBrains Mono | 12/16 | | | 400; 500 for the How it works eyebrow, Problem card titles and step numbers | 0.1em, uppercase | Eyebrows, card and panel labels, chips, value tags, the footer's bottom row |
+| label | JetBrains Mono | 12/16 | | | 400; 500 for the How it works eyebrow and what each part is, Problem card titles and step numbers | 0.1em, uppercase | Eyebrows, card and panel labels, chips, value tags, the footer's bottom row |
 
 - Paragraphs are 16px or larger (CLAUDE.md quality bar). Stitch sets card text at 14/22.75, and at 12px in the evidence nodes; here every paragraph is body, 16/26.
 - One exception: the Evidence chain's comb scales whole with its column, text included, so between 1024 and 1247px its type is smaller than these sizes, down to 0.81 of them at 1024px, where body text renders at about 13px (Components, Evidence chain).
 - 12px is for uppercase mono labels only. Other text, such as links, buttons and the badge, is 14px or larger. Stitch's panel details at 9–11px become labels at 12/16 where they are uppercase, and small type at 14/20 otherwise.
 - Use `font-variant-numeric: tabular-nums` on numeric text only (values, counts, dates), never on running text: in Inter it also widens the hyphen.
+- Example values show both unit systems: the nameplate's unit, then the SI value in brackets, as in "2,000 MBH (586 kW)". A no-break space joins each number to its unit, so a line never splits them. In uppercase labels, the SI value keeps its symbols' case: kW, never KW.
 
 ## Layout and spacing
 
 - Spacing: a 4px base. Stitch uses 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 112 and 128.
 - Breakpoints: 640px, 768px and 1024px.
-- Content widths: 1280px (Problem; How it works; the nav and footer, whose logo and button line up with this column), 1152px (Evidence chain, Buildings, Team, Pilot), 896px (Principles; the hero headline), 768px (the hero subtext), 672px (the Pilot text).
+- Content widths: 1280px (Problem; How it works; the nav and footer, whose logo and button line up with this column), 1152px (Evidence chain, Who it's for, Team, Pilot), 896px (Principles; the hero headline), 768px (the hero subtext), 672px (the Pilot text).
 - Side padding: 24px, and 48px from 1024px, on sections, the nav and the footer alike.
-- Section padding, top and bottom, at every width: hero 96px (128px from 640 to 767px); Problem 96px; How it works, Evidence chain, Principles, Buildings and Team 112px; Pilot 80px; footer 64px.
+- Section padding, top and bottom, at every width: hero 96px (128px from 640 to 767px); Problem 96px; How it works, Evidence chain, Principles, Who it's for and Team 112px; Pilot 80px; footer 64px.
 - Nav height: 80px.
 - Hero height: on phones, its content's. From 768px, at least 90% of the screen below the nav (`svh` units), never under 560px or over 880px, with its content centred vertically, so the top of the Problem section shows below it. Its 96px padding is then the least space above and below the content.
 - Hero headline: from 1024px it breaks after "Every Building.", so the second line reads "Better Energy Intelligence."; below that it wraps by itself, balanced.
-- From a section header to its content: 48px (Problem, Evidence chain, Buildings, Team), 56px (How it works), 40px (Principles).
-- Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Principles), 20px (Buildings). The Evidence chain's cells are 272px wide and 80px apart at full size (Components, Evidence chain).
-- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (principles, building tiles); 32px (Team); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
-- From 1024 to 1279px, where its three cards are narrowest, How it works takes 20px at the sides of its cards and 12px at the sides of their panels, so the Optimize table fits. From 1280px it is back to 28px and 16px.
+- From a section header to its content: 48px (Problem, Evidence chain, Who it's for, Team), 56px (How it works), 40px (Principles).
+- Grid gaps: 24px (Problem), 32px (How it works, Team), 16px (Principles), 20px (Who it's for: its primary tiles and the audit row below them; 12px between the planned-next tiles, which sit 48px below). The Evidence chain's cells are 272px wide and 80px apart at full size (Components, Evidence chain).
+- Card padding: 24px, 28px from 1024px (Problem); 28px (How it works); 24px (principles, the Who it's for audit row); 32px (Who it's for primary tiles, Team); 12px 16px (planned-next tiles); 40px, 56px from 768px (pilot card). Panels inside cards: 16px; 20px in the Site photos viewfinder, as in Stitch.
+- From 1024 to 1279px, where its three cards are narrowest, How it works takes 20px at the sides of its cards and 12px at the sides of their panels, so the panel rows fit. From 1280px it is back to 28px and 16px.
 - Tap targets: 44px or larger (CLAUDE.md), so the nav button is 44px tall where Stitch has 36–40px.
 
 ## Shape and depth
@@ -153,7 +153,7 @@ Borders are 1px: divider (often at 70%), or edge on How it works cards, Evidence
 | Shadow | Value | Use |
 |---|---|---|
 | shadow-sm | 0 1px 2px 0 rgb(0 0 0 / 0.05) | Badge, secondary button, icon tiles |
-| shadow-md | 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) | Problem closing banner |
+| shadow-md | 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) | Problem closing banner; the Who it's for audit row |
 | shadow-lg | 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) | Problem cards |
 | shadow-xl | 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) | How it works cards |
 | shadow-2xl | 0 25px 50px -12px rgb(0 0 0 / 0.25) | Pilot card |
@@ -179,16 +179,16 @@ Backdrop blur: 24px behind the nav; 12px behind the badge and the secondary butt
 
 | Token | Timing | What changes | When |
 |---|---|---|---|
-| hover | 150ms for links, icons and the nav button; 200ms for buttons, cards and tiles | Colour, border colour, box-shadow; building tiles also rise 4px | While hovered |
+| hover | 150ms for links, icons and the nav button; 200ms for buttons, cards and tiles | Colour, border colour, box-shadow; primary building tiles also rise 4px | While hovered |
 | reveal | 400ms, ease-out; 60ms stagger | Opacity 0 → 1 and translateY 12px → 0 | Once, as an element enters the viewport |
 | draw | 800ms, ease-standard | stroke-dashoffset to 0 | Once, as a line enters the viewport |
-| tick | 200ms, ease-out; the first 400ms after its list enters, then 300ms apart | A dashed circle gives way to a check and "Captured" | Once, as the Capture list enters the viewport |
+| tick | 200ms, ease-out; the first 400ms after its list enters, then 300ms apart | A dashed circle gives way to a check and "Captured" | Once, as the input list enters the viewport |
 | flow | A 4.5s cycle. Each connector's leg takes 1s, linear, and legs start 1.15s apart; a step lights over 250ms, holds 350ms and fades over 700ms, ease-standard | A train of three dots crosses each connector; 06 and 07 light as the dots reach them | In a loop, only while the Evidence chain is in view and not paused |
 
-- **Hover:** card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards, as in Stitch); icons not already in brand turn brand; Problem and How it works cards deepen their shadow; building tiles rise 4px.
+- **Hover:** card borders turn brand at 50% (40% on principles, building tiles, Team and pilot cards, as in Stitch); icons not already in brand turn brand; Problem and How it works cards deepen their shadow; the primary building tiles rise 4px, and the smaller planned-next tiles stay where they are.
 - **Reveal:** section headers and cards in Home sections 2 to 8. Elements that enter together follow one another 60ms apart, in page order. The hero is not revealed: it is in view on arrival.
 - **Draw:** the How it works line joining 01, 02 and 03, from 1024px. A line behind cards waits until the cards entering with it have faded in (the reveal plus four staggers), so it never shows through them.
-- **Tick:** the five inputs in the Capture panel, one by one.
+- **Tick:** the five inputs in the Field app panel, one by one.
 - **Flow:** the Evidence chain only, and the one exception to the rule against loops, which Kian approved. The dotted connectors stay as the base. Over them, a train of three brand dots, 6, 5 and 4px with the lead brightest, each glowing, crosses each connector. Each cycle: 01→04, 02→05 and 03→06 together; then 04→06 and 05→06, and 06's outline lights; then 06→07, and 07's outline lights; then a rest. Below 1024px the list runs the same cycle down its rail: the segments below 01, 02 and 03, then below 04 and 05, then below 06. The dots move by transform (translate) keyframes alone, at a linear pace, with no script per frame; each train is clipped to the gap between the walls it joins, so it enters one cell's wall and leaves into the next. The dots run only while the section is in view. The "Pause animation" button in the section header stops them where they are, and "Play animation" starts them again.
 - **How it runs:** one IntersectionObserver for the page (`components/Reveal.tsx`); each element starts once it is 10% of the viewport's height inside it, then is no longer watched. The Evidence chain's flow stays watched: the observer marks it in view while it is, and CSS sets its animation-play-state from that. Elements in view or above it when the page loads keep their final state, and so does everything when script does not run. CSS runs the motion; no animation library.
 - **Press:** primary buttons scale to 0.98.
@@ -245,18 +245,27 @@ Differences from Stitch's canvas version:
 - The description, then two labels on a divider at 70%: the first after a 6px dot, in text-secondary; the second in text-soft.
 - The closing banner adds a chip on the right: bg-alt, tile radius, an unlinked-chain icon in warning and the text in text-secondary.
 
-**Capture list** (How it works): one row per input, the input's icon in brand and its name on the left; on the right a dashed circle in text-secondary that ticks over to a check and "Captured" in success (Motion, tick).
+**How it works card**: the number (numeral) and an icon tile on a divider; the part's name (h3) with what it is under it (label type at 500, text-secondary); its text; then its panel, at the foot of the card. The panels:
+- **Input list** (01, Field app): one row per input, the input's icon in brand and its name on the left; on the right a dashed circle in text-secondary that ticks over to a check and "Captured" in success (Motion, tick).
+- **Analysis rows** (02, Engineering analysis): each row a label in text-secondary and a placeholder line in divider, never a figure. The labels share one column, as wide as the longest, so the lines start together.
+- **Report rows** (03, Client results): each row a label in text-soft and "—" in text-secondary, with the Awaiting review tag in the panel's label row.
+- Rows are bg on chip-bordered tag-radius strips, 10px padding, label type.
+
+**Who it's for** (not from Stitch, which has eight equal tiles):
+- Two primary building tiles, two columns from 768px: card fill, divider border, container radius, 32px padding; a 48px icon tile with its icon in brand; 32px below it, the title (h3) and its line (body, text-secondary).
+- Below them, the audit row: card-low, divider border, container radius, 24px padding, shadow-md. Its title (title type), then four items in one, two (from 640px) or four (from 1024px) columns, each a 36px icon tile (bg-alt, icon in brand) beside its text (body, text-body).
+- Then, smaller and quieter, "Planned next": a label in text-secondary, then the six building types in one, two (from 640px) or three (from 1024px) columns of compact tiles: card-low, divider border, container radius, 12px 16px padding, an 18px icon and the name (base type), both in text-secondary.
 
 **Evidence chain** (not from Stitch, which has a row of four cards): seven steps that converge on a model and its review (CONTENT.md, section 4), as cells of a comb, the honeycomb of the logo and the hero.
 - From 1024px, the comb: seven regular pointy-top hexagon cells, the logo's shape, on a true honeycomb, in three rows: 01 and 04 on top; 03, 06 and 07 in the middle; 02 and 05 below. The top and bottom rows sit half a cell left of the middle one, so every connector points right, from a lower number to a higher one: 01→04, 02→05, 03→06, 04→06, 05→06 and 06→07.
 - At full size the cells are 272px wide and 80px apart all round (`--comb-cell`, `--comb-gap`), and the comb is 1152 × 924px, the width of its column. In a narrower column, from 1024 to 1247px, the whole comb scales down with it, text included: to 0.81 at 1024px.
-- Each cell holds, on one grid: its number in brand and its action word (label type, at 500), its title (cell type, one line), its text (body, balanced, four lines at most) and its value tag. The rows are 16, 22, 104 and 22px tall and 8, 6 and 12px apart, centred in the cell, with the title and text in a 236px column, so the lines in each row of cells align. Nothing comes within 12px of a wall.
+- Each cell holds, on one grid: its number in brand and its action word (label type, at 500), its title (cell type, one line), its text (body, balanced, four lines at most) and its value tag. The rows are 16, 22, 104 and 22px tall and 8, 6 and 12px apart, centred in the cell, so the lines in each row of cells align. The title is one line, up to 248px wide: its row lies between the side walls, 12px clear of each. The text is a 236px column. Nothing comes within 12px of a wall.
 - Cells: card fill and a 1px edge outline, with the action word in text-secondary; 06, the hub, has a brand outline at 60%. Hovering, focusing or tapping a cell lights it and every cell and connector upstream of it, without motion: their outlines turn brand at 60% and their action words brand, and the cell itself takes a 2px brand outline over brand at 6% on card. Focus: a 2px brand hexagon 2px outside the cell. Only the hexagon takes the pointer, not the corners of the cell's box. For screen readers, each cell is named by all it shows, in order (number, action word, title, text and value tag), so its name holds its visible text (WCAG 2.5.3), and is described by the steps it is based on.
 - Connectors join the middles of facing walls: 2px dots 6px apart, between 6px ports on the two walls; chip-border, and on a lit trail brand at 80% with brand ports. The flow's dots cross them (Motion).
 - Below 1024px, a list in number order: each step a row with a 32px hexagon badge holding its number, then its action word and value tag, its title (title type) and its text (body). The badges sit on a dotted rail in the connectors' dots, and the flow runs down it.
 - The pause button: a small ghost button in the section header, beside the "Illustrative example" label, with a pause or play icon and "Pause animation" or "Play animation". It is hidden with reduced motion.
 
-**Value tag** (product vocabulary from CONTENT.md): in the evidence chain, beside the Problem card titles and the principle titles, and in the Optimize panel's label row, where Stitch had status chips. Tags use Stitch's chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
+**Value tag** (product vocabulary from CONTENT.md): in the evidence chain, beside the Problem card titles and the principle titles, and in the How it works report panel's label row, where Stitch had status chips. Tags use Stitch's chip metrics: tag radius, 2px 8px padding, label type. Each tag differs by text and border style, not colour alone:
 
 | Tag | Style |
 |---|---|
@@ -286,7 +295,7 @@ Differences from Stitch's canvas version:
 - Not used from Stitch: its column headings and descriptor (text not in CONTENT.md), its invented email address and legal name, and its status line.
 
 **Placeholder pages** (until milestone 4), both `noindex`:
-- Pilot: a 672px column on bg with section padding; the headline in h2-lg type, the placeholder line in body-lg text-secondary, then "What happens next" in a card like the pilot band's (card fill, edge border, card radius, shadow-2xl, 32px padding, 40px from 768px): its h3, then the three steps, each its number in brand label type at 500 and its text in title type, divided by lines at 70%.
+- Pilot: a 672px column on bg with section padding; the headline in h2-lg type, the focus line and the placeholder line in body-lg text-secondary, 16px apart, then "What happens next" in a card like the pilot band's (card fill, edge border, card radius, shadow-2xl, 32px padding, 40px from 768px): its h3, then the three steps, each its number in brand label type at 500 and its text in title type, divided by lines at 70%.
 - Privacy: as the 404 page: the heading in h2 type, then the placeholder line in body-lg text-secondary.
 
 ## Logo

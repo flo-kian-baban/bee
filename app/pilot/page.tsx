@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { pilotPage } from "@/content/site";
 
-// A placeholder until the form arrives in milestone 4. Kept out of search
+// A placeholder until the form arrives in milestone 4: the headline, the
+// buildings the pilot starts with, and "What happens next". Kept out of search
 // engines on its own account, whatever the site does at launch.
 export const metadata: Metadata = {
   title: pilotPage.headline,
@@ -14,6 +15,7 @@ export default function PilotPage() {
       <div className="mx-auto flex max-w-2xl flex-col gap-12">
         <div className="flex flex-col gap-4">
           <h1 className="type-h2-lg text-text">{pilotPage.headline}</h1>
+          <p className="type-body-lg text-text-secondary">{pilotPage.focus}</p>
           <p className="type-body-lg text-text-secondary">{pilotPage.placeholder}</p>
         </div>
 
