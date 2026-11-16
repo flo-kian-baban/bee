@@ -3,7 +3,7 @@
 Every visible word on the site comes from this file. Move it into `content/site.ts` unchanged.
 
 **Tags:**
-- **[A]**: approved. Source is the brand book business answers v1 or the approved Stitch brief.
+- **[A]**: approved. Source is the brand book business answers v1, the approved Stitch brief or a later ruling by Kian.
 - **[D]**: draft. Build with it, but list it in the milestone report for Kian to approve.
 
 **Brand name constant:** `BRAND = "B.E.E."`. Every mention of the name in this file uses this constant. How the name is written in running text is still Kian's ruling (B.E.E. or BEE), so changing it must be a one-line edit.
@@ -65,8 +65,8 @@ Every visible word on the site comes from this file. Move it into `content/site.
 - Card 02, "Colony" · "Engineering analysis": "Utility analysis, benchmarking, energy conservation measures and decarbonization pathways, with every assumption labelled and every decision made by the engineer." [D]
   - Panel: four labelled rows: "Utility analysis", "Benchmark", "Measures", "Pathways", each with a short placeholder line and no figures [D]
 - Card 03, "Honey" · "Client results": "Your report's key results (summary, benchmark, measures and pathways) in one place, designed for 'what if' questions." [D]
-  - Panel: four rows: "Executive summary", "Benchmark", "Measures", "Pathways", each with a "—" value, and an "Awaiting review" tag [D]
-- Panel labels: "INPUTS" (Card 01) [A], "ANALYSIS" (Card 02) [D] and "REPORT" (Card 03, with the "Awaiting review" tag beside it) [D]
+  - Panel: four rows: "Executive summary", "Benchmark", "Measures", "Pathways" [D], each with a "—" value [A], and an "Awaiting review" tag [A]
+- Panel labels: "INPUTS" (Card 01), "ANALYSIS" (Card 02) and "REPORT" (Card 03, with the "Awaiting review" tag beside it) [A]
 
 ### 4. Evidence chain (id `traceability`, bg-alt)
 - Eyebrow: "Traceability" [A]
@@ -77,7 +77,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
   - 01 Capture · "Nameplate photo" · Observed · "Site photo 014, taken during the inspection of Boiler B-1."
   - 02 Collect · "Gas statements" · Observed · "Account ••••4521, natural gas, monthly statements; one flagged as missing."
   - 03 Assume · "Seasonal efficiency" · Assumed · "Entered by the engineer and labelled as an assumption wherever it is used."
-  - 04 Extract · "Rated input: 2,000 MBH (586 kW)" · Observed · "Read from the nameplate in site photo 014."
+  - 04 Extract · "Rated input: 2,000 MBH (586 kW)" · Observed · "Read from the nameplate in site photo 014." The title is two lines, "Rated input:" then "2,000 MBH (586 kW)": always in the comb, and in the list when it wraps.
   - 05 Normalize · "Weather-normalized baseline" · Calculated · "Gas use compared against heating degree days."
   - 06 Model · "Boiler replacement scenario" · Calculated · "Energy, cost and GHG compared against the baseline. No values shown in this example."
   - 07 Review · "Draft finding" · Awaiting review · "Boiler replacement option, prepared for review by a qualified professional."
@@ -106,9 +106,8 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ### 7. Team (id `team`, only when `showTeam` is true)
 - Eyebrow: "Founders" [D]
 - Heading: "Team" [A]
-- Card 1: "{NAME_1}" · "Co-Founder, Engineering & Building Energy Intelligence" [A titles; names pending]
-- Card 2: "{NAME_2}" · "Co-Founder, AI & Technology Development" [A titles; names pending]
-  - This title contains "AI", which the claim rules now ban (CLAUDE.md, rule 2): it needs a new title before `showTeam` is turned on.
+- Card 1: "{NAME_1}" · "Co-Founder, Engineering & Building Energy Intelligence" [A title; name pending]
+- Card 2: "{NAME_2}" · "Co-Founder, Technology & Platform Development" [D title; name pending]
 - No other people. No photos until consent is given; use the initials on a card background meanwhile.
 
 ### 8. Pilot band
@@ -166,7 +165,7 @@ Every visible word on the site comes from this file. Move it into `content/site.
 ## Metadata
 
 - Title: "{BRAND} · Building Energy Intelligence" [A]
-- Description: "{BRAND} connects on-site inspections, utility data and detailed engineering calculations into clear, traceable energy decisions. In development, with a pilot program open." [D, from the hero subtext]
+- Description: "{BRAND} connects on-site inspections, utility data and detailed engineering calculations into clear, traceable energy decisions. In development, with a pilot program open." [A]
 - Open Graph image: the wordmark plus "Every Building. Better Energy Intelligence." on #111112 [D]
 - Structured data: Organization with name {BRAND}, plus `url` and `logo` once the domain is set [D]
 

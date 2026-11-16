@@ -20,7 +20,12 @@ const bannedTerms = [
   "AI",
   "ballpark",
   "generative",
+  // Every form of "estimate".
   "estimate",
+  "estimated",
+  "estimates",
+  "estimating",
+  "estimation",
   // Until accuracy is validated.
   "accurate",
   "accuracy",

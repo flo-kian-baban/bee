@@ -453,13 +453,12 @@
   line-height: var(--type-title-leading);
 }
 
-/* Evidence chain step titles in the comb: one line. */
+/* Evidence chain step titles in the comb: up to two lines. */
 @utility type-cell {
   font-family: var(--font-display);
   font-weight: var(--type-title-weight);
   font-size: var(--type-cell-size);
   line-height: var(--type-cell-leading);
-  letter-spacing: var(--type-cell-tracking);
 }
 
 @utility type-body-lg {

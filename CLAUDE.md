@@ -48,7 +48,8 @@ Read these before writing any code:
    - compliance, certification or standard-conformance claims ("compliant", "certified", "ASHRAE Guideline 14", and similar);
    - "P.Eng", "sealed", "sealable" or "stamp" (P.Eng is a protected title in Ontario, and B.E.E. does not offer sealed engineering services);
    - "autonomous", "revolutionary", "guaranteed", "real-time", "telemetry" or "live";
-   - "AI", "ballpark", "generative" or "estimate";
+   - "AI", "ballpark" or "generative";
+   - "estimate" in any form: "estimate", "estimated", "estimates", "estimating" or "estimation";
    - "accurate" or "accuracy", until accuracy is validated;
    - an offer of a free audit ("free audit");
    - invented client names, logos, testimonials, statistics, legal names, domains, addresses or phone numbers.

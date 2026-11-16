@@ -170,7 +170,7 @@ function Comb() {
                     onFocus={() => setActive(step.number)}
                     onBlur={() => setActive(null)}
                     onClick={() => setActive(step.number)}
-                    className="group pointer-events-none isolate flex size-full flex-col items-center justify-center text-center focus-visible:outline-none"
+                    className="group pointer-events-none isolate flex size-full flex-col items-center justify-center pb-4.5 text-center focus-visible:outline-none"
                   >
                     {/* The cell, whose hexagon alone takes the pointer, and its focus ring. */}
                     <svg
@@ -194,10 +194,13 @@ function Comb() {
                     </svg>
                     {lights.has(step.number) && <Light number={step.number} />}
 
-                    {/* One grid for every cell: rows 16, 22, 104 (four lines) and
-                        22px tall, centred, so the lines in each row of cells align.
-                        The title is one line, up to 248px: the row lies between the
-                        side walls, 12px clear of each. The text is 236px wide.
+                    {/* One grid for every cell, so the lines in each row of cells
+                        align: rows 16, 44 (two title lines), 104 (four text lines)
+                        and 22px tall, 6, 4 and 8px apart, with the title and text
+                        in a 236px column. To keep the widest label, tag and titles
+                        12px from the walls, the grid sits 9px above the cell's
+                        centre (the bottom padding), and a one-line title takes the
+                        second title line, next to its text.
                         The button is named by all it shows, in order, so its name
                         holds its visible text (WCAG 2.5.3, Label in Name); the
                         spaces keep the parts apart as words. The steps it is
@@ -211,18 +214,18 @@ function Comb() {
                     <span
                       id={`${id}-title`}
                       data-part="title"
-                      className="mt-2 h-5.5 w-62 type-cell whitespace-nowrap text-text"
+                      className="mt-1.5 flex h-11 w-59 flex-col justify-end type-cell text-text"
                     >
                       {step.title}
                     </span>{" "}
                     <span
                       id={`${id}-text`}
                       data-part="text"
-                      className="mt-1.5 h-26 w-59 type-body text-balance text-text-secondary"
+                      className="mt-1 h-26 w-59 type-body text-balance text-text-secondary"
                     >
                       {step.text}
                     </span>{" "}
-                    <span id={`${id}-tag`} data-part="tag" className="mt-3 flex h-5.5 items-center">
+                    <span id={`${id}-tag`} data-part="tag" className="mt-2 flex h-5.5 items-center">
                       <ValueTag kind={step.tag} />
                     </span>
                     {step.from.length > 0 && (

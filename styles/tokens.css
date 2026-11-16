@@ -80,9 +80,8 @@
   --type-title-size: 1.125rem; /* 18px */
   --type-title-leading: 1.75rem; /* 28px */
   --type-title-weight: 500;
-  --type-cell-size: 1rem; /* 16px: Evidence chain step titles in the comb, one line */
+  --type-cell-size: 1rem; /* 16px: Evidence chain step titles in the comb, two lines at most */
   --type-cell-leading: 1.375rem; /* 22px */
-  --type-cell-tracking: -0.025em; /* so the longest title, step 04's, fits its line */
 
   --type-body-lg-size: 1rem; /* 16px */
   --type-body-lg-leading: 1.625rem; /* 26px */

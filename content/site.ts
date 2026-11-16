@@ -69,7 +69,7 @@ export const notFoundPage = {
 
 export const meta = {
   title: `${BRAND} · Building Energy Intelligence`,
-  // [D] The hero subtext, shortened, plus where the product stands.
+  // The hero subtext, shortened, plus where the product stands.
   description: `${BRAND} connects on-site inspections, utility data and detailed engineering calculations into clear, traceable energy decisions. In development, with a pilot program open.`,
 };
 
@@ -182,8 +182,8 @@ export const howItWorks = {
   eyebrow: "How it works",
   heading: "Collect. Calculate. Deliver.", // [D]
   label: exampleLabel,
-  // [D] The three cards: name, what it is, text and panel rows, except the
-  // INPUTS label and the "Captured" status, which are approved.
+  // [D] The three cards: name, what it is, text and panel rows. Approved: the
+  // INPUTS, ANALYSIS and REPORT labels, the "Captured" status and the "—".
   collect: {
     number: "01",
     name: "Bee",
@@ -275,7 +275,10 @@ export const evidenceChain: {
     {
       number: "04",
       action: "Extract",
-      title: "Rated input: 2,000 MBH (586 kW)", // [D] the SI value
+      // [D] With the SI value. No-break spaces hold "2,000 MBH (586 kW)" together,
+      // so the title breaks after "Rated input:": in the comb always, in the list
+      // when it wraps.
+      title: "Rated input: 2,000 MBH (586 kW)",
       tag: "observed",
       text: "Read from the nameplate in site photo 014.",
       from: ["01"],
@@ -378,11 +381,9 @@ export const team = {
   eyebrow: "Founders", // [D]
   heading: "Team",
   // TODO(copy): the founders' names, pending their consent (CONTENT.md, Pending).
-  // TODO(copy): the second title contains "AI", which the claim rules now ban;
-  // it needs a new title before showTeam is turned on.
   members: [
     { name: "", title: "Co-Founder, Engineering & Building Energy Intelligence" },
-    { name: "", title: "Co-Founder, AI & Technology Development" },
+    { name: "", title: "Co-Founder, Technology & Platform Development" }, // [D]
   ],
 };
 
